@@ -5,7 +5,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { useMedplum } from '@medplum/ui';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import logoUrl from '../img/logo-256x256.png';
+import logoUrl from '../img/logo-1050x180.png';
 
 const user = {
   name: 'Whitney Francis',
