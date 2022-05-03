@@ -2,6 +2,7 @@
 // https://tailwindui.com/components/application-ui/page-examples/detail-screens
 import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { useMedplum } from '@medplum/ui';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import logoUrl from '../img/logo-256x256.png';
@@ -21,13 +22,14 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/signout' },
 ];
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
 export function Header() {
+  const medplum = useMedplum();
   return (
     <header className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
