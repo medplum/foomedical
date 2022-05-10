@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import PageLayout from '../../components/PageLayout';
 
 const LabResults = lazy(() => import('./LabResults'));
+const Medications = lazy(() => import('./Medications'));
 const Vaccines = lazy(() => import('./Vaccines'));
 
 export const sideNavigation = {
@@ -20,6 +21,7 @@ export default function HealthRecord(): JSX.Element {
         <Route index element={<Navigate replace to={sideNavigation.navigation[0].href} />} />
 
         <Route path="lab-results" element={<LabResults />} />
+        <Route path="medications" element={<Medications />} />
         <Route path="vaccines" element={<Vaccines />} />
       </Routes>
     </PageLayout>

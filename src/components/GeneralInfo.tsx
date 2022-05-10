@@ -1,6 +1,6 @@
 interface GeneralInfoProps {
   title: string;
-  subTitle?: string;
+  subTitle?: string | JSX.Element;
   imageUrl?: string;
   imageAlt?: string;
 }

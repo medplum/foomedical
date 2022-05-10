@@ -8,7 +8,7 @@ const PersonalItems = [
     label: (
       <>
         <p>Legal name</p>
-        <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700 text-gray-400" aria-hidden="true" />
+        <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
       </>
     ),
     body: (
@@ -29,7 +29,7 @@ const PersonalItems = [
     label: (
       <>
         <p>Sex</p>
-        <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700 text-gray-400" aria-hidden="true" />
+        <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
       </>
     ),
     body: (
