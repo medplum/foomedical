@@ -5,7 +5,7 @@ import { CalendarIcon, LocationMarkerIcon, UsersIcon } from '@heroicons/react/so
 const positions = [
   {
     id: 1,
-    title: 'Testosterone Panel',
+    title: 'Schedule a flue shot',
     type: 'Complete',
     location: 'San Francisco General Hospital',
     department: 'Engineering',
@@ -14,7 +14,7 @@ const positions = [
   },
   {
     id: 2,
-    title: 'Chemistries Panel',
+    title: 'Schedule your annual physical',
     type: 'Complete',
     location: 'Walgreens, Fillmore Street',
     department: 'Engineering',
@@ -23,7 +23,16 @@ const positions = [
   },
   {
     id: 3,
-    title: 'Immunoassays',
+    title: 'Walk in for lab work',
+    type: 'Complete',
+    location: 'UCSF Mt Zion',
+    department: 'Design',
+    closeDate: '2020-01-14',
+    closeDateFull: 'January 14, 2020',
+  },
+  {
+    id: 4,
+    title: 'Book a physical exam',
     type: 'Complete',
     location: 'UCSF Mt Zion',
     department: 'Design',
@@ -32,20 +41,20 @@ const positions = [
   },
 ];
 
-export default function LabResultsList() {
+export default function ActionItems() {
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
-      <h2 className="text-lg font-medium text-gray-900 mb-3">Lab Results</h2>
-      <div className="bg-white border overflow-hidden sm:rounded-md">
+      <h2 className="mb-3 text-lg font-medium text-gray-900">Action Items</h2>
+      <div className="overflow-hidden border bg-white sm:rounded-md">
         <ul role="list" className="divide-y divide-gray-200">
           {positions.map((position) => (
             <li key={position.id}>
-              <a href="#" className="block hover:bg-gray-50">
+              <a href="src/pages/care-plan/ActionItemsList#" className="block hover:bg-gray-50">
                 <div className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-teal-600 truncate">{position.title}</p>
-                    <div className="ml-2 flex-shrink-0 flex">
-                      <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <p className="truncate text-sm font-medium text-teal-600">{position.title}</p>
+                    <div className="ml-2 flex flex-shrink-0">
+                      <p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
                         {position.type}
                       </p>
                     </div>
@@ -53,12 +62,12 @@ export default function LabResultsList() {
                   <div className="mt-2 sm:flex sm:justify-between">
                     <div className="sm:flex">
                       <p className="flex items-center text-sm text-gray-500">
-                        <LocationMarkerIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <LocationMarkerIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                         {position.location}
                       </p>
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                      <CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                       <p>
                         <time dateTime={position.closeDate}>{position.closeDateFull}</time>
                       </p>
