@@ -32,12 +32,12 @@ export default function Profile() {
       label: (
         <>
           <p>Legal name</p>
-          <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
+          <ExclamationCircleIcon className="ml-2 h-6 w-6 self-center text-emerald-700" aria-hidden="true" />
         </>
       ),
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{getName({ firstName: true, lastName: true })}</p>
+          <p className="text-lg text-gray-600">{getName({ firstName: true, lastName: true })}</p>
         </>
       ),
     },
@@ -45,7 +45,7 @@ export default function Profile() {
       label: 'Preferred name',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{getName({ firstName: true })}</p>
+          <p className="text-lg text-gray-600">{getName({ firstName: true })}</p>
         </>
       ),
     },
@@ -53,12 +53,12 @@ export default function Profile() {
       label: (
         <>
           <p>Sex</p>
-          <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
+          <ExclamationCircleIcon className="ml-2 h-6 w-6 self-center text-emerald-700" aria-hidden="true" />
         </>
       ),
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600 first-letter:uppercase">{patient?.gender}</p>
+          <p className="text-lg text-gray-600 first-letter:uppercase">{patient?.gender}</p>
         </>
       ),
     },
@@ -66,7 +66,7 @@ export default function Profile() {
       label: 'Pronouns',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{patient?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
+          <p className="text-lg text-gray-600">{patient?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
         </>
       ),
     },
@@ -74,7 +74,7 @@ export default function Profile() {
       label: 'Birthday',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{patient?.birthDate && getLocaleDate(patient?.birthDate)}</p>
+          <p className="text-lg text-gray-600">{patient?.birthDate && getLocaleDate(patient?.birthDate)}</p>
         </>
       ),
     },
@@ -87,7 +87,7 @@ export default function Profile() {
         <>
           {patient?.telecom?.map(({ system, use, value }) => (
             <p
-              className="mt-1 text-base capitalize text-gray-600"
+              className="text-lg capitalize text-gray-600"
               key={profileIdGenerator.next().value}
             >{`${system} (${use}): ${value}`}</p>
           ))}
@@ -101,11 +101,11 @@ export default function Profile() {
           {patient?.address?.map(({ city, line, state }) => (
             <div key={profileIdGenerator.next().value}>
               {line?.map((line) => (
-                <p className="mt-1 text-base text-gray-600" key={profileIdGenerator.next().value}>
+                <p className="text-lg text-gray-600" key={profileIdGenerator.next().value}>
                   {line}
                 </p>
               ))}
-              <p className="mt-1 text-base text-gray-600">
+              <p className="text-lg text-gray-600">
                 {city}, {state}
               </p>
             </div>

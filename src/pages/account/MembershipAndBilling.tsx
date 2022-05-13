@@ -1,4 +1,5 @@
 import { ClockIcon } from '@heroicons/react/outline';
+import { useMedplum } from '@medplum/ui';
 import InfoSection from '../../components/InfoSection';
 import TwoColumnsList from '../../components/TwoColumnsList';
 import PageTitle from '../../components/PageTitle';
@@ -8,13 +9,17 @@ const membershipItems = [
     label: 'Current plan',
     body: (
       <>
-        <p className="mt-1 text-base text-gray-600">Sponsored Membership - $0</p>
-        <p className="mt-1 text-lg text-red-500">Expired on Dec 31, 2019</p>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mb-1 text-lg text-gray-600">Sponsored Membership - $0</p>
+        <p className="mb-1 text-lg text-red-500">Expired on Dec 31, 2019</p>
+        <p className="mb-1 text-sm text-gray-600">
           Please update your sponsored membership or convert to a personal membership below for just $100/year
         </p>
-        <p className="mt-1 text-base text-sky-700">Update Sponsored Membership</p>
-        <p className="mt-1 text-base text-sky-700">Convert to Personal Membership</p>
+        <a href="#" className="mb-1 block text-base text-sky-700">
+          Update Sponsored Membership
+        </a>
+        <a href="#" className="mb-1 block text-base text-sky-700">
+          Convert to Personal Membership
+        </a>
       </>
     ),
   },
@@ -25,11 +30,13 @@ const accountItems = [
     label: 'Login Email',
     body: (
       <>
-        <p className="mt-1 text-base text-gray-600">example@gmail.com</p>
-        <p className="mt-1 text-sm text-red-500">Unverified email</p>
-        <p className="mt-1 text-base text-sky-700">Send verification email</p>
+        <input className="mb-1 border-none p-0 text-lg text-gray-600" type="email" value="example@gmail.com" />
+        <p className="mb-1 text-sm text-red-500">Unverified email</p>
+        <a href="#" className="mb-1 text-base text-sky-700">
+          Send verification email
+        </a>
         <div>
-          <p className="mt-1 text-sm text-gray-600">Need help verifying your email? Contact support of</p>
+          <p className="mb-1 text-sm text-gray-600">Need help verifying your email? Contact support of</p>
           <p className="mt-0 text-sm text-gray-600">
             <a href="mailto:helpsupport@medplum.com" className="text-base text-sky-700">
               helpsupport@medplum.com
@@ -44,8 +51,8 @@ const accountItems = [
     label: 'Preferred Email',
     body: (
       <>
-        <p className="mt-1 text-base text-sky-700">+ add preferred email</p>
-        <p className="mt-1 text-sm text-gray-600">
+        <button className="mb-1 text-lg text-sky-700">+ add preferred email</button>
+        <p className="mb-1 text-sm text-gray-600">
           Optional - Add a preferred email if you want to receive communications, separate from your login email
         </p>
       </>
@@ -53,7 +60,7 @@ const accountItems = [
   },
   {
     label: 'Password',
-    body: <p>&bull;&bull;&bull;&bull;&bull;&bull;&bull;</p>,
+    body: <input className="border-none p-0" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />,
   },
 ];
 
