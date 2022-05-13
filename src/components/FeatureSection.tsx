@@ -34,9 +34,9 @@ export function FeatureSection() {
     <div className="bg-white py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base font-semibold uppercase tracking-wide text-teal-600">Transactions</h2>
+          <h2 className="text-base font-semibold uppercase tracking-wide text-teal-600">Healthcare</h2>
           <p className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-            A better way to send money
+            A better way to get care
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
             Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in

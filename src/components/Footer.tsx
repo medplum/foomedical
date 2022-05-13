@@ -99,7 +99,7 @@ export function Footer() {
           ))}
         </div>
         <p className="mt-8 text-base text-gray-200 md:order-1 md:mt-0">
-          &copy; 2022 Workflow, Inc. All rights reserved.
+          &copy; 2022 Foo Medical, Inc. All rights reserved.
         </p>
       </div>
     </footer>
