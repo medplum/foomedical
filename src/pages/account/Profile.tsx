@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMedplum } from '@medplum/ui';
 import { Patient } from '@medplum/fhirtypes';
+import { formatHumanName, formatGivenName } from '@medplum/core';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import InfoSection from '../../components/InfoSection';
 import GeneralInfo from '../../components/GeneralInfo';
@@ -11,21 +12,12 @@ import generateId from '../../helpers/generate-id';
 
 const profileIdGenerator = generateId();
 
-interface getNameProps {
-  hasPrefix?: boolean;
-  firstName?: boolean;
-  lastName?: boolean;
-}
-
 export default function Profile() {
   const medplum = useMedplum();
   const [patient, setPatient] = useState<Patient>();
 
-  const getName = ({ hasPrefix, firstName, lastName }: getNameProps) => {
-    const { prefix = 'Mr', given = 'John', family = 'Doe' } = patient?.name ? patient?.name[0] : {};
-
-    return `${hasPrefix ? `${prefix + ' '}` : ''}${firstName ? `${given + ' '}` : ''}${lastName ? family : ''}`;
-  };
+  const legalName = formatHumanName(patient?.name ? patient?.name[0] : {});
+  const preferredName = formatGivenName(patient?.name ? patient?.name[0] : {});
 
   const personalItems = [
     {
@@ -37,7 +29,7 @@ export default function Profile() {
       ),
       body: (
         <>
-          <p className="text-lg text-gray-600">{getName({ firstName: true, lastName: true })}</p>
+          <p className="text-lg text-gray-600">{legalName}</p>
         </>
       ),
     },
@@ -45,7 +37,7 @@ export default function Profile() {
       label: 'Preferred name',
       body: (
         <>
-          <p className="text-lg text-gray-600">{getName({ firstName: true })}</p>
+          <p className="text-lg text-gray-600">{preferredName}</p>
         </>
       ),
     },
@@ -131,7 +123,7 @@ export default function Profile() {
   return (
     <div>
       <GeneralInfo
-        title={getName({ hasPrefix: true, firstName: true, lastName: true })}
+        title={legalName}
         image="avatar"
         imageUrl={patient.photo ? patient.photo[0].url : ''}
         imageAlt="profile-image"
