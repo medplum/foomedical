@@ -80,7 +80,7 @@ const navigation = {
 export function Footer() {
   return (
     <footer className="bg-teal-900">
-      <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
         <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
           {navigation.main.map((item) => (
             <div key={item.name} className="px-5 py-2">
@@ -98,7 +98,7 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <p className="mt-8 text-base text-gray-200 md:mt-0 md:order-1">
+        <p className="mt-8 text-base text-gray-200 md:order-1 md:mt-0">
           &copy; 2022 Foo Medical, Inc. All rights reserved.
         </p>
       </div>

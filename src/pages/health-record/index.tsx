@@ -11,7 +11,6 @@ export const sideNavigation = {
   navigation: [
     { name: 'Lab Results', href: '/health-record/lab-results' },
     { name: 'Vaccines', href: '/health-record/vaccines' },
-    { name: 'Medications', href: '/health-record/medications' },
   ],
 };
 
