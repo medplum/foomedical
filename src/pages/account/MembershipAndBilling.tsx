@@ -1,4 +1,3 @@
-import { useMedplum } from '@medplum/ui';
 import { ClockIcon } from '@heroicons/react/outline';
 import InfoSection from '../../components/InfoSection';
 import TwoColumnsList from '../../components/TwoColumnsList';
@@ -59,9 +58,6 @@ const accountItems = [
 ];
 
 const MembershipAndBilling = (): JSX.Element => {
-  const medplum = useMedplum();
-  medplum.search('Coverage?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9').then((value) => console.log(value));
-
   return (
     <div>
       <PageTitle title="Membership & Billing" />
