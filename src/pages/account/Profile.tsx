@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useMedplum } from '@medplum/ui';
-import { Patient } from '@medplum/fhirtypes';
+import { useContext } from 'react';
 import { formatHumanName, formatGivenName } from '@medplum/core';
+import { profileContext } from '../../profileContext';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import InfoSection from '../../components/InfoSection';
 import GeneralInfo from '../../components/GeneralInfo';
@@ -13,11 +12,7 @@ import generateId from '../../helpers/generate-id';
 const profileIdGenerator = generateId();
 
 export default function Profile() {
-  const medplum = useMedplum();
-  const [patient, setPatient] = useState<Patient>();
-
-  const legalName = formatHumanName(patient?.name ? patient?.name[0] : {});
-  const preferredName = formatGivenName(patient?.name ? patient?.name[0] : {});
+  const profile = useContext(profileContext);
 
   const personalItems = [
     {
@@ -29,7 +24,7 @@ export default function Profile() {
       ),
       body: (
         <>
-          <p className="text-lg text-gray-600">{legalName}</p>
+          <p className="text-lg text-gray-600">{profile?.name ? formatHumanName(profile?.name[0]) : ''}</p>
         </>
       ),
     },
@@ -37,7 +32,7 @@ export default function Profile() {
       label: 'Preferred name',
       body: (
         <>
-          <p className="text-lg text-gray-600">{preferredName}</p>
+          <p className="text-lg text-gray-600">{profile?.name ? formatGivenName(profile?.name[0]) : ''}</p>
         </>
       ),
     },
@@ -50,7 +45,7 @@ export default function Profile() {
       ),
       body: (
         <>
-          <p className="text-lg text-gray-600 first-letter:uppercase">{patient?.gender}</p>
+          <p className="text-lg text-gray-600 first-letter:uppercase">{profile?.gender}</p>
         </>
       ),
     },
@@ -58,7 +53,7 @@ export default function Profile() {
       label: 'Pronouns',
       body: (
         <>
-          <p className="text-lg text-gray-600">{patient?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
+          <p className="text-lg text-gray-600">{profile?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
         </>
       ),
     },
@@ -66,7 +61,7 @@ export default function Profile() {
       label: 'Birthday',
       body: (
         <>
-          <p className="text-lg text-gray-600">{patient?.birthDate && getLocaleDate(patient?.birthDate)}</p>
+          <p className="text-lg text-gray-600">{profile?.birthDate && getLocaleDate(profile?.birthDate)}</p>
         </>
       ),
     },
@@ -77,7 +72,7 @@ export default function Profile() {
       label: 'Contacts',
       body: (
         <>
-          {patient?.telecom?.map(({ system, use, value }) => (
+          {profile?.telecom?.map(({ system, use, value }) => (
             <p
               className="text-lg capitalize text-gray-600"
               key={profileIdGenerator.next().value}
@@ -90,7 +85,7 @@ export default function Profile() {
       label: 'Address',
       body: (
         <>
-          {patient?.address?.map(({ city, line, state }) => (
+          {profile?.address?.map(({ city, line, state }) => (
             <div key={profileIdGenerator.next().value}>
               {line?.map((line) => (
                 <p className="text-lg text-gray-600" key={profileIdGenerator.next().value}>
@@ -107,25 +102,16 @@ export default function Profile() {
     },
   ];
 
-  useEffect(() => {
-    medplum
-      .readResource('Patient', '3e27eaee-2c55-4400-926e-90982df528e9')
-      .then((value) => {
-        setPatient(value as Patient);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  if (!patient) {
+  if (!profile) {
     return <NoData title="Profile" />;
   }
 
   return (
     <div>
       <GeneralInfo
-        title={legalName}
+        title={profile?.name ? formatHumanName(profile?.name[0], { prefix: true }) : ''}
         image="avatar"
-        imageUrl={patient.photo ? patient.photo[0].url : ''}
+        imageUrl={profile.photo ? profile.photo[0].url : ''}
         imageAlt="profile-image"
       />
       <InfoSection title="Personal Information">
