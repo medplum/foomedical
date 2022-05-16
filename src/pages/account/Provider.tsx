@@ -27,7 +27,7 @@ const providerItems = [
     label: 'Office Hours',
     body: (
       <>
-        <p className="text-base text-gray-600">Mon, Tue, Thu, Fri: 8AM-5PM</p>
+        <p className="text-lg text-gray-600">Mon, Tue, Thu, Fri: 8AM-5PM</p>
         <p className="mt-1 text-base text-gray-600">Wed: 8AM-12:30PM, 1PM-4PM</p>
         <p className="mt-1 text-base text-gray-600">Sat-Sun: Closed</p>
       </>
@@ -37,7 +37,7 @@ const providerItems = [
     label: 'Lab Hours',
     body: (
       <>
-        <p className="text-base text-gray-600">Mon-Fri: 8AM-4PM</p>
+        <p className="text-lg text-gray-600">Mon-Fri: 8AM-4PM</p>
         <p className="mt-1 text-base text-gray-600">Sat-Sun: Closed</p>
       </>
     ),

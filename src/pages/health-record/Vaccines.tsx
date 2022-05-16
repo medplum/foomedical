@@ -1,42 +1,91 @@
 // This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/headings/card-headings
 // https://tailwindui.com/components/application-ui/lists/stacked-lists
-import { CalendarIcon, LocationMarkerIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { useState, useEffect } from 'react';
+import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
+import { useMedplum } from '@medplum/ui';
+import { BundleEntry, Immunization } from '@medplum/fhirtypes';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import Button from '../../components/Button';
+import NoData from '../../components/NoData';
+import getLocaleDate from '../../helpers/get-locale-date';
 
-const positions = [
-  {
-    id: 1,
-    title: 'COVID-19 (Pfizer)',
-    type: 'Complete',
-    location: 'San Francisco General Hospital',
-    department: 'Engineering',
-    closeDate: '2020-01-07',
-    closeDateFull: 'January 7, 2020',
-  },
-  {
-    id: 2,
-    title: 'COVID-19 (J&J)',
-    type: 'Complete',
-    location: 'Walgreens, Fillmore Street',
-    department: 'Engineering',
-    closeDate: '2020-01-07',
-    closeDateFull: 'January 7, 2020',
-  },
-  {
-    id: 3,
-    title: 'MMR',
-    type: 'Complete',
-    location: 'UCSF Mt Zion',
-    department: 'Design',
-    closeDate: '2020-01-14',
-    closeDateFull: 'January 14, 2020',
-  },
-];
+interface VaccineProps {
+  resource: Immunization;
+}
+
+const Vaccine = ({ resource }: VaccineProps): JSX.Element => {
+  const date = resource?.occurrenceDateTime ? getLocaleDate(resource?.occurrenceDateTime) : null;
+
+  return (
+    <li key={resource?.id}>
+      <a href="#" className="block hover:bg-gray-50">
+        <div className="px-4 py-4 sm:px-6">
+          <div className="flex items-center justify-between">
+            <p className="truncate text-sm font-medium text-teal-600">{resource?.vaccineCode?.text}</p>
+            <div className="ml-2 flex flex-shrink-0">
+              <p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                {resource?.status}
+              </p>
+            </div>
+          </div>
+          <div className="mt-2 sm:flex sm:justify-between">
+            <div className="sm:flex">
+              <p className="flex items-center text-sm text-gray-500">
+                <LocationMarkerIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                {resource?.location?.display}
+              </p>
+            </div>
+            {date && (
+              <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                <p>
+                  <time dateTime={resource.occurrenceDateTime}>{date}</time>
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </a>
+    </li>
+  );
+};
 
 export default function ImmunizationList(): JSX.Element {
+  const medplum = useMedplum();
+  const [pastVaccines, setPastVaccines] = useState<BundleEntry<Immunization>[]>([]);
+  const [upcomingVaccines, setUpcomingVaccines] = useState<BundleEntry<Immunization>[]>([]);
+
+  const today = new Date();
+
+  useEffect(() => {
+    medplum
+      .search('Immunization?_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
+      .then(({ entry }) => {
+        if (entry) {
+          const vaccines = entry as BundleEntry<Immunization>[];
+
+          let index = 0;
+          vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
+            if (resource?.occurrenceDateTime) {
+              const date = new Date(resource.occurrenceDateTime);
+
+              if (date < today) {
+                index = i;
+                return resource;
+              }
+            }
+          });
+
+          const pastVaccinesArray = vaccines.slice(index);
+          const upcomingVaccinesArray = vaccines.slice(0, index);
+
+          setPastVaccines(pastVaccinesArray);
+          setUpcomingVaccines(upcomingVaccinesArray);
+        }
+      });
+  }, []);
+
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
       <PageTitle title="Vaccines" />
@@ -48,55 +97,28 @@ export default function ImmunizationList(): JSX.Element {
           <Button label="Download" action={() => console.log('download action')} />
         </div>
       </div>
-      <InfoSection title="Upcoming">
-        <ul role="list" className="divide-y divide-gray-200">
-          <li>
-            <a href="#" className="block hover:bg-gray-50">
-              <div className="px-4 py-4 sm:px-6">
-                <div className="flex items-center justify-between">
-                  <p className="truncate text-sm font-medium text-teal-600">Schedule a flu shot today</p>
-                  <ChevronRightIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </InfoSection>
-      <InfoSection title="Past vaccines">
-        <ul role="list" className="divide-y divide-gray-200">
-          {!positions.length && <p className="px-4 text-sm font-medium text-gray-500">No vaccines available</p>}
-          {positions?.map((position) => (
-            <li key={position.id}>
-              <a href="#" className="block hover:bg-gray-50">
-                <div className="px-4 py-4 sm:px-6">
-                  <div className="flex items-center justify-between">
-                    <p className="truncate text-sm font-medium text-teal-600">{position.title}</p>
-                    <div className="ml-2 flex flex-shrink-0">
-                      <p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                        {position.type}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-2 sm:flex sm:justify-between">
-                    <div className="sm:flex">
-                      <p className="flex items-center text-sm text-gray-500">
-                        <LocationMarkerIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                        {position.location}
-                      </p>
-                    </div>
-                    <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                      <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                      <p>
-                        <time dateTime={position.closeDate}>{position.closeDateFull}</time>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </InfoSection>
+      {!upcomingVaccines.length ? (
+        <NoData title="upcoming vaccines" />
+      ) : (
+        <InfoSection title="Upcoming">
+          <ul role="list" className="divide-y divide-gray-200">
+            {upcomingVaccines.map(({ resource }) => {
+              return resource ? <Vaccine resource={resource} key={resource?.id} /> : null;
+            })}
+          </ul>
+        </InfoSection>
+      )}
+      {!pastVaccines.length ? (
+        <NoData title="past vaccines" />
+      ) : (
+        <InfoSection title="Past vaccines">
+          <ul role="list" className="divide-y divide-gray-200">
+            {pastVaccines.map(({ resource }) => {
+              return resource ? <Vaccine resource={resource} key={resource?.id} /> : null;
+            })}
+          </ul>
+        </InfoSection>
+      )}
     </div>
   );
 }

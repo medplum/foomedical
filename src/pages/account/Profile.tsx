@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMedplum } from '@medplum/ui';
 import { Patient } from '@medplum/fhirtypes';
+import { formatHumanName, formatGivenName } from '@medplum/core';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import InfoSection from '../../components/InfoSection';
 import GeneralInfo from '../../components/GeneralInfo';
@@ -11,33 +12,24 @@ import generateId from '../../helpers/generate-id';
 
 const profileIdGenerator = generateId();
 
-interface getNameProps {
-  hasPrefix?: boolean;
-  firstName?: boolean;
-  lastName?: boolean;
-}
-
 export default function Profile() {
   const medplum = useMedplum();
   const [patient, setPatient] = useState<Patient>();
 
-  const getName = ({ hasPrefix, firstName, lastName }: getNameProps) => {
-    const { prefix = 'Mr', given = 'John', family = 'Doe' } = patient?.name ? patient?.name[0] : {};
-
-    return `${hasPrefix ? `${prefix + ' '}` : ''}${firstName ? `${given + ' '}` : ''}${lastName ? family : ''}`;
-  };
+  const legalName = formatHumanName(patient?.name ? patient?.name[0] : {});
+  const preferredName = formatGivenName(patient?.name ? patient?.name[0] : {});
 
   const personalItems = [
     {
       label: (
         <>
           <p>Legal name</p>
-          <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
+          <ExclamationCircleIcon className="ml-2 h-6 w-6 self-center text-emerald-700" aria-hidden="true" />
         </>
       ),
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{getName({ firstName: true, lastName: true })}</p>
+          <p className="text-lg text-gray-600">{legalName}</p>
         </>
       ),
     },
@@ -45,7 +37,7 @@ export default function Profile() {
       label: 'Preferred name',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{getName({ firstName: true })}</p>
+          <p className="text-lg text-gray-600">{preferredName}</p>
         </>
       ),
     },
@@ -53,12 +45,12 @@ export default function Profile() {
       label: (
         <>
           <p>Sex</p>
-          <ExclamationCircleIcon className="ml-2 h-6 w-6 text-emerald-700" aria-hidden="true" />
+          <ExclamationCircleIcon className="ml-2 h-6 w-6 self-center text-emerald-700" aria-hidden="true" />
         </>
       ),
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600 first-letter:uppercase">{patient?.gender}</p>
+          <p className="text-lg text-gray-600 first-letter:uppercase">{patient?.gender}</p>
         </>
       ),
     },
@@ -66,7 +58,7 @@ export default function Profile() {
       label: 'Pronouns',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{patient?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
+          <p className="text-lg text-gray-600">{patient?.gender === 'female' ? 'She/Her' : 'He/Him'}</p>
         </>
       ),
     },
@@ -74,7 +66,7 @@ export default function Profile() {
       label: 'Birthday',
       body: (
         <>
-          <p className="mt-1 text-base text-gray-600">{patient?.birthDate && getLocaleDate(patient?.birthDate)}</p>
+          <p className="text-lg text-gray-600">{patient?.birthDate && getLocaleDate(patient?.birthDate)}</p>
         </>
       ),
     },
@@ -87,7 +79,7 @@ export default function Profile() {
         <>
           {patient?.telecom?.map(({ system, use, value }) => (
             <p
-              className="mt-1 text-base capitalize text-gray-600"
+              className="text-lg capitalize text-gray-600"
               key={profileIdGenerator.next().value}
             >{`${system} (${use}): ${value}`}</p>
           ))}
@@ -101,11 +93,11 @@ export default function Profile() {
           {patient?.address?.map(({ city, line, state }) => (
             <div key={profileIdGenerator.next().value}>
               {line?.map((line) => (
-                <p className="mt-1 text-base text-gray-600" key={profileIdGenerator.next().value}>
+                <p className="text-lg text-gray-600" key={profileIdGenerator.next().value}>
                   {line}
                 </p>
               ))}
-              <p className="mt-1 text-base text-gray-600">
+              <p className="text-lg text-gray-600">
                 {city}, {state}
               </p>
             </div>
@@ -131,7 +123,7 @@ export default function Profile() {
   return (
     <div>
       <GeneralInfo
-        title={getName({ hasPrefix: true, firstName: true, lastName: true })}
+        title={legalName}
         image="avatar"
         imageUrl={patient.photo ? patient.photo[0].url : ''}
         imageAlt="profile-image"
