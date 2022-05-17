@@ -1,4 +1,4 @@
-interface TwoColumnsListItemProps {
+export interface TwoColumnsListItemProps {
   label: string | JSX.Element;
   body: string | JSX.Element;
 }
