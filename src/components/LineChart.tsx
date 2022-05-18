@@ -9,15 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom' as const,
-    },
-  },
-};
+import { lineChartOptions } from '../constants/chartConfig';
 
 interface LineChartProps {
   chartData: {
@@ -35,7 +27,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const LineChart = ({ chartData }: LineChartProps): JSX.Element => (
   <div className="my-5">
-    <Line options={options} data={chartData} />
+    <Line options={lineChartOptions} data={chartData} />
   </div>
 );
 
