@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
 import getLocaleDate from '../../helpers/get-locale-date';
+import MeasurementCodes from '../../constants/measurementCodes';
 
 interface measurementsMetaType {
   [key: string]: {
@@ -32,10 +33,10 @@ const secondBorderColor = 'rgba(255, 119, 0, 1)';
 export const measurementsMeta: measurementsMetaType = {
   'blood-pressure': {
     id: 'blood-pressure',
-    code: '85354-9',
+    code: MeasurementCodes['85354-9'][0].code,
     title: 'Blood Pressure',
     description:
-      'Your blud pressure is the pressure exerted on the walls of your blood vessels. When this pressure is high, it can damage your blood vessels and increase your risk for a heart attack or stroke. We measure your blood pressure periodically to make sure it is not staying high. Hypertention is a condition that refers to consistantly high blood pressure.',
+      'Your blood pressure is the pressure exerted on the walls of your blood vessels. When this pressure is high, it can damage your blood vessels and increase your risk for a heart attack or stroke. We measure your blood pressure periodically to make sure it is not staying high. Hypertention is a condition that refers to consistantly high blood pressure.',
     chartDatasets: [
       {
         label: 'Diastolic',
@@ -51,7 +52,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'body-temperature': {
     id: 'body-temperature',
-    code: '8310-5',
+    code: MeasurementCodes['8310-5'][0].code,
     title: 'Body Temperature',
     description: 'Your body temperature values',
     chartDatasets: [
@@ -64,7 +65,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   height: {
     id: 'height',
-    code: '8302-2',
+    code: MeasurementCodes['8302-2'][0].code,
     title: 'Height',
     description: 'Your height values',
     chartDatasets: [
@@ -77,7 +78,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'respiratory-rate': {
     id: 'respiratory-rate',
-    code: '9279-1',
+    code: MeasurementCodes['9279-1'][0].code,
     title: 'Respiratory Rate',
     description: 'Your respiratory rate values',
     chartDatasets: [
@@ -90,7 +91,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'heart-rate': {
     id: 'heart-rate',
-    code: '8867-4',
+    code: MeasurementCodes['8867-4'][0].code,
     title: 'Heart Rate',
     description: 'Your heart rate values',
     chartDatasets: [
@@ -103,7 +104,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   weight: {
     id: 'weight',
-    code: '29463-7',
+    code: MeasurementCodes['29463-7'][0].code,
     title: 'Weight',
     description: 'Your weight values',
     chartDatasets: [
@@ -158,14 +159,14 @@ const Measurement = (): JSX.Element | null => {
 
   const renderValue = (resource: Observation): JSX.Element => {
     return resource?.component?.length ? (
-      <p>
+      <p className="text-base text-gray-500">
         {resource.component[1].valueQuantity?.value}
         &nbsp;/&nbsp;
         {resource.component[0].valueQuantity?.value}&nbsp;
         {resource.component[0].valueQuantity?.unit?.replace(/\[|\]/g, '')}
       </p>
     ) : (
-      <p>
+      <p className="text-base text-gray-500">
         {resource?.valueQuantity?.value}&nbsp;
         {resource?.valueQuantity?.unit?.replace('/', '/ ')}
       </p>
