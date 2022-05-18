@@ -1,5 +1,5 @@
 interface InfoSectionProps {
-  title: string;
+  title: string | JSX.Element;
   children: JSX.Element;
 }
 
