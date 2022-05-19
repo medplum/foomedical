@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useMedplum } from '@medplum/ui';
+import { profileContext } from '../../profileContext';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
@@ -10,14 +11,17 @@ const title = 'Medications';
 
 export default function Medications() {
   const medplum = useMedplum();
+  const profile = useContext(profileContext);
   const [bundle, setBundle] = useState<Bundle<MedicationRequest>>();
   const data = bundle?.entry;
   const hasData = data && data.length > 0;
 
   useEffect(() => {
     medplum
-      .search('MedicationRequest?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
-      .then((value) => setBundle(value as Bundle<MedicationRequest>))
+      .search(`MedicationRequest?patient=Patient/${profile.id}`)
+      .then((value) => {
+        setBundle(value as Bundle<MedicationRequest>);
+      })
       .catch((err) => console.error(err));
   }, []);
 
