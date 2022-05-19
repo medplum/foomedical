@@ -10,7 +10,6 @@ import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
 import getLocaleDate from '../../helpers/get-locale-date';
 import MeasurementCodes from '../../constants/measurementCodes';
-import { backgroundColor, borderColor, secondBackgroundColor, secondBorderColor } from '../../constants/chartConfig';
 
 interface measurementsMetaType {
   [key: string]: {
@@ -25,6 +24,11 @@ interface measurementsMetaType {
     }[];
   };
 }
+
+const backgroundColor = 'rgba(29, 112, 214, 0.7)';
+const borderColor = 'rgba(29, 112, 214, 1)';
+const secondBackgroundColor = 'rgba(255, 119, 0, 0.7)';
+const secondBorderColor = 'rgba(255, 119, 0, 1)';
 
 export const measurementsMeta: measurementsMetaType = {
   'blood-pressure': {
