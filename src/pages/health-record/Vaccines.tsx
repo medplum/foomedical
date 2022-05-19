@@ -105,22 +105,6 @@ export default function ImmunizationList(): JSX.Element {
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
       <PageTitle title="Vaccines" />
-      <div className="mb-5 sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <p className="mt-2 text-sm text-gray-700">Need to download or share a copy of your vaccine records?</p>
-        </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Button
-            label="Download"
-            action={() => {
-              const url = medplum.fhirUrl(searchRequest.resourceType) + '/$csv' + formatSearchQuery(searchRequest);
-              medplum.download(url).then((blob) => {
-                window.open(window.URL.createObjectURL(blob), '_blank');
-              });
-            }}
-          />
-        </div>
-      </div>
       {!upcomingVaccines.length ? (
         <NoData title="upcoming vaccines" />
       ) : (
