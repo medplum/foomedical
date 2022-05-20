@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
 import getLocaleDate from '../../helpers/get-locale-date';
+import renderValue from '../../helpers/render-value';
 import MeasurementCodes from '../../constants/measurementCodes';
 
 interface measurementsMetaType {
@@ -155,22 +156,6 @@ const Measurement = (): JSX.Element | null => {
       ...item,
       data: getDatasets(i),
     })),
-  };
-
-  const renderValue = (resource: Observation): JSX.Element => {
-    return resource?.component?.length ? (
-      <p className="text-base text-gray-500">
-        {resource.component[1].valueQuantity?.value}
-        &nbsp;/&nbsp;
-        {resource.component[0].valueQuantity?.value}&nbsp;
-        {resource.component[0].valueQuantity?.unit?.replace(/\[|\]/g, '')}
-      </p>
-    ) : (
-      <p className="text-base text-gray-500">
-        {resource?.valueQuantity?.value}&nbsp;
-        {resource?.valueQuantity?.unit?.replace('/', '/ ')}
-      </p>
-    );
   };
 
   return (
