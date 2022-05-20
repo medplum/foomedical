@@ -13,6 +13,7 @@ export const sideMenu = {
   title: 'Health Record',
   menu: [
     { name: 'Lab Results', href: '/health-record/lab-results' },
+    { name: 'Medications', href: '/health-record/medications' },
     { name: 'Vaccines', href: '/health-record/vaccines' },
     {
       name: 'Vitals',

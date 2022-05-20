@@ -2,6 +2,7 @@
 // https://tailwindui.com/components/application-ui/lists/stacked-lists
 import { useState, useEffect } from 'react';
 import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
+import { formatSearchQuery, Operator, SearchRequest } from '@medplum/core';
 import { useMedplum } from '@medplum/ui';
 import { BundleEntry, Immunization } from '@medplum/fhirtypes';
 import PageTitle from '../../components/PageTitle';
@@ -58,45 +59,52 @@ export default function ImmunizationList(): JSX.Element {
 
   const today = new Date();
 
+  const searchRequest: SearchRequest = {
+    resourceType: 'Immunization',
+    filters: [
+      {
+        code: 'patient',
+        operator: Operator.EQUALS,
+        value: 'Patient/3e27eaee-2c55-4400-926e-90982df528e9',
+      },
+    ],
+    sortRules: [
+      {
+        code: 'date',
+        descending: true,
+      },
+    ],
+  };
+
   useEffect(() => {
-    medplum
-      .search('Immunization?_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
-      .then(({ entry }) => {
-        if (entry) {
-          const vaccines = entry as BundleEntry<Immunization>[];
+    medplum.search(searchRequest).then(({ entry }) => {
+      if (entry) {
+        const vaccines = entry as BundleEntry<Immunization>[];
 
-          let index = 0;
-          vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
-            if (resource?.occurrenceDateTime) {
-              const date = new Date(resource.occurrenceDateTime);
+        let index = 0;
+        vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
+          if (resource?.occurrenceDateTime) {
+            const date = new Date(resource.occurrenceDateTime);
 
-              if (date < today) {
-                index = i;
-                return resource;
-              }
+            if (date < today) {
+              index = i;
+              return resource;
             }
-          });
+          }
+        });
 
-          const pastVaccinesArray = vaccines.slice(index);
-          const upcomingVaccinesArray = vaccines.slice(0, index);
+        const pastVaccinesArray = vaccines.slice(index);
+        const upcomingVaccinesArray = vaccines.slice(0, index);
 
-          setPastVaccines(pastVaccinesArray);
-          setUpcomingVaccines(upcomingVaccinesArray);
-        }
-      });
+        setPastVaccines(pastVaccinesArray);
+        setUpcomingVaccines(upcomingVaccinesArray);
+      }
+    });
   }, []);
 
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
       <PageTitle title="Vaccines" />
-      <div className="mb-5 sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <p className="mt-2 text-sm text-gray-700">Need to download or share a copy of your vaccine records?</p>
-        </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Button label="Download" action={() => console.log('download action')} />
-        </div>
-      </div>
       {!upcomingVaccines.length ? (
         <NoData title="upcoming vaccines" />
       ) : (
