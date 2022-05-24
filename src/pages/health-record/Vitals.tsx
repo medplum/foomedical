@@ -9,7 +9,7 @@ import GridSection from '../../components/GridSection';
 import NoData from '../../components/NoData';
 import PageTitle from '../../components/PageTitle';
 import getLocaleDate from '../../helpers/get-locale-date';
-import renderValue from '../../helpers/render-value';
+import renderValue from '../../helpers/get-render-value';
 
 export default function Vitals(): JSX.Element {
   const medplum = useMedplum();

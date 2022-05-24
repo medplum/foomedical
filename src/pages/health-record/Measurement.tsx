@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMedplum } from '@medplum/ui';
 import { BundleEntry, Observation } from '@medplum/fhirtypes';
-import { ChevronLeftIcon } from '@heroicons/react/solid';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import PageTitle from '../../components/PageTitle';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
+import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import getLocaleDate from '../../helpers/get-locale-date';
-import renderValue from '../../helpers/render-value';
+import renderValue from '../../helpers/get-render-value';
 import MeasurementCodes from '../../constants/measurementCodes';
 
 interface measurementsMetaType {
@@ -26,10 +26,10 @@ interface measurementsMetaType {
   };
 }
 
-const backgroundColor = 'rgba(29, 112, 214, 0.7)';
-const borderColor = 'rgba(29, 112, 214, 1)';
-const secondBackgroundColor = 'rgba(255, 119, 0, 0.7)';
-const secondBorderColor = 'rgba(255, 119, 0, 1)';
+export const backgroundColor = 'rgba(29, 112, 214, 0.7)';
+export const borderColor = 'rgba(29, 112, 214, 1)';
+export const secondBackgroundColor = 'rgba(255, 119, 0, 0.7)';
+export const secondBorderColor = 'rgba(255, 119, 0, 1)';
 
 export const measurementsMeta: measurementsMetaType = {
   'blood-pressure': {
@@ -160,10 +160,7 @@ const Measurement = (): JSX.Element | null => {
 
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
-      <Link to="/health-record/vitals" className="flex items-center text-sky-700">
-        <ChevronLeftIcon className="mr-1 h-5 w-5 flex-shrink-0" />
-        Vitals
-      </Link>
+      <LinkToPreviousPage url="/health-record/vitals" label="Vitals" />
       <div className="flex items-center justify-between">
         <PageTitle title={title} />
         <Button label="Add Measurement" action={() => console.log('some action')} />
