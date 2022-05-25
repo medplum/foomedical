@@ -5,6 +5,7 @@ import PageLayout from '../../components/PageLayout';
 const Profile = lazy(() => import('./Profile'));
 const Provider = lazy(() => import('./Provider'));
 const MembershipAndBilling = lazy(() => import('./MembershipAndBilling'));
+const ChooseProvider = lazy(() => import('./ChooseProvider'));
 
 export const sideMenu = {
   title: 'Account',
@@ -21,7 +22,8 @@ export default function Account(): JSX.Element {
       <Routes>
         <Route index element={<Navigate replace to={sideMenu.menu[0].href} />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="provider" element={<Provider />} />
+        <Route path="provider/*" element={<Provider />} />
+        <Route path="provider/choose-a-primary-care-povider" element={<ChooseProvider />} />
         <Route path="membership-and-billing" element={<MembershipAndBilling />} />
       </Routes>
     </PageLayout>
