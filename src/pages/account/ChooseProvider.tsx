@@ -7,7 +7,6 @@ import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import Button from '../../components/Button';
-import GoogleMap from '../../components/GoogleMap';
 import generateId from '../../helpers/generate-id';
 
 const idGenerator = generateId();
@@ -77,11 +76,6 @@ const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModa
           ))}
         </div>
         <Button label="Choose this Provider" action={handleClick} marginsUtils="ml-0 mb-5" widthUtils="full" />
-        {practitioner.address?.length && (
-          <div className="h-48 w-96">
-            <GoogleMap address={practitioner.address[0]} />
-          </div>
-        )}
       </div>
     </>
   );
