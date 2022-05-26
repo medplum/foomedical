@@ -4,6 +4,7 @@ import PageLayout from '../../components/PageLayout';
 import { measurementsMeta } from './Measurement';
 
 const LabResults = lazy(() => import('./LabResults'));
+const MainResult = lazy(() => import('./MainResult'));
 const Medications = lazy(() => import('./Medications'));
 const Vaccines = lazy(() => import('./Vaccines'));
 const Vitals = lazy(() => import('./Vitals'));
@@ -31,7 +32,8 @@ export default function HealthRecord(): JSX.Element {
     <PageLayout sideMenu={sideMenu}>
       <Routes>
         <Route index element={<Navigate replace to={sideMenu.menu[0].href} />} />
-        <Route path="lab-results" element={<LabResults />} />
+        <Route path="lab-results/*" element={<LabResults />} />
+        <Route path="lab-results/:resultId" element={<MainResult />} />
         <Route path="medications" element={<Medications />} />
         <Route path="vaccines" element={<Vaccines />} />
         <Route path="vitals" element={<Vitals />} />
