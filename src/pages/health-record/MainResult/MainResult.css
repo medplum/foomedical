@@ -1,0 +1,142 @@
+.medplum-diagnostic-report-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 4px;
+  overflow: hidden;
+  color: #424242;
+}
+
+.medplum-diagnostic-report-header > .medplum-avatar {
+  margin: 5px;
+}
+
+.medplum-diagnostic-report-header > dl {
+  margin: 5px 30px 5px 0;
+}
+
+.medplum-diagnostic-report-header dt {
+  color: #9e9e9e;
+  text-transform: uppercase;
+  font-size: 10px;
+  white-space: nowrap;
+  height: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.medplum-diagnostic-report-header dd {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+  white-space: nowrap;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+table.medplum-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.medplum-table th,
+table.medplum-table td {
+  border: 0.1px solid #bdbdbd;
+  padding: 4px 6px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+  font-size: 13px;
+  color: #424242;
+  text-align: left;
+}
+
+table.medplum-table th > a,
+table.medplum-table td > a {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+  font-size: 13px;
+}
+
+table.medplum-table th > a,
+table.medplum-table td > a,
+.medplum-resource-badge > a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+table.medplum-table th > a:hover,
+table.medplum-table td > a:hover,
+.medplum-resource-badge > a:hover {
+  text-decoration: underline;
+  transition: background-color 100ms linear, color 100ms linear, border 100ms linear;
+}
+
+table.medplum-table th > a:focus,
+table.medplum-table td > a:focus,
+.medplum-resource-badge > a:focus {
+  outline: 0.1px solid #2196f3;
+}
+
+.medplum-resource-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.medplum-avatar {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  line-height: 32px;
+  user-select: none;
+  border-radius: 50%;
+  overflow: hidden;
+  text-align: center;
+  color: #ffffff;
+  background-color: #9e9e9e;
+  font-size: 18px;
+}
+
+.medplum-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medplum-avatar.xsmall {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  line-height: 20px;
+  font-size: 10px;
+}
+
+.medplum-avatar.small {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  font-size: 11px;
+}
+
+.medplum-avatar.large {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  line-height: 56px;
+  font-size: 28px;
+}
+
+.medplum-avatar > a {
+  color: #ffffff;
+  text-decoration: none;
+}
