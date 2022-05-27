@@ -1,6 +1,6 @@
 // This example requires Tailwind CSS v2.0+
 // https://tailwindui.com/components/application-ui/lists/stacked-lists
-import { CalendarIcon, LocationMarkerIcon, UsersIcon } from '@heroicons/react/solid';
+import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
 
 const positions = [
   {
@@ -41,7 +41,7 @@ const positions = [
   },
 ];
 
-export default function ActionItems() {
+export default function ActionItems(): JSX.Element {
   return (
     <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
       <h2 className="mb-3 text-lg font-medium text-gray-900">Action Items</h2>

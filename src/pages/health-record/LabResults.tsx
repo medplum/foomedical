@@ -9,6 +9,7 @@ import PageTitle from '../../components/PageTitle';
 import { useEffect, useState } from 'react';
 import getLocaleDate from '../../helpers/get-locale-date';
 import { Bundle, DiagnosticReport } from '@medplum/fhirtypes';
+import { Link } from 'react-router-dom';
 
 export default function LabResults(): JSX.Element {
   const medplum = useMedplum();
@@ -18,9 +19,7 @@ export default function LabResults(): JSX.Element {
 
   useEffect(() => {
     medplum
-      .search(
-        'DiagnosticReport?_count=20&_fields=id,_lastUpdated,subject,code,status&_offset=0&_sort=-_lastUpdated&subject=Patient%2F3e27eaee-2c55-4400-926e-90982df528e9'
-      )
+      .search('DiagnosticReport?_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2')
       .then((value) => setBundle(value as Bundle<DiagnosticReport>))
       .catch((err) => console.error(err));
   }, []);
@@ -33,27 +32,27 @@ export default function LabResults(): JSX.Element {
           <ul role="list" className="divide-y divide-gray-200">
             {data.map(({ resource }) => (
               <li key={resource?.id}>
-                <a href="#" className="block hover:bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    {resource?.meta?.lastUpdated && (
+                {resource?.meta?.lastUpdated && resource?.id && (
+                  <Link to={resource?.id} className="block hover:bg-gray-50">
+                    <div className="flex items-center justify-between">
                       <div className="w-full px-4 py-4 sm:px-6">
                         <div>
-                          <div className="text-black-500 mb-2 flex items-center text-lg">
+                          <div className="text-black-500 mb-2 flex items-center text-lg last:mb-0">
                             <p>
                               <time>
                                 {resource?.meta?.lastUpdated ? getLocaleDate(resource?.meta?.lastUpdated) : null}
                               </time>
                             </p>
                           </div>
-                          <p className="text-sm font-medium text-gray-400">
-                            {resource?.subject?.display || resource?.subject?.reference}
-                          </p>
+                          {resource.code?.text && (
+                            <p className="text-sm font-medium text-gray-400">{resource.code.text}</p>
+                          )}
                         </div>
                       </div>
-                    )}
-                    <ChevronRightIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-                  </div>
-                </a>
+                      <ChevronRightIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
+                    </div>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
