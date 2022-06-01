@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { formatHumanName, formatGivenName, formatFamilyName, ProfileResource } from '@medplum/core';
 import { Button, useMedplum } from '@medplum/ui';
 import { profileContext } from '../../profileContext';
@@ -16,8 +16,11 @@ const profileIdGenerator = generateId();
 export default function Profile() {
   const profile = useContext(profileContext);
   const medplum = useMedplum();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [resource, setResource] = useState<ProfileResource>();
+
+  const [file, setFile] = useState<File>();
 
   const [personalInfo, setPersonalInfo] = useState<TwoColumnsListItemProps[]>([]);
   const [contactInfo, setContactInfo] = useState<TwoColumnsListItemProps[]>([]);
@@ -38,6 +41,18 @@ export default function Profile() {
   const [activeInputName, setActiveInputName] = useState<string>('');
 
   const [pending, setPending] = useState<boolean>(false);
+
+  const handleUploadFile = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   const handleInputChange = (key: string, value: string) => {
     setProfileValues({ ...profileValues, [key]: value });
@@ -112,6 +127,40 @@ export default function Profile() {
         .catch((err) => console.error(err));
     }
   }, [profile, pending]);
+
+  useEffect(() => {
+    if (file) {
+      medplum.createBinary(file, file.name, file.type).then((value) => {
+        if (resource && resource.id) {
+          if (resource.photo && resource.photo[0].url) {
+            medplum
+              .patchResource(resource.resourceType, resource.id, [
+                { op: 'replace', path: '/photo/0/contentType', value: value.contentType },
+                { op: 'replace', path: '/photo/0/title', value: file.name },
+                { op: 'replace', path: '/photo/0/url', value: value.url },
+              ])
+              .then(() => setPending(!pending));
+          } else {
+            medplum
+              .patchResource(resource.resourceType, resource.id, [
+                {
+                  op: 'add',
+                  path: '/photo',
+                  value: [
+                    {
+                      contentType: value.contentType,
+                      title: file.name,
+                      url: value.url,
+                    },
+                  ],
+                },
+              ])
+              .then(() => setPending(!pending));
+          }
+        }
+      });
+    }
+  }, [file]);
 
   useEffect(() => {
     if (resource) {
@@ -437,8 +486,10 @@ export default function Profile() {
         title={resource?.name ? formatHumanName(resource?.name[0], { prefix: true }) : ''}
         image="avatar"
         imageUrl={resource?.photo ? resource.photo[0].url : ''}
+        onImageClick={handleUploadFile}
         imageAlt="profile-image"
       />
+      <input type="file" id="file" ref={fileInputRef} onChange={handleFileInputChange} className="hidden" />
       <InfoSection title="Personal Information">
         <TwoColumnsList items={personalInfo} />
       </InfoSection>
