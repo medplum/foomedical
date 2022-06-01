@@ -2,7 +2,7 @@
 // https://tailwindui.com/components/application-ui/headings/card-headings
 // https://tailwindui.com/components/application-ui/lists/stacked-lists
 import { Bundle, Observation } from '@medplum/fhirtypes';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import GridCell from '../../components/GridCell';
 import GridSection from '../../components/GridSection';

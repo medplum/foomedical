@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { formatHumanName } from '@medplum/core';
 import { BundleEntry, Practitioner } from '@medplum/fhirtypes';
 import { XIcon } from '@heroicons/react/outline';

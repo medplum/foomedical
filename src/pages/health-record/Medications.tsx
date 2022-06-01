@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { profileContext } from '../../profileContext';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';

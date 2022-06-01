@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMedplum, DiagnosticReportDisplay } from '@medplum/ui';
+import { useMedplum, DiagnosticReportDisplay } from '@medplum/react';
 import { DiagnosticReport } from '@medplum/fhirtypes';
 import NoData from '../../components/NoData';
 

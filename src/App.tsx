@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import Loader from './components/Loader';
 import Router from './Router';
 

@@ -1,7 +1,7 @@
 // This example requires Tailwind CSS v2.0+
 // https://tailwindui.com/components/application-ui/forms/sign-in-forms
 
-import { SignInForm } from '@medplum/ui';
+import { SignInForm } from '@medplum/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Footer } from '../components/Footer';
@@ -9,7 +9,7 @@ import { Footer } from '../components/Footer';
 export function SignInPage() {
   const navigate = useNavigate();
   return (
-    <div id="signin" className="flex flex-col h-screen justify-between">
+    <div id="signin" className="flex h-screen flex-col justify-between">
       <main>
         <div className="relative bg-white">
           <div className="lg:absolute lg:inset-0">
@@ -21,7 +21,7 @@ export function SignInPage() {
               />
             </div>
           </div>
-          <div className="relative py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:max-w-7xl lg:mx-auto lg:py-32 lg:grid lg:grid-cols-2">
+          <div className="relative py-16 px-4 sm:py-24 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8 lg:py-32">
             <div className="lg:pr-8">
               <SignInForm onSuccess={() => navigate('/')}>
                 <h2>Sign in to Foo Medical</h2>

@@ -1,5 +1,5 @@
 import { ClockIcon } from '@heroicons/react/outline';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import InfoSection from '../../components/InfoSection';
 import TwoColumnsList from '../../components/TwoColumnsList';
 import PageTitle from '../../components/PageTitle';

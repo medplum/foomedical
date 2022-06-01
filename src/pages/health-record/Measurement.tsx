@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import PageTitle from '../../components/PageTitle';

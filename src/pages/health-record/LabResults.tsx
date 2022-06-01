@@ -4,7 +4,7 @@
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import PageTitle from '../../components/PageTitle';
 import { useEffect, useState } from 'react';
 import getLocaleDate from '../../helpers/get-locale-date';

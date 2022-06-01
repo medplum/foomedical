@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { formatHumanName, formatGivenName, formatFamilyName, ProfileResource } from '@medplum/core';
-import { Button, useMedplum } from '@medplum/ui';
+import { Button, useMedplum } from '@medplum/react';
 import { profileContext } from '../../profileContext';
 import { PencilIcon, CheckIcon, PlusIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';

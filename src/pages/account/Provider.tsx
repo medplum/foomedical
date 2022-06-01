@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
 import { formatHumanName } from '@medplum/core';
 import InfoSection from '../../components/InfoSection';

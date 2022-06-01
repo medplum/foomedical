@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
 import { formatSearchQuery, Operator, SearchRequest } from '@medplum/core';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { BundleEntry, Immunization } from '@medplum/fhirtypes';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
