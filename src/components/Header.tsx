@@ -2,7 +2,7 @@
 // https://tailwindui.com/components/application-ui/page-examples/detail-screens
 import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import logoUrl from '../img/logo-1050x180.png';

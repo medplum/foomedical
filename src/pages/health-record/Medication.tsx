@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/ui';
+import { useMedplum } from '@medplum/react';
 import { MedicationRequest } from '@medplum/fhirtypes';
 import getTimingRepeat from '../../helpers/get-timing-repeat';
 import getLocaleDate from '../../helpers/get-locale-date';
