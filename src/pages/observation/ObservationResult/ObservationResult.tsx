@@ -25,9 +25,11 @@ export default function ObservationResult(): JSX.Element {
       {resource ? (
         <>
           <LinkToPreviousPage onClick={() => navigate(-1)} label="Go back" />
-          <InfoSection title="Observation result">
-            <ResourceTable value={resource} ignoreMissingValues />
-          </InfoSection>
+          <div className="mb-10">
+            <InfoSection title="Observation result">
+              <ResourceTable value={resource} ignoreMissingValues />
+            </InfoSection>
+          </div>
         </>
       ) : (
         <NoData title="Observation" />
