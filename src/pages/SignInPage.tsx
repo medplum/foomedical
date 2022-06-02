@@ -23,7 +23,10 @@ export function SignInPage() {
           </div>
           <div className="relative py-16 px-4 sm:py-24 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8 lg:py-32">
             <div className="lg:pr-8">
-              <SignInForm onSuccess={() => navigate('/')}>
+              <SignInForm
+                googleClientId="679052511930-8dqur4mmg8egbttgos5pmr4ljtf3etbb.apps.googleusercontent.com"
+                onSuccess={() => navigate('/')}
+              >
                 <h2>Sign in to Foo Medical</h2>
               </SignInForm>
             </div>
