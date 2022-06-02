@@ -1,0 +1,26 @@
+dl.medplum-description-list {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+  font-size: 13px;
+  color: #424242;
+}
+
+dl.medplum-description-list dt,
+dl.medplum-description-list dd {
+  padding: 12px 8px;
+  border-top: 0.1px solid #bdbdbd;
+  margin: 0;
+}
+
+dl.medplum-description-list.compact {
+  grid-template-columns: 20% 80%;
+}
+
+dl.medplum-description-list.compact dt,
+dl.medplum-description-list.compact dd {
+  padding: 0 4px 4px 0;
+  border: 0;
+}
