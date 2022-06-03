@@ -1,18 +1,11 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/page-examples/detail-screens
+import { Fragment, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { profileContext } from '../profileContext';
 import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
-import { useMedplum } from '@medplum/react';
-import { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { formatHumanName } from '@medplum/core';
 import logoUrl from '../img/logo-1050x180.png';
 
-const user = {
-  name: 'Whitney Francis',
-  email: 'whitney@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-};
 const navigation = [
   { name: 'Health Record', href: '/health-record' },
   { name: 'Messages', href: '/messages' },
@@ -29,7 +22,7 @@ function classNames(...classes: string[]): string {
 }
 
 export function Header() {
-  const medplum = useMedplum();
+  const profile = useContext(profileContext);
 
   return (
     <header className="bg-white shadow">
@@ -111,11 +104,16 @@ export function Header() {
                     <div className="pt-4 pb-2">
                       <div className="flex items-center px-5">
                         <div className="flex-shrink-0">
-                          <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                          {profile.photo && (
+                            <img className="h-10 w-10 rounded-full" src={profile.photo[0].url} alt="" />
+                          )}
                         </div>
                         <div className="ml-3">
-                          <div className="text-base font-medium text-gray-800">{user.name}</div>
-                          <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                          {profile.name && (
+                            <div className="text-base font-medium text-gray-800">
+                              {formatHumanName(profile.name[0])}
+                            </div>
+                          )}
                         </div>
                         <button
                           type="button"
@@ -148,7 +146,7 @@ export function Header() {
               <div>
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <span className="sr-only">Open user menu</span>
-                  <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                  {profile.photo && <img className="h-8 w-8 rounded-full" src={profile.photo[0].url} alt="" />}
                 </Menu.Button>
               </div>
               <Transition
