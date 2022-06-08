@@ -1,87 +1,106 @@
-import { ClockIcon } from '@heroicons/react/outline';
+import { useContext, useState, useEffect } from 'react';
+import { profileContext } from '../../profileContext';
 import { useMedplum } from '@medplum/react';
+import { Bundle, Coverage, PaymentNotice } from '@medplum/fhirtypes';
+import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import TwoColumnsList from '../../components/TwoColumnsList';
-import PageTitle from '../../components/PageTitle';
-
-const membershipItems = [
-  {
-    label: 'Current plan',
-    body: (
-      <>
-        <p className="mb-1 text-lg text-gray-600">Sponsored Membership - $0</p>
-        <p className="mb-1 text-lg text-red-500">Expired on Dec 31, 2019</p>
-        <p className="mb-1 text-sm text-gray-600">
-          Please update your sponsored membership or convert to a personal membership below for just $100/year
-        </p>
-        <a href="#" className="mb-1 block text-base text-sky-700">
-          Update Sponsored Membership
-        </a>
-        <a href="#" className="mb-1 block text-base text-sky-700">
-          Convert to Personal Membership
-        </a>
-      </>
-    ),
-  },
-];
-
-const accountItems = [
-  {
-    label: 'Login Email',
-    body: (
-      <>
-        <input className="mb-1 border-none p-0 text-lg text-gray-600" type="email" value="example@gmail.com" />
-        <p className="mb-1 text-sm text-red-500">Unverified email</p>
-        <a href="#" className="mb-1 text-base text-sky-700">
-          Send verification email
-        </a>
-        <div>
-          <p className="mb-1 text-sm text-gray-600">Need help verifying your email? Contact support of</p>
-          <p className="mt-0 text-sm text-gray-600">
-            <a href="mailto:helpsupport@medplum.com" className="text-base text-sky-700">
-              helpsupport@medplum.com
-            </a>
-            &nbsp;or call 8-036-346-56
-          </p>
-        </div>
-      </>
-    ),
-  },
-  {
-    label: 'Preferred Email',
-    body: (
-      <>
-        <button className="mb-1 text-lg text-sky-700">+ add preferred email</button>
-        <p className="mb-1 text-sm text-gray-600">
-          Optional - Add a preferred email if you want to receive communications, separate from your login email
-        </p>
-      </>
-    ),
-  },
-  {
-    label: 'Password',
-    body: <input className="border-none p-0" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />,
-  },
-];
 
 const MembershipAndBilling = (): JSX.Element => {
+  const medplum = useMedplum();
+  const profile = useContext(profileContext);
+
+  const [coverageBundle, setCoverageBundle] = useState<Bundle<Coverage> | null>(null);
+  const [paymentBundle, setPaymentBundle] = useState<Bundle<PaymentNotice> | null>(null);
+  const [resources, setResources] = useState<Coverage[]>([]);
+  const [pending, setPending] = useState<boolean>(false);
+
+  const getCoverageStatus = (status: string) => {
+    if (status === 'active') {
+      return <span className="text-emerald-700">{status}</span>;
+    } else if (status === 'cancelled') {
+      return <span className="text-red-700">{status}</span>;
+    } else {
+      return status;
+    }
+  };
+
+  const handleCancelButton = (id: string) => {
+    medplum
+      .patchResource('Coverage', id, [{ op: 'replace', path: '/status', value: 'cancelled' }])
+      .then(() => setPending(!pending))
+      .catch((err) => console.error(err));
+  };
+
+  const handleViewPayments = () => {
+    medplum
+      .search(`PaymentNotice?resource=Patient/3e27eaee-2c55-4400-926e-90982df528e9`)
+      .then((value) => setPaymentBundle(value as Bundle<PaymentNotice>))
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    medplum
+      .search(`Coverage?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9`)
+      .then((value) => setCoverageBundle(value as Bundle<Coverage>))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const bundleItems: Coverage[] = [];
+    if (coverageBundle?.entry) {
+      coverageBundle.entry.forEach(({ resource }) => {
+        if (resource?.id) {
+          medplum
+            .readResource('Coverage', resource.id)
+            .then((value) => bundleItems.push(value as Coverage))
+            .then(() => setResources(bundleItems))
+            .catch((err) => console.error(err));
+        }
+      });
+    }
+  }, [coverageBundle, pending]);
+
   return (
     <div>
       <PageTitle title="Membership & Billing" />
-      <div>
-        <div className="mb-5 flex items-center text-red-500">
-          <ClockIcon className="mr-1.5 h-7 w-7 flex-shrink-0" />
-          <p className="text-lg text-red-500">
-            Your sponsored membership has expired. Please make updates below to renew.
-          </p>
-        </div>
-        <InfoSection title="Membership">
-          <TwoColumnsList items={membershipItems} />
+      {resources.map(({ id, payor, type, subscriberId, status }) => (
+        <InfoSection
+          title="Medical Billing"
+          key={id}
+          onButtonClick={status === 'active' ? handleCancelButton : undefined}
+          id={id}
+        >
+          <TwoColumnsList
+            items={[
+              {
+                label: 'Insurance',
+                body: (
+                  <div className="flex flex-col">
+                    {payor && <p className="text-lg text-gray-600">{payor[0].display}</p>}
+                    {type && <p className="text-lg capitalize text-gray-600">Category: {type.text}</p>}
+                    {subscriberId && <p className="text-lg text-gray-600">Member ID: {subscriberId}</p>}
+                    {status && <p className="text-lg text-gray-600">Status: {getCoverageStatus(status)}</p>}
+                  </div>
+                ),
+              },
+              {
+                label: 'Online Bills',
+                body: (
+                  <div className="flex flex-col items-start">
+                    <button onClick={handleViewPayments} className="text-lg text-sky-700">
+                      View payments
+                    </button>
+                    <p className="inline-block text-lg text-gray-600">
+                      Pay current bills, check your balance, and view previous payments.
+                    </p>
+                  </div>
+                ),
+              },
+            ]}
+          />
         </InfoSection>
-        <InfoSection title="Account Information">
-          <TwoColumnsList items={accountItems} />
-        </InfoSection>
-      </div>
+      ))}
     </div>
   );
 };
