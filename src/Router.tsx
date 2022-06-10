@@ -1,4 +1,3 @@
-import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import MessagesPage from './pages/MessagesPage';
@@ -6,10 +5,10 @@ import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { ProfileResource } from '@medplum/core';
 import { profileContext } from './profileContext';
-const Account = lazy(() => import('./pages/account'));
-const HealthRecord = lazy(() => import('./pages/health-record'));
-const Observation = lazy(() => import('./pages/observation'));
-const CarePlan = lazy(() => import('./pages/care-plan'));
+import Account from './pages/account';
+import HealthRecord from './pages/health-record';
+import Observation from './pages/observation';
+import CarePlan from './pages/care-plan';
 
 export interface RouterProps {
   profile: ProfileResource | undefined;

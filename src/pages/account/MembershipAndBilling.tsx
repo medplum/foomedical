@@ -10,10 +10,13 @@ const MembershipAndBilling = (): JSX.Element => {
   const medplum = useMedplum();
   const profile = useContext(profileContext);
 
-  const [coverageBundle, setCoverageBundle] = useState<Bundle<Coverage> | null>(null);
   const [paymentBundle, setPaymentBundle] = useState<Bundle<PaymentNotice> | null>(null);
   const [resources, setResources] = useState<Coverage[]>([]);
   const [pending, setPending] = useState<boolean>(false);
+
+  const coverageBundle: Bundle<Coverage> = medplum
+    .search<Coverage>('Coverage?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
+    .read();
 
   const getCoverageStatus = (status: string) => {
     if (status === 'active') {
@@ -40,13 +43,6 @@ const MembershipAndBilling = (): JSX.Element => {
   };
 
   useEffect(() => {
-    medplum
-      .search(`Coverage?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9`)
-      .then((value) => setCoverageBundle(value as Bundle<Coverage>))
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
     const bundleItems: Coverage[] = [];
     if (coverageBundle?.entry) {
       coverageBundle.entry.forEach(({ resource }) => {
@@ -62,7 +58,7 @@ const MembershipAndBilling = (): JSX.Element => {
   }, [coverageBundle, pending]);
 
   return (
-    <div>
+    <>
       <PageTitle title="Membership & Billing" />
       {resources.map(({ id, payor, type, subscriberId, status }) => (
         <InfoSection
@@ -101,7 +97,7 @@ const MembershipAndBilling = (): JSX.Element => {
           />
         </InfoSection>
       ))}
-    </div>
+    </>
   );
 };
 

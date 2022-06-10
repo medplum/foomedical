@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMedplum } from '@medplum/react';
 import { formatHumanName } from '@medplum/core';
-import { BundleEntry, Practitioner } from '@medplum/fhirtypes';
+import { Bundle, Practitioner } from '@medplum/fhirtypes';
 import { XIcon } from '@heroicons/react/outline';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import PageTitle from '../../components/PageTitle';
@@ -101,7 +101,7 @@ const PractitionerItem = ({ practitioner }: PractitionerItemProps): JSX.Element 
         )}
         <p>{practitioner.name && formatHumanName(practitioner.name[0], { prefix: true })}</p>
       </div>
-      <Button label="Learn mode" action={handleClick} />
+      <Button label="Learn more" action={handleClick} />
       <PractitionerModal practitioner={practitioner} isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </div>
   );
@@ -109,19 +109,13 @@ const PractitionerItem = ({ practitioner }: PractitionerItemProps): JSX.Element 
 
 const ChooseProvider = (): JSX.Element => {
   const medplum = useMedplum();
-  const [practitioners, setPractitioners] = useState<BundleEntry<Practitioner>[]>();
 
-  useEffect(() => {
-    medplum
-      .search(`Practitioner?patient=Patient/${patientId}`)
-      .then((value) => {
-        setPractitioners(value.entry as BundleEntry<Practitioner>[]);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const practitioners: Bundle<Practitioner> = medplum
+    .search<Practitioner>(`Practitioner?patient=Patient/${patientId}`)
+    .read();
 
   return (
-    <div>
+    <>
       <LinkToPreviousPage url="/account/provider" label="Provider" />
       <PageTitle title="Primary Care Provider" />
       <p className="mb-5">
@@ -130,12 +124,12 @@ const ChooseProvider = (): JSX.Element => {
       </p>
       <InfoSection title="Providers in your area">
         <div>
-          {practitioners?.map(({ resource }) => (
+          {practitioners.entry?.map(({ resource }) => (
             <PractitionerItem key={resource?.id} practitioner={resource} />
           ))}
         </div>
       </InfoSection>
-    </div>
+    </>
   );
 };
 

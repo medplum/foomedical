@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMedplum, ResourceTable } from '@medplum/react';
 import { Observation } from '@medplum/fhirtypes';
@@ -11,21 +10,15 @@ export default function ObservationResult(): JSX.Element {
   const medplum = useMedplum();
   const { observationId = '' } = useParams();
   const navigate = useNavigate();
-  const [resource, setResource] = useState<Observation>();
 
-  useEffect(() => {
-    medplum
-      .readResource('Observation', observationId)
-      .then((value) => setResource(value as Observation))
-      .catch((err) => console.error(err));
-  }, []);
+  const resource: Observation = medplum.readResource<Observation>('Observation', observationId).read();
 
   return (
     <>
       {resource ? (
         <>
           <LinkToPreviousPage onClick={() => navigate(-1)} label="Go back" />
-          <div className="mb-10">
+          <div className="mt-5 sm:mt-10">
             <InfoSection title={resource?.code?.text || 'Results'}>
               <ResourceTable value={resource} ignoreMissingValues />
             </InfoSection>
