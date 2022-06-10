@@ -11,7 +11,7 @@ interface InfoSectionProps {
 
 const InfoSection = ({ title, children, onButtonClick, id = '' }: InfoSectionProps): JSX.Element => {
   return (
-    <div className="mb-10 overflow-hidden border bg-white sm:rounded-md">
+    <div className="mb-10 overflow-hidden rounded-md border last:mb-0">
       <div
         className={`border-b border-gray-100 bg-gray-100 px-4 py-5 sm:px-6 ${
           onButtonClick ? 'flex justify-between' : ''

@@ -159,11 +159,11 @@ const Measurement = (): JSX.Element | null => {
   };
 
   return (
-    <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
+    <>
       <LinkToPreviousPage url="/health-record/vitals" label="Vitals" />
-      <div className="flex items-center justify-between">
-        <PageTitle title={title} />
-        <Button label="Add Measurement" action={() => console.log('some action')} />
+      <div className="mt-5 flex flex-col items-start space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+        <h1 className="text-3xl font-extrabold">{title}</h1>
+        <Button marginsUtils="ml-0" label="Add Measurement" action={() => console.log('some action')} />
       </div>
       <LineChart chartData={chartData} />
       {description && (
@@ -198,7 +198,7 @@ const Measurement = (): JSX.Element | null => {
           })}
         </div>
       </InfoSection>
-    </div>
+    </>
   );
 };
 

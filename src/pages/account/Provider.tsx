@@ -13,17 +13,9 @@ const providerIdGenerator = generateId();
 
 export default function Provider() {
   const medplum = useMedplum();
-  const [patient, setPatient] = useState<Patient>();
   const [practitioners, setPractitioners] = useState<Practitioner[]>([]);
 
-  useEffect(() => {
-    medplum
-      .readResource('Patient', '3e27eaee-2c55-4400-926e-90982df528e9')
-      .then((value) => {
-        setPatient(value as Patient);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const patient: Patient = medplum.readResource<Patient>('Patient', '3e27eaee-2c55-4400-926e-90982df528e9').read();
 
   useEffect(() => {
     patient?.generalPractitioner?.forEach((practitioners) => {
@@ -38,63 +30,76 @@ export default function Provider() {
   }, [patient]);
 
   return (
-    <div>
+    <>
       <PageTitle title="My Provider" />
-      <InfoSection title="My Primary Care Provider">
-        <div className="mx-auto px-4 py-5 text-center sm:px-6">
-          <GeneralInfo
-            title="Hi there, pair with a PCP today."
-            subTitle="Members who build lasting relationships with a Primary Care Physician have higher quality lives and control of their health."
-            imageUrl="https://via.placeholder.com/175"
-            imageAlt="provider-image"
-          />
-          <Link
-            to="choose-a-primary-care-povider"
-            className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-emerald-700 px-5 py-3 text-base font-medium text-white hover:bg-emerald-900"
-          >
-            Choose a Primary Care Provider
-          </Link>
-        </div>
-      </InfoSection>
-      {practitioners?.map(({ name, photo, address }) => {
-        const practitionerItems = [
-          {
-            label: 'Address',
-            body: (
-              <>
-                {address?.map(({ city, line, state }) => (
-                  <div key={providerIdGenerator.next().value}>
-                    {line?.map((line) => (
-                      <p className="text-lg text-gray-600" key={providerIdGenerator.next().value}>
-                        {line}
+      {practitioners.length > 0 ? (
+        practitioners?.map(({ name, photo, address }) => {
+          const practitionerItems = [
+            {
+              label: 'Address',
+              body: (
+                <>
+                  {address?.map(({ city, line, state }) => (
+                    <div key={providerIdGenerator.next().value}>
+                      {line?.map((line) => (
+                        <p className="text-lg text-gray-600" key={providerIdGenerator.next().value}>
+                          {line}
+                        </p>
+                      ))}
+                      <p className="text-lg text-gray-600">
+                        {city}, {state}
                       </p>
-                    ))}
-                    <p className="text-lg text-gray-600">
-                      {city}, {state}
-                    </p>
-                  </div>
-                ))}
-              </>
-            ),
-          },
-        ];
+                    </div>
+                  ))}
+                </>
+              ),
+            },
+          ];
 
-        return (
-          <div className="mb-20" key={providerIdGenerator.next().value}>
-            <InfoSection title="My Primary Care Provider">
-              <GeneralInfo
-                title={name ? formatHumanName(name[0], { prefix: true }) : ''}
-                image="avatar"
-                imageUrl={photo && photo[0].url}
-                imageAlt="profile-image"
-              />
-            </InfoSection>
-            <InfoSection title="Home Office">
-              <TwoColumnsList items={practitionerItems} />
-            </InfoSection>
+          return (
+            <div className="mb-20 last:mb-0" key={providerIdGenerator.next().value}>
+              <InfoSection title="My Primary Care Provider">
+                <div className="mx-auto px-4 py-5 text-center sm:px-6">
+                  <GeneralInfo
+                    title={name ? formatHumanName(name[0], { prefix: true }) : ''}
+                    image="avatar"
+                    imageUrl={photo && photo[0].url}
+                    imageAlt="profile-image"
+                  />
+                  <Link
+                    to="choose-a-primary-care-povider"
+                    className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-emerald-700 px-5 py-3 text-base font-medium text-white hover:bg-emerald-900"
+                  >
+                    Choose a Primary Care Provider
+                  </Link>
+                </div>
+              </InfoSection>
+              {address && (
+                <InfoSection title="Home Office">
+                  <TwoColumnsList items={practitionerItems} />
+                </InfoSection>
+              )}
+            </div>
+          );
+        })
+      ) : (
+        <InfoSection title="My Primary Care Provider">
+          <div className="mx-auto px-4 py-5 text-center sm:px-6">
+            <GeneralInfo
+              title="Hi there, pair with a PCP today."
+              subTitle="Members who build lasting relationships with a Primary Care Physician have higher quality lives and control of their health."
+              imageUrl="https://cdn4.iconfinder.com/data/icons/professions-1-2/151/3-512.png"
+              imageAlt="provider-image"
+            />
+            <Link
+              to="choose-a-primary-care-povider"
+              className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-emerald-700 px-5 py-3 text-base font-medium text-white hover:bg-emerald-900"
+            >
+              Choose a Primary Care Provider
+            </Link>
           </div>
-        );
-      })}
-    </div>
+        </InfoSection>
+      )}
+    </>
   );
 }

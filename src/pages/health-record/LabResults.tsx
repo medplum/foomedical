@@ -1,36 +1,28 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/headings/card-headings
-// https://tailwindui.com/components/application-ui/lists/stacked-lists
+import { useMedplum } from '@medplum/react';
+import { Link } from 'react-router-dom';
+import { Bundle, DiagnosticReport } from '@medplum/fhirtypes';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
-import { useMedplum } from '@medplum/react';
 import PageTitle from '../../components/PageTitle';
-import { useEffect, useState } from 'react';
 import getLocaleDate from '../../helpers/get-locale-date';
-import { Bundle, DiagnosticReport } from '@medplum/fhirtypes';
-import { Link } from 'react-router-dom';
 
 export default function LabResults(): JSX.Element {
   const medplum = useMedplum();
-  const [bundle, setBundle] = useState<Bundle<DiagnosticReport>>();
-  const data = bundle?.entry;
-  const hasData = data && data?.length > 0;
 
-  useEffect(() => {
-    medplum
-      .search('DiagnosticReport?_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2')
-      .then((value) => setBundle(value as Bundle<DiagnosticReport>))
-      .catch((err) => console.error(err));
-  }, []);
+  const bundle: Bundle<DiagnosticReport> = medplum
+    .search<DiagnosticReport>(
+      'DiagnosticReport?_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2'
+    )
+    .read();
 
   return (
-    <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
+    <>
       <PageTitle title="Lab Results" />
-      {hasData ? (
+      {bundle.entry ? (
         <InfoSection title="Past Results">
           <ul role="list" className="divide-y divide-gray-200">
-            {data.map(({ resource }) => (
+            {bundle.entry.map(({ resource }) => (
               <li key={resource?.id}>
                 {resource?.meta?.lastUpdated && resource?.id && (
                   <Link to={resource?.id} className="block hover:bg-gray-50">
@@ -60,6 +52,6 @@ export default function LabResults(): JSX.Element {
       ) : (
         <NoData title="results" />
       )}
-    </div>
+    </>
   );
 }

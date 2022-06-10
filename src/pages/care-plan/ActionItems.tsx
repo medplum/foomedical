@@ -43,7 +43,7 @@ const positions = [
 
 export default function ActionItems(): JSX.Element {
   return (
-    <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
+    <>
       <h2 className="mb-3 text-lg font-medium text-gray-900">Action Items</h2>
       <div className="overflow-hidden border bg-white sm:rounded-md">
         <ul role="list" className="divide-y divide-gray-200">
@@ -79,6 +79,6 @@ export default function ActionItems(): JSX.Element {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 }

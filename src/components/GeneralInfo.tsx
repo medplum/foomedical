@@ -18,7 +18,7 @@ const GeneralInfo = ({
   imageAlt,
 }: GeneralInfoProps): JSX.Element => {
   return (
-    <div className="mx-auto mb-5 flex max-w-xl flex-col items-center">
+    <div className="mx-auto mb-5 flex max-w-xl flex-col items-center last:mb-0">
       {imageUrl ? (
         <img
           className={`inline-block h-44 object-cover ${image === 'avatar' ? 'w-44 rounded-full' : 'w-auto'} ${

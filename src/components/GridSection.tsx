@@ -5,7 +5,7 @@ interface GridSectionProps {
 
 const GridSection = ({ array, children }: GridSectionProps): JSX.Element => {
   return (
-    <div className="mb-10 overflow-hidden rounded-md border bg-white">
+    <div className="mb-10 overflow-hidden rounded-md border bg-white last:mb-0">
       <ul role="list" className={`grid gap-x-0 grid-cols-${array.length}`}>
         {array.map((item) => (
           <li className="col-span-1 bg-gray-100" key={item}>

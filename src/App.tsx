@@ -12,9 +12,5 @@ export function App(): JSX.Element | null {
 
   const profile = medplum.getProfile();
 
-  return (
-    <Suspense fallback={<Loader />}>
-      <Router profile={profile} />
-    </Suspense>
-  );
+  return <Router profile={profile} />;
 }

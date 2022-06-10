@@ -15,10 +15,10 @@ const profileIdGenerator = generateId();
 
 export default function Profile() {
   const profile = useContext(profileContext);
+  if (!profile.id) return null;
   const medplum = useMedplum();
+  let resource: ProfileResource = medplum.readResource<ProfileResource>(profile.resourceType, profile.id).read();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const [resource, setResource] = useState<ProfileResource>();
 
   const [file, setFile] = useState<File>();
 
@@ -120,13 +120,13 @@ export default function Profile() {
 
   useEffect(() => {
     if (profile.id) {
-      medplum
-        .readResource(profile.resourceType, profile.id)
-        .then((value) => setResource(value as ProfileResource))
-        .then(() => setActiveInputName(''))
-        .catch((err) => console.error(err));
+      resource = medplum.readResource<ProfileResource>(profile.resourceType, profile.id).read();
     }
   }, [profile, pending]);
+
+  useEffect(() => {
+    setActiveInputName('');
+  }, [resource]);
 
   useEffect(() => {
     if (file) {
@@ -481,7 +481,7 @@ export default function Profile() {
   }, [resource, profileValues, activeInputName]);
 
   return (
-    <div>
+    <>
       <GeneralInfo
         title={resource?.name ? formatHumanName(resource?.name[0], { prefix: true }) : ''}
         image="avatar"
@@ -496,6 +496,6 @@ export default function Profile() {
       <InfoSection title="Contact Information">
         <TwoColumnsList items={contactInfo} />
       </InfoSection>
-    </div>
+    </>
   );
 }

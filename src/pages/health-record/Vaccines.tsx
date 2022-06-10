@@ -1,13 +1,9 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/lists/stacked-lists
 import { useState, useEffect } from 'react';
-import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
-import { formatSearchQuery, Operator, SearchRequest } from '@medplum/core';
 import { useMedplum } from '@medplum/react';
-import { BundleEntry, Immunization } from '@medplum/fhirtypes';
+import { BundleEntry, Bundle, Immunization } from '@medplum/fhirtypes';
+import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
-import Button from '../../components/Button';
 import NoData from '../../components/NoData';
 import getLocaleDate from '../../helpers/get-locale-date';
 
@@ -59,51 +55,36 @@ export default function ImmunizationList(): JSX.Element {
 
   const today = new Date();
 
-  const searchRequest: SearchRequest = {
-    resourceType: 'Immunization',
-    filters: [
-      {
-        code: 'patient',
-        operator: Operator.EQUALS,
-        value: 'Patient/3e27eaee-2c55-4400-926e-90982df528e9',
-      },
-    ],
-    sortRules: [
-      {
-        code: 'date',
-        descending: true,
-      },
-    ],
-  };
+  const bundle: Bundle<Immunization> = medplum
+    .search<Immunization>('Immunization?_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
+    .read();
 
   useEffect(() => {
-    medplum.search(searchRequest).then(({ entry }) => {
-      if (entry) {
-        const vaccines = entry as BundleEntry<Immunization>[];
+    if (bundle.entry) {
+      const vaccines = bundle.entry as BundleEntry<Immunization>[];
 
-        let index = 0;
-        vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
-          if (resource?.occurrenceDateTime) {
-            const date = new Date(resource.occurrenceDateTime);
+      let index = 0;
+      vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
+        if (resource?.occurrenceDateTime) {
+          const date = new Date(resource.occurrenceDateTime);
 
-            if (date < today) {
-              index = i;
-              return resource;
-            }
+          if (date < today) {
+            index = i;
+            return resource;
           }
-        });
+        }
+      });
 
-        const pastVaccinesArray = vaccines.slice(index);
-        const upcomingVaccinesArray = vaccines.slice(0, index);
+      const pastVaccinesArray = vaccines.slice(index);
+      const upcomingVaccinesArray = vaccines.slice(0, index);
 
-        setPastVaccines(pastVaccinesArray);
-        setUpcomingVaccines(upcomingVaccinesArray);
-      }
-    });
-  }, []);
+      setPastVaccines(pastVaccinesArray);
+      setUpcomingVaccines(upcomingVaccinesArray);
+    }
+  }, [bundle]);
 
   return (
-    <div className="bg-white px-4 py-5 sm:rounded-lg sm:px-6">
+    <>
       <PageTitle title="Vaccines" />
       {!upcomingVaccines.length ? (
         <NoData title="upcoming vaccines" />
@@ -127,6 +108,6 @@ export default function ImmunizationList(): JSX.Element {
           </ul>
         </InfoSection>
       )}
-    </div>
+    </>
   );
 }
