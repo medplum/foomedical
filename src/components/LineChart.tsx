@@ -13,7 +13,7 @@ import { lineChartOptions } from '../constants/chartConfig';
 
 interface LineChartProps {
   chartData: {
-    labels: (string | undefined)[];
+    labels: (string | null | undefined)[];
     datasets: {
       label: string;
       data: (number | undefined)[];
