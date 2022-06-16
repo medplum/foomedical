@@ -1,6 +1,5 @@
 import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
-import { Bundle, DiagnosticReport } from '@medplum/fhirtypes';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
@@ -10,10 +9,8 @@ import getLocaleDate from '../../helpers/get-locale-date';
 export default function LabResults(): JSX.Element {
   const medplum = useMedplum();
 
-  const bundle: Bundle<DiagnosticReport> = medplum
-    .search<DiagnosticReport>(
-      'DiagnosticReport?_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2'
-    )
+  const bundle = medplum
+    .search('DiagnosticReport', '_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2')
     .read();
 
   return (

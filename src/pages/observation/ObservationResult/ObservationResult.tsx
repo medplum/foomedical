@@ -11,7 +11,7 @@ export default function ObservationResult(): JSX.Element {
   const { observationId = '' } = useParams();
   const navigate = useNavigate();
 
-  const resource: Observation = medplum.readResource<Observation>('Observation', observationId).read();
+  const resource: Observation = medplum.readResource('Observation', observationId).read();
 
   return (
     <>

@@ -1,5 +1,4 @@
 import { useMedplum } from '@medplum/react';
-import { Bundle, Observation } from '@medplum/fhirtypes';
 import GridCell from '../../components/GridCell';
 import GridSection from '../../components/GridSection';
 import NoData from '../../components/NoData';
@@ -12,8 +11,8 @@ const headers = ['Measurements', 'Your Value', 'Last updated'];
 export default function Vitals(): JSX.Element {
   const medplum = useMedplum();
 
-  const bundle: Bundle<Observation> = medplum
-    .search<Observation>('Observation?_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
+  const bundle = medplum
+    .search('Observation', '_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
     .read();
 
   return (

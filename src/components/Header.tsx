@@ -21,7 +21,7 @@ function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-export function Header() {
+export function Header(): JSX.Element {
   const profile = useContext(profileContext);
 
   return (

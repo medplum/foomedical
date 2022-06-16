@@ -1,6 +1,3 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/page-examples/detail-screens
-import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 
@@ -34,14 +31,14 @@ const comments = [
   },
 ];
 
-export default function MessagesPage() {
+export default function MessagesPage(): JSX.Element {
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="flex h-screen flex-col justify-between">
       <Header />
       <main className="mb-auto pb-16">
-        <div className="mt-8 max-w-3xl mx-auto sm:px-6 lg:max-w-4xl">
+        <div className="mx-auto mt-8 max-w-3xl sm:px-6 lg:max-w-4xl">
           <section aria-labelledby="notes-title">
-            <div className="bg-white border sm:rounded-lg sm:overflow-hidden">
+            <div className="border bg-white sm:overflow-hidden sm:rounded-lg">
               <div className="divide-y divide-gray-200">
                 <div className="px-4 py-5 sm:px-6">
                   <h2 id="notes-title" className="text-lg font-medium text-gray-900">
@@ -69,10 +66,10 @@ export default function MessagesPage() {
                             <div className="mt-1 text-sm text-gray-700">
                               <p>{comment.body}</p>
                             </div>
-                            <div className="mt-2 text-sm space-x-2">
-                              <span className="text-gray-500 font-medium">{comment.date}</span>{' '}
-                              <span className="text-gray-500 font-medium">&middot;</span>{' '}
-                              <button type="button" className="text-gray-900 font-medium">
+                            <div className="mt-2 space-x-2 text-sm">
+                              <span className="font-medium text-gray-500">{comment.date}</span>{' '}
+                              <span className="font-medium text-gray-500">&middot;</span>{' '}
+                              <button type="button" className="font-medium text-gray-900">
                                 Reply
                               </button>
                             </div>
@@ -98,7 +95,7 @@ export default function MessagesPage() {
                           id="comment"
                           name="comment"
                           rows={3}
-                          className="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm border border-gray-300 rounded-md"
+                          className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                           placeholder="Add a note"
                           defaultValue={''}
                         />
@@ -106,7 +103,7 @@ export default function MessagesPage() {
                       <div className="mt-3 flex flex-row-reverse">
                         <button
                           type="submit"
-                          className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                           Comment
                         </button>

@@ -11,17 +11,18 @@ import generateId from '../../helpers/generate-id';
 
 const providerIdGenerator = generateId();
 
-export default function Provider() {
+export default function Provider(): JSX.Element {
   const medplum = useMedplum();
   const [practitioners, setPractitioners] = useState<Practitioner[]>([]);
 
-  const patient: Patient = medplum.readResource<Patient>('Patient', '3e27eaee-2c55-4400-926e-90982df528e9').read();
+  const patient: Patient = medplum.readResource('Patient', '3e27eaee-2c55-4400-926e-90982df528e9').read();
 
   useEffect(() => {
     patient?.generalPractitioner?.forEach((practitioners) => {
       const id = practitioners.reference ? practitioners.reference.split('/') : '';
+
       medplum
-        .readResource(id[0], id[1])
+        .readResource('Practitioner', id[1])
         .then((value) => {
           setPractitioners([value as Practitioner]);
         })

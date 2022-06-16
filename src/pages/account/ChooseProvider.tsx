@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMedplum } from '@medplum/react';
 import { formatHumanName } from '@medplum/core';
-import { Bundle, Practitioner } from '@medplum/fhirtypes';
+import { Practitioner } from '@medplum/fhirtypes';
 import { XIcon } from '@heroicons/react/outline';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import PageTitle from '../../components/PageTitle';
@@ -25,17 +25,17 @@ const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModa
 
   const name = practitioner.name && formatHumanName(practitioner.name[0], { prefix: true });
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsOpen(false);
   };
 
-  const handleClick = async () => {
+  const handleClick = (): void => {
     const newPractitioner = {
       display: name,
       reference: `Practitioner/${practitioner.id}`,
     };
 
-    await medplum
+    medplum
       .patchResource('Patient', patientId, [{ op: 'replace', path: '/generalPractitioner', value: [newPractitioner] }])
       .catch((err) => console.error(err));
 
@@ -89,7 +89,7 @@ const PractitionerItem = ({ practitioner }: PractitionerItemProps): JSX.Element 
   const [isModalOpen, setIsModalOpen] = useState(false);
   if (!practitioner) return null;
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setIsModalOpen(true);
   };
 
@@ -110,9 +110,7 @@ const PractitionerItem = ({ practitioner }: PractitionerItemProps): JSX.Element 
 const ChooseProvider = (): JSX.Element => {
   const medplum = useMedplum();
 
-  const practitioners: Bundle<Practitioner> = medplum
-    .search<Practitioner>(`Practitioner?patient=Patient/${patientId}`)
-    .read();
+  const practitioners = medplum.search('Practitioner', `patient=Patient/${patientId}`).read();
 
   return (
     <>

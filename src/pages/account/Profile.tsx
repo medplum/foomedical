@@ -13,11 +13,11 @@ import generateId from '../../helpers/generate-id';
 
 const profileIdGenerator = generateId();
 
-export default function Profile() {
+export default function Profile(): JSX.Element | null {
   const profile = useContext(profileContext);
   if (!profile.id) return null;
   const medplum = useMedplum();
-  let resource: ProfileResource = medplum.readResource<ProfileResource>(profile.resourceType, profile.id).read();
+  let resource: ProfileResource = medplum.readResource(profile.resourceType, profile.id).read();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [file, setFile] = useState<File>();
@@ -42,23 +42,23 @@ export default function Profile() {
 
   const [pending, setPending] = useState<boolean>(false);
 
-  const handleUploadFile = () => {
+  const handleUploadFile = (): void => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
   };
 
-  const handleInputChange = (key: string, value: string) => {
+  const handleInputChange = (key: string, value: string): void => {
     setProfileValues({ ...profileValues, [key]: value });
   };
 
-  const toggleInputButton = (type: string, operations: any[]) => {
+  const toggleInputButton = (type: string, operations: any[]): void => {
     if (activeInputName === type && resource?.id) {
       medplum.patchResource(resource.resourceType, resource.id, operations).then(() => setPending(!pending));
     } else {
@@ -66,7 +66,7 @@ export default function Profile() {
     }
   };
 
-  const toggleButtonIcons = (name: string) => {
+  const toggleButtonIcons = (name: string): JSX.Element => {
     if (activeInputName === name) {
       return <CheckIcon className="ml-2 h-8 w-8 self-center text-gray-400 hover:text-emerald-700" />;
     } else {
@@ -120,7 +120,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (profile.id) {
-      resource = medplum.readResource<ProfileResource>(profile.resourceType, profile.id).read();
+      resource = medplum.readResource(profile.resourceType, profile.id).read();
     }
   }, [profile, pending]);
 

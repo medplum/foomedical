@@ -8,7 +8,7 @@ interface NoDataProps {
 const NoData = ({ title }: NoDataProps): JSX.Element => {
   const subTitle = (
     <>
-      If you think you're missing {title} that should be here, please{' '}
+      If you think you&apos;re missing {title} that should be here, please{' '}
       <a href="#" className="text-emerald-700">
         contact our medical team.
       </a>

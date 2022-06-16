@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMedplum } from '@medplum/react';
-import { BundleEntry, Bundle, Immunization } from '@medplum/fhirtypes';
+import { BundleEntry, Immunization } from '@medplum/fhirtypes';
 import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
@@ -55,8 +55,8 @@ export default function ImmunizationList(): JSX.Element {
 
   const today = new Date();
 
-  const bundle: Bundle<Immunization> = medplum
-    .search<Immunization>('Immunization?_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
+  const bundle = medplum
+    .search('Immunization', '_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
     .read();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { TimingRepeat } from '@medplum/fhirtypes';
 
-const getTimingRepeat = (repeat?: TimingRepeat) => {
+const getTimingRepeat = (repeat?: TimingRepeat): string => {
   if (!repeat) {
     return 'No instruction provided';
   }
