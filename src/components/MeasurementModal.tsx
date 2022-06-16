@@ -3,117 +3,122 @@ import { useMedplum } from '@medplum/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import Input from './Input';
-import { Observation } from '@medplum/fhirtypes';
+import getMeasurementObject from '../helpers/get-measurement-object';
 
 interface MeasurementModalProps {
+  type: string;
   profile: string;
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  onSend: (value: Observation) => void;
 }
 
 interface MeasurementValues {
-  diastolicBloodPressure: number;
-  systolicBloodPressure: number;
+  diastolicBloodPressure: string;
+  systolicBloodPressure: string;
+  bodyTemperature: string;
+  height: string;
+  respiratoryRate: string;
+  heartRate: string;
+  weight: string;
 }
 
-export default function MeasurementModal({
-  profile,
-  isOpen,
-  onClose,
-  title,
-  onSend,
-}: MeasurementModalProps): JSX.Element {
+interface measurementModalInputTypes {
+  modalType: string;
+  inputType: string;
+  value: string;
+  name: string;
+  placeholder: string;
+}
+
+export default function MeasurementModal({ type, profile, isOpen, onClose }: MeasurementModalProps): JSX.Element {
   const medplum = useMedplum();
-  const date = new Date().toISOString();
 
   const [modalValues, setModalValues] = useState<MeasurementValues>({
-    diastolicBloodPressure: 0,
-    systolicBloodPressure: 0,
+    diastolicBloodPressure: '',
+    systolicBloodPressure: '',
+    bodyTemperature: '',
+    height: '',
+    respiratoryRate: '',
+    heartRate: '',
+    weight: '',
   });
 
   const handleInputChange = (key: string, value: string): void => {
     setModalValues({ ...modalValues, [key]: value });
   };
 
+  const createMeasurement = (firstValue: string, secondValue?: string): void => {
+    medplum
+      .createResource(getMeasurementObject(type, profile, firstValue, secondValue))
+      .then(() => onClose())
+      .catch((err) => console.error(err));
+  };
+
   const addResource = (): void => {
-    if (modalValues.diastolicBloodPressure && modalValues.systolicBloodPressure) {
-      medplum
-        .createResource({
-          resourceType: 'Observation',
-          subject: {
-            reference: profile,
-          },
-          code: {
-            coding: [
-              {
-                code: '85354-9',
-                display: 'Blood Pressure',
-                system: 'http://loinc.org',
-              },
-            ],
-            text: 'Blood Pressure',
-          },
-          component: [
-            {
-              code: {
-                coding: [
-                  {
-                    code: '8462-4',
-                    display: 'Diastolic Blood Pressure',
-                    system: 'http://loinc.org',
-                  },
-                ],
-                text: 'Diastolic Blood Pressure',
-              },
-              valueQuantity: {
-                code: 'mm[Hg]',
-                system: 'http://unitsofmeasure.org',
-                unit: 'mm[Hg]',
-                value: modalValues.diastolicBloodPressure,
-              },
-            },
-            {
-              code: {
-                coding: [
-                  {
-                    code: '8480-6',
-                    display: 'Systolic Blood Pressure',
-                    system: 'http://loinc.org',
-                  },
-                ],
-                text: 'Systolic Blood Pressure',
-              },
-              valueQuantity: {
-                code: 'mm[Hg]',
-                system: 'http://unitsofmeasure.org',
-                unit: 'mm[Hg]',
-                value: modalValues.systolicBloodPressure,
-              },
-            },
-          ],
-          effectiveDateTime: date,
-          status: 'final',
-        })
-        .then((value) => onSend(value))
-        .then(() => onClose())
-        .catch((err) => console.error(err));
+    if (type === 'Blood Pressure' && modalValues.diastolicBloodPressure && modalValues.systolicBloodPressure) {
+      createMeasurement(modalValues.diastolicBloodPressure, modalValues.systolicBloodPressure);
+    } else if (type === 'Body Temperature' && modalValues.bodyTemperature) {
+      createMeasurement(modalValues.bodyTemperature);
+    } else if (type === 'Height' && modalValues.height) {
+      createMeasurement(modalValues.height);
+    } else if (type === 'Respiratory Rate' && modalValues.respiratoryRate) {
+      createMeasurement(modalValues.respiratoryRate);
+    } else if (type === 'Heart Rate' && modalValues.heartRate) {
+      createMeasurement(modalValues.heartRate);
+    } else if (type === 'Weight' && modalValues.weight) {
+      createMeasurement(modalValues.weight);
     }
   };
 
-  const measurementModalInputs = [
+  const measurementModalInputs: measurementModalInputTypes[] = [
     {
-      type: 'number',
+      modalType: 'Blood Pressure',
+      inputType: 'number',
       value: modalValues.systolicBloodPressure,
       name: 'systolicBloodPressure',
-      placeholder: 'Systolic Blood Pressure',
+      placeholder: 'mm[Hg]',
     },
     {
-      type: 'number',
+      modalType: 'Blood Pressure',
+      inputType: 'number',
       value: modalValues.diastolicBloodPressure,
       name: 'diastolicBloodPressure',
-      placeholder: 'Diastolic Blood Pressure',
+      placeholder: 'mm[Hg]',
+    },
+    {
+      modalType: 'Body Temperature',
+      inputType: 'number',
+      value: modalValues.bodyTemperature,
+      name: 'bodyTemperature',
+      placeholder: '°C',
+    },
+    {
+      modalType: 'Height',
+      inputType: 'number',
+      value: modalValues.height,
+      name: 'height',
+      placeholder: 'cm',
+    },
+    {
+      modalType: 'Respiratory Rate',
+      inputType: 'number',
+      value: modalValues.respiratoryRate,
+      name: 'respiratoryRate',
+      placeholder: '/min',
+    },
+    {
+      modalType: 'Heart Rate',
+      inputType: 'number',
+      value: modalValues.heartRate,
+      name: 'heartRate',
+      placeholder: '/min',
+    },
+    {
+      modalType: 'Weight',
+      inputType: 'number',
+      value: modalValues.weight,
+      name: 'weight',
+      placeholder: 'kg',
     },
   ];
 
@@ -156,23 +161,23 @@ export default function MeasurementModal({
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
                   <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                    {title}
+                    {type}
                   </Dialog.Title>
                   <div className="mt-2 flex space-x-4">
-                    {measurementModalInputs.map(({ type, name, value, placeholder }) => {
-                      return (
+                    {measurementModalInputs
+                      .filter(({ modalType }) => modalType === type)
+                      .map(({ inputType, name, value, placeholder }) => (
                         <div className="flex w-full flex-col space-y-2" key={name}>
-                          <p className="text-base text-gray-600">{placeholder}</p>
+                          <p className="text-base capitalize text-gray-600">{name.split(/(?=[A-Z])/).join(' ')}</p>
                           <Input
-                            type={type}
+                            type={inputType}
                             value={value}
                             name={name}
                             handleChange={handleInputChange}
                             placeholder={placeholder}
                           />
                         </div>
-                      );
-                    })}
+                      ))}
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

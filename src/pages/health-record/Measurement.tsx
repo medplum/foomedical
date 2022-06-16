@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMedplum } from '@medplum/react';
-import { Bundle, BundleEntry, Observation } from '@medplum/fhirtypes';
+import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
@@ -139,12 +139,10 @@ const Measurement = (): JSX.Element | null => {
 
   const profile = 'Patient/0beab6fe-fc9c-4276-af71-4df508097eb2';
 
-  let measurements: Bundle<Observation> = medplum
-    .search<Observation>(`Observation?code=${code}&_sort=date&patient=${profile}`)
-    .read();
+  let measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
 
   useEffect(() => {
-    measurements = medplum.search<Observation>(`Observation?code=${code}&_sort=date&patient=${profile}`).read();
+    measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
   }, [measurementId]);
 
   useEffect(() => {
@@ -220,11 +218,10 @@ const Measurement = (): JSX.Element | null => {
         </div>
       </InfoSection>
       <MeasurementModal
+        type={title}
         profile={profile}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(!isModalOpen)}
-        title={title}
-        onSend={(value) => console.log(value)}
       />
     </>
   );
