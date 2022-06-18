@@ -1,6 +1,3 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/marketing/sections/footers
-
 import React from 'react';
 
 const navigation = {
@@ -77,7 +74,7 @@ const navigation = {
   ],
 };
 
-export function Footer() {
+export function Footer(): JSX.Element {
   return (
     <footer className="bg-teal-900">
       <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">

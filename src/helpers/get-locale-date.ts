@@ -1,4 +1,5 @@
-const getLocaleDate = (stringDate: string, isHoursDisplayed = false): string => {
+const getLocaleDate = (stringDate?: string, isHoursDisplayed = false): string | null => {
+  if (!stringDate) return null;
   const date = new Date(stringDate);
 
   return date.toLocaleDateString('en-us', {

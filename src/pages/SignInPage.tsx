@@ -1,12 +1,9 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/forms/sign-in-forms
-
 import { SignInForm } from '@medplum/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 
-export function SignInPage() {
+export function SignInPage(): JSX.Element {
   const navigate = useNavigate();
   return (
     <div id="signin" className="flex h-screen flex-col justify-between">

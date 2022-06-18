@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useMedplum } from '@medplum/react';
 import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { InformationCircleIcon } from '@heroicons/react/outline';
-import PageTitle from '../../components/PageTitle';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
@@ -11,6 +10,7 @@ import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import getLocaleDate from '../../helpers/get-locale-date';
 import renderValue from '../../helpers/get-render-value';
 import MeasurementCodes from '../../constants/measurementCodes';
+import MeasurementModal from '../../components/MeasurementModal';
 
 interface measurementsMetaType {
   [key: string]: {
@@ -24,6 +24,16 @@ interface measurementsMetaType {
       borderColor: string;
     }[];
   };
+}
+
+interface chartDataType {
+  labels: (string | null | undefined)[];
+  datasets: {
+    label: string;
+    data: (number | undefined)[];
+    backgroundColor: string;
+    borderColor?: string;
+  }[];
 }
 
 export const backgroundColor = 'rgba(29, 112, 214, 0.7)';
@@ -124,38 +134,42 @@ const Measurement = (): JSX.Element | null => {
   const { code, title, description, chartDatasets } = measurementsMeta[measurementId];
 
   const medplum = useMedplum();
-  const [measurements, setMeasurements] = useState<BundleEntry<Observation>[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [chartData, setChartData] = useState<chartDataType>();
+
+  const profile = 'Patient/0beab6fe-fc9c-4276-af71-4df508097eb2';
+
+  const measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
 
   useEffect(() => {
-    medplum
-      .search(`Observation?code=${code}&_sort=date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9`)
-      .then(({ entry }) => {
-        if (entry) {
-          setMeasurements(entry as BundleEntry<Observation>[]);
+    if (measurements.entry) {
+      const labels = measurements.entry.map(({ resource }) => {
+        if (resource?.effectiveDateTime) {
+          return getLocaleDate(resource?.effectiveDateTime);
         }
-      })
-      .catch((error) => console.error(error));
-  }, [measurementId]);
+      });
 
-  const labels = measurements.map(({ resource }) => {
-    if (resource?.effectiveDateTime) {
-      return getLocaleDate(resource?.effectiveDateTime);
+      setChartData({
+        labels,
+        datasets: chartDatasets.map((item, i) => ({
+          ...item,
+          data: getDatasets(i, measurements.entry),
+        })),
+      });
     }
-  });
+  }, [measurements]);
 
-  const getDatasets = (index: number): (number | undefined)[] =>
-    measurements.map(({ resource }) => {
-      return resource?.component?.length
-        ? resource?.component[index].valueQuantity?.value
-        : resource?.valueQuantity?.value;
-    });
+  const getDatasets = (index: number, measurements?: BundleEntry<Observation>[]): (number | undefined)[] => {
+    if (measurements) {
+      return measurements.map(({ resource }) =>
+        resource?.component?.length ? resource?.component[index].valueQuantity?.value : resource?.valueQuantity?.value
+      );
+    }
+    return [];
+  };
 
-  const chartData = {
-    labels,
-    datasets: chartDatasets.map((item, i) => ({
-      ...item,
-      data: getDatasets(i),
-    })),
+  const handleAddMeasurement = (): void => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -163,9 +177,9 @@ const Measurement = (): JSX.Element | null => {
       <LinkToPreviousPage url="/health-record/vitals" label="Vitals" />
       <div className="mt-5 flex flex-col items-start space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <h1 className="text-3xl font-extrabold">{title}</h1>
-        <Button marginsUtils="ml-0" label="Add Measurement" action={() => console.log('some action')} />
+        <Button marginsUtils="ml-0" label="Add Measurement" action={handleAddMeasurement} />
       </div>
-      <LineChart chartData={chartData} />
+      {chartData && <LineChart chartData={chartData} />}
       {description && (
         <div className="mb-10 overflow-hidden border bg-white p-4 sm:rounded-md">
           <div className="mb-3 flex items-center text-gray-600">
@@ -184,20 +198,27 @@ const Measurement = (): JSX.Element | null => {
         }
       >
         <div className="px-4 pt-4 pb-2">
-          {[...measurements].reverse().map(({ resource }) => {
-            if (!resource) return null;
+          {measurements.entry &&
+            [...measurements.entry].reverse().map(({ resource }) => {
+              if (!resource) return null;
 
-            const time = resource.effectiveDateTime ? getLocaleDate(resource.effectiveDateTime, true) : null;
+              const time = getLocaleDate(resource.effectiveDateTime, true);
 
-            return (
-              <div className="mb-2 flex justify-between" key={resource.id}>
-                {time && <p>{time}</p>}
-                {renderValue(resource)}
-              </div>
-            );
-          })}
+              return (
+                <div className="mb-2 flex justify-between" key={resource.id}>
+                  {time && <p>{time}</p>}
+                  {renderValue(resource)}
+                </div>
+              );
+            })}
         </div>
       </InfoSection>
+      <MeasurementModal
+        type={title}
+        profile={profile}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(!isModalOpen)}
+      />
     </>
   );
 };

@@ -1,5 +1,3 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/application-ui/lists/stacked-lists
 import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
 
 const positions = [

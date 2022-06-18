@@ -1,8 +1,5 @@
-import { useContext } from 'react';
-import { profileContext } from '../../profileContext';
 import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
-import { Bundle, MedicationRequest } from '@medplum/fhirtypes';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
@@ -10,14 +7,11 @@ import PageTitle from '../../components/PageTitle';
 
 const title = 'Medications';
 
-export default function Medications() {
+export default function Medications(): JSX.Element {
   const medplum = useMedplum();
-  const profile = useContext(profileContext);
 
-  const bundle: Bundle<MedicationRequest> = medplum
-    .search<MedicationRequest>(
-      'MedicationRequest?_sort=-_lastUpdated&patient=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2'
-    )
+  const bundle = medplum
+    .search('MedicationRequest', '_sort=-_lastUpdated&patient=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2')
     .read();
 
   return (

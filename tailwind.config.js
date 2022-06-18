@@ -1,4 +1,4 @@
-// tailwind.config.js
+/* eslint-disable @typescript-eslint/no-var-requires */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
@@ -11,5 +11,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms') ],
+  plugins: [require('@tailwindcss/forms')],
 };

@@ -15,7 +15,7 @@ export default function Medication(): JSX.Element {
   const { medicationId = '' } = useParams();
   const [medicationValues, setMedicationValues] = useState<TwoColumnsListItemProps[]>([]);
 
-  const resource: MedicationRequest = medplum.readResource<MedicationRequest>('MedicationRequest', medicationId).read();
+  const resource: MedicationRequest = medplum.readResource('MedicationRequest', medicationId).read();
 
   useEffect(() => {
     const medication = [];

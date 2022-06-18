@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
-import { profileContext } from '../../profileContext';
+import { useState, useEffect } from 'react';
 import { useMedplum } from '@medplum/react';
 import { Bundle, Coverage, PaymentNotice } from '@medplum/fhirtypes';
 import PageTitle from '../../components/PageTitle';
@@ -8,17 +7,14 @@ import TwoColumnsList from '../../components/TwoColumnsList';
 
 const MembershipAndBilling = (): JSX.Element => {
   const medplum = useMedplum();
-  const profile = useContext(profileContext);
 
   const [paymentBundle, setPaymentBundle] = useState<Bundle<PaymentNotice> | null>(null);
   const [resources, setResources] = useState<Coverage[]>([]);
   const [pending, setPending] = useState<boolean>(false);
 
-  const coverageBundle: Bundle<Coverage> = medplum
-    .search<Coverage>('Coverage?patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
-    .read();
+  const coverageBundle = medplum.search('Coverage', 'patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9').read();
 
-  const getCoverageStatus = (status: string) => {
+  const getCoverageStatus = (status: string): JSX.Element | string => {
     if (status === 'active') {
       return <span className="text-emerald-700">{status}</span>;
     } else if (status === 'cancelled') {
@@ -28,17 +24,18 @@ const MembershipAndBilling = (): JSX.Element => {
     }
   };
 
-  const handleCancelButton = (id: string) => {
+  const handleCancelButton = (id: string): void => {
     medplum
       .patchResource('Coverage', id, [{ op: 'replace', path: '/status', value: 'cancelled' }])
       .then(() => setPending(!pending))
       .catch((err) => console.error(err));
   };
 
-  const handleViewPayments = () => {
+  const handleViewPayments = (): void => {
     medplum
-      .search(`PaymentNotice?resource=Patient/3e27eaee-2c55-4400-926e-90982df528e9`)
+      .search('PaymentNotice', 'resource=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
       .then((value) => setPaymentBundle(value as Bundle<PaymentNotice>))
+      .then(() => console.log(paymentBundle))
       .catch((err) => console.error(err));
   };
 

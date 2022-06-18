@@ -1,6 +1,6 @@
 interface InputProps {
-  type?: 'text' | 'date';
-  value: string;
+  type?: string;
+  value: string | number;
   handleChange: (key: string, value: string) => void;
   name: string;
   placeholder: string;

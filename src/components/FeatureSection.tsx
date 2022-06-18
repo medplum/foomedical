@@ -1,5 +1,3 @@
-// This example requires Tailwind CSS v2.0+
-// https://tailwindui.com/components/marketing/sections/feature-sections
 import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline';
 
 const features = [
@@ -29,7 +27,7 @@ const features = [
   },
 ];
 
-export function FeatureSection() {
+export function FeatureSection(): JSX.Element {
   return (
     <div className="bg-white py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
