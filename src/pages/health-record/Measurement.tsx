@@ -139,11 +139,7 @@ const Measurement = (): JSX.Element | null => {
 
   const profile = 'Patient/0beab6fe-fc9c-4276-af71-4df508097eb2';
 
-  let measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
-
-  useEffect(() => {
-    measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
-  }, [measurementId]);
+  const measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
 
   useEffect(() => {
     if (measurements.entry) {
