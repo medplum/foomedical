@@ -7,6 +7,7 @@ const LabResults = lazy(() => import('./LabResults'));
 const MainResult = lazy(() => import('./MainResult/MainResult'));
 const Medications = lazy(() => import('./Medications'));
 const Medication = lazy(() => import('./Medication'));
+const PrescriptionRenewal = lazy(() => import('./PrescriptionRenewal'));
 const Vaccines = lazy(() => import('./Vaccines'));
 const Vitals = lazy(() => import('./Vitals'));
 const Measurement = lazy(() => import('./Measurement'));
@@ -37,6 +38,7 @@ export default function HealthRecord(): JSX.Element {
         <Route path="lab-results/:resultId" element={<MainResult />} />
         <Route path="medications" element={<Medications />} />
         <Route path="medications/:medicationId" element={<Medication />} />
+        <Route path="medications/:medicationId/prescription-renewal" element={<PrescriptionRenewal />} />
         <Route path="vaccines" element={<Vaccines />} />
         <Route path="vitals" element={<Vitals />} />
         <Route path="vitals/:measurementId" element={<Measurement />} />
