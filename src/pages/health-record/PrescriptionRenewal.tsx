@@ -8,6 +8,7 @@ import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
+import RenewalNotification, { NotificationValues } from '../../components/RenewalNotification';
 import getTimingRepeat from '../../helpers/get-timing-repeat';
 import getLocaleDate from '../../helpers/get-locale-date';
 
@@ -15,9 +16,14 @@ export default function PrescriptionRenewal(): JSX.Element {
   const medplum = useMedplum();
   const navigate = useNavigate();
   const { medicationId = '' } = useParams();
+  const date = new Date().toISOString();
 
   const [prescription, setPrescription] = useState<TwoColumnsListItemProps[]>([]);
   const [isPrescriptionChecked, setIsPrescriptionChecked] = useState(false);
+  const [notificationValues, setNotificationValues] = useState<NotificationValues>({
+    show: false,
+    url: '',
+  });
 
   const resource: MedicationRequest = medplum.readResource('MedicationRequest', medicationId).read();
   const patientId = resource.subject?.reference ? resource.subject?.reference.split('/') : '';
@@ -29,8 +35,20 @@ export default function PrescriptionRenewal(): JSX.Element {
 
   const handlePrescriptionRenewal = (): void => {
     medplum
-      .patchResource('MedicationRequest', medicationId, [{ op: 'replace', path: '/status', value: 'active' }])
-      .then(() => setIsPrescriptionChecked(false))
+      .createResource({
+        ...resource,
+        status: 'draft',
+        note: [
+          {
+            time: date,
+            text: 'Patient Requested Refill',
+          },
+        ],
+      })
+      .then((value) => {
+        setIsPrescriptionChecked(false);
+        setNotificationValues({ show: true, url: `/health-record/medications/${value.id || ''}` });
+      })
       .catch((err) => console.error(err));
   };
 
@@ -96,7 +114,7 @@ export default function PrescriptionRenewal(): JSX.Element {
                 )}
               </div>
             </div>
-            {resource.status !== 'active' && (
+            {resource.status === 'stopped' && (
               <input
                 id="prescription"
                 name="prescription"
@@ -120,6 +138,10 @@ export default function PrescriptionRenewal(): JSX.Element {
           </button>
         </div>
       </div>
+      <RenewalNotification
+        notificationValues={notificationValues}
+        onClose={() => setNotificationValues({ show: false, url: '' })}
+      />
     </div>
   );
 }
