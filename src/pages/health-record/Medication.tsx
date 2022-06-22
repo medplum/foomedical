@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMedplum } from '@medplum/react';
 import { MedicationRequest } from '@medplum/fhirtypes';
 import getTimingRepeat from '../../helpers/get-timing-repeat';
@@ -60,6 +60,12 @@ export default function Medication(): JSX.Element {
           <LinkToPreviousPage url="/health-record/medications" label="All Medications" />
           {resource.medicationCodeableConcept?.text && <PageTitle title={resource.medicationCodeableConcept?.text} />}
           <p className="mb-6 text-lg text-gray-600">To refill this medication, please contact your pharmacy.</p>
+          <p className="mb-6 text-lg text-gray-600">
+            No more refills available at your pharmacy?{' '}
+            <Link to={`/health-record/medications/${medicationId}/prescription-renewal`} className="text-sky-700">
+              Renew your prescription
+            </Link>
+          </p>
           <InfoSection title="Details">
             <TwoColumnsList items={medicationValues} />
           </InfoSection>
