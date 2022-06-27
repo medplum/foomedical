@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
-import MessagesPage from './pages/MessagesPage';
+import Messages from './pages/messages';
 import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { ProfileResource } from '@medplum/core';
@@ -19,7 +19,7 @@ export default function Router({ profile }: RouterProps): JSX.Element {
     <profileContext.Provider value={profile}>
       <Routes>
         <Route path="/" element={<Navigate replace to="/health-record/lab-results" />} />
-        <Route path="messages" element={<MessagesPage />} />
+        <Route path="messages/*" element={<Messages />} />
         <Route path="health-record/*" element={<HealthRecord />} />
         <Route path="Observation/*" element={<Observation />} />
         <Route path="care-plan/*" element={<CarePlan />} />
