@@ -1,11 +1,14 @@
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { profileContext } from '../../profileContext';
 import { useMedplum } from '@medplum/react';
-import { formatHumanName, ProfileResource } from '@medplum/core';
+import { createReference, ProfileResource } from '@medplum/core';
+import { Attachment, Bundle, Communication, Patient } from '@medplum/fhirtypes';
 import { DocumentAddIcon, DocumentDownloadIcon, DocumentRemoveIcon } from '@heroicons/react/solid';
-import getLocaleDate from '../../helpers/get-locale-date';
 import Button from '../../components/Button';
-import { Binary, Bundle, Communication } from '@medplum/fhirtypes';
+import getLocaleDate from '../../helpers/get-locale-date';
+import generateId from '../../helpers/generate-id';
+
+const chatIdGenerator = generateId();
 
 export default function Chat(): JSX.Element | null {
   const medplum = useMedplum();
@@ -20,40 +23,27 @@ export default function Chat(): JSX.Element | null {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const name = formatHumanName(profile.name[0]);
-
   const replyMessage = (): void => {
     textareaRef.current?.focus();
   };
 
-  const createResource = (value?: Binary): void => {
-    const payload = value
-      ? [
-          {
-            contentString: messageValue,
-            contentAttachment: {
-              contentType: value.contentType,
-              url: value.url,
-            },
-          },
-        ]
-      : [
-          {
-            contentString: messageValue,
-          },
-        ];
+  const createResource = (value?: Attachment): void => {
+    const payload: any[] = [{ contentString: messageValue }];
+
+    if (value) {
+      payload.push({
+        contentAttachment: {
+          contentType: value.contentType,
+          url: value.url,
+        },
+      });
+    }
 
     medplum
       .createResource({
         resourceType: 'Communication',
-        subject: {
-          display: name,
-          reference: `${profile.resourceType}/${profile.id}`,
-        },
-        sender: {
-          display: name,
-          reference: `${profile.resourceType}/${profile.id}`,
-        },
+        subject: createReference(profile as Patient),
+        sender: createReference(profile as Patient),
         payload: payload,
       })
       .then((value) => {
@@ -157,19 +147,23 @@ export default function Chat(): JSX.Element | null {
                                 </div>
                                 {resource?.payload && (
                                   <div className="mt-1 flex flex-col items-start space-y-2 text-sm text-gray-700">
-                                    {resource.payload[0].contentString && <p>{resource.payload[0].contentString}</p>}
-                                    {resource.payload[0].contentAttachment?.url && (
-                                      <a
-                                        href={resource.payload[0].contentAttachment.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        download
-                                        className="group flex items-center rounded-sm border border-gray-200 px-2 py-1"
-                                      >
-                                        <DocumentDownloadIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
-                                        Download attached file
-                                      </a>
-                                    )}
+                                    {resource.payload.map((content) => (
+                                      <React.Fragment key={chatIdGenerator.next().value}>
+                                        {content.contentString && <p>{content.contentString}</p>}
+                                        {content.contentAttachment?.url && (
+                                          <a
+                                            href={content.contentAttachment.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            download
+                                            className="group flex items-center rounded-sm border border-gray-200 px-2 py-1"
+                                          >
+                                            <DocumentDownloadIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
+                                            Download attached file
+                                          </a>
+                                        )}
+                                      </React.Fragment>
+                                    ))}
                                   </div>
                                 )}
                                 <div className="mt-2 space-x-2 text-sm">
