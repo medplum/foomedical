@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { profileContext } from '../../profileContext';
-import { useMedplum } from '@medplum/react';
+import { UploadButton, useMedplum } from '@medplum/react';
 import { createReference, ProfileResource } from '@medplum/core';
 import { Attachment, Bundle, Communication, Patient } from '@medplum/fhirtypes';
-import { DocumentAddIcon, DocumentDownloadIcon, DocumentRemoveIcon } from '@heroicons/react/solid';
+import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
 import Button from '../../components/Button';
 import getLocaleDate from '../../helpers/get-locale-date';
 import generateId from '../../helpers/generate-id';
@@ -18,23 +18,21 @@ export default function Chat(): JSX.Element | null {
   const [messages, setMessages] = useState<Bundle<Communication>>();
   const [profiles, setProfiles] = useState<ProfileResource[]>([]);
   const [messageValue, setMessageValue] = useState<string>('');
-  const [file, setFile] = useState<File>();
-
+  const [attachment, setAttachment] = useState<Attachment>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const replyMessage = (): void => {
     textareaRef.current?.focus();
   };
 
-  const createResource = (value?: Attachment): void => {
+  const createResource = (attachment?: Attachment): void => {
     const payload: any[] = [{ contentString: messageValue }];
 
-    if (value) {
+    if (attachment) {
       payload.push({
         contentAttachment: {
-          contentType: value.contentType,
-          url: value.url,
+          contentType: attachment.contentType,
+          url: attachment.url,
         },
       });
     }
@@ -49,64 +47,43 @@ export default function Chat(): JSX.Element | null {
       .then((value) => {
         if (messages?.entry) {
           setMessages({ ...messages, entry: [...messages.entry, { resource: value }] });
+        } else {
+          setMessages({ resourceType: 'Bundle', entry: [{ resource: value }] });
         }
       })
       .then(() => {
         setMessageValue('');
-        setFile(undefined);
+        setAttachment(undefined);
       })
       .catch((err) => console.error(err));
-  };
-
-  const createMessage = (): void => {
-    if (file) {
-      medplum.createBinary(file, file.name, file.type).then((value) => createResource(value));
-    } else {
-      createResource();
-    }
-  };
-
-  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  };
-
-  const handleUploadFile = (): void => {
-    if (file) {
-      setFile(undefined);
-    } else {
-      if (fileInputRef.current) {
-        fileInputRef.current.click();
-      }
-    }
   };
 
   useEffect(() => {
     medplum
       .search('Communication', `subject=${profile.resourceType}/${profile.id}`)
-      .then((value) => {
-        if (value.entry) {
-          setMessages(value);
-          const senders: string[] = [];
-          value.entry.forEach(({ resource }) => {
-            if (resource?.sender?.reference) {
-              senders.push(resource.sender.reference);
-            }
-          });
-          const uniqueSenders = [...new Set(senders)];
-          uniqueSenders.forEach((reference) => {
-            const id = reference.split('/');
-            const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
-            medplum
-              .readResource(profileType, id[1])
-              .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
-              .catch((err) => console.error(err));
-          });
-        }
-      })
+      .then((value) => setMessages(value))
       .catch((err) => console.error(err));
   }, []);
+
+  useEffect(() => {
+    if (messages?.entry) {
+      const senders: string[] = [];
+      messages.entry.forEach(({ resource }) => {
+        if (resource?.sender?.reference) {
+          senders.push(resource.sender.reference);
+        }
+      });
+      const uniqueSenders = [...new Set(senders)];
+      uniqueSenders.forEach((reference) => {
+        const id = reference.split('/');
+        const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
+        medplum
+          .readResource(profileType, id[1])
+          .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
+          .catch((err) => console.error(err));
+      });
+    }
+  }, [messages]);
 
   return (
     <div className="flex flex-col justify-between">
@@ -212,34 +189,28 @@ export default function Chat(): JSX.Element | null {
                         value={messageValue}
                         onChange={(e) => setMessageValue(e.target.value)}
                       />
-                      <input
-                        type="file"
-                        id="file"
-                        ref={fileInputRef}
-                        onChange={handleFileInputChange}
-                        className="hidden"
-                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="flex flex-col items-end justify-end space-y-6 bg-gray-50 px-4 pb-6 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6 sm:px-6">
-                <div className="flex">
-                  <button
-                    className="flex items-center rounded-l-md bg-teal-600 px-2 hover:bg-teal-700"
-                    onClick={handleUploadFile}
-                  >
-                    {file ? (
-                      <DocumentRemoveIcon className="h-6 w-6 text-white" />
-                    ) : (
-                      <DocumentAddIcon className="h-6 w-6 text-white" />
-                    )}
-                  </button>
-                  <div className="inline-flex items-center justify-center whitespace-nowrap rounded-r-md border border-gray-200 bg-white px-4 py-2 text-gray-700 shadow-sm">
-                    {file ? file.name : 'No file chosen'}
-                  </div>
+                <div>
+                  <UploadButton onUpload={(value: Attachment) => setAttachment(value)}>
+                    <div className="group flex">
+                      <div className="flex items-center rounded-l-md bg-teal-600 px-2 group-hover:bg-teal-700">
+                        {attachment ? (
+                          <DocumentIcon className="h-6 w-6 text-white" />
+                        ) : (
+                          <DocumentAddIcon className="h-6 w-6 text-white" />
+                        )}
+                      </div>
+                      <div className="inline-flex items-center justify-center whitespace-nowrap rounded-r-md border border-gray-200 bg-white px-4 py-2 text-gray-700 shadow-sm">
+                        {attachment ? attachment.title : 'No file chosen'}
+                      </div>
+                    </div>
+                  </UploadButton>
                 </div>
-                <Button marginsUtils="ml-0" label="Comment" action={createMessage} />
+                <Button marginsUtils="ml-0" label="Comment" action={() => createResource(attachment)} />
               </div>
             </div>
           </section>
