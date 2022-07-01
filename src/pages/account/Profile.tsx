@@ -17,9 +17,9 @@ export default function Profile(): JSX.Element | null {
   const profile = useContext(profileContext);
   if (!profile.id) return null;
   const medplum = useMedplum();
-  let resource: ProfileResource = medplum.readResource(profile.resourceType, profile.id).read();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [resource, setResource] = useState<ProfileResource>();
   const [file, setFile] = useState<File>();
 
   const [personalInfo, setPersonalInfo] = useState<TwoColumnsListItemProps[]>([]);
@@ -42,6 +42,15 @@ export default function Profile(): JSX.Element | null {
 
   const [pending, setPending] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (profile.id) {
+      medplum.readResource(profile.resourceType, profile.id).then((value) => {
+        setResource(value);
+        setActiveInputName('');
+      });
+    }
+  }, [pending]);
+
   const handleUploadFile = (): void => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -60,7 +69,9 @@ export default function Profile(): JSX.Element | null {
 
   const toggleInputButton = (type: string, operations: any[]): void => {
     if (activeInputName === type && resource?.id) {
-      medplum.patchResource(resource.resourceType, resource.id, operations).then(() => setPending(!pending));
+      medplum.patchResource(resource.resourceType, resource.id, operations).then(() => {
+        setPending(!pending);
+      });
     } else {
       setActiveInputName(type);
     }
@@ -119,16 +130,6 @@ export default function Profile(): JSX.Element | null {
   };
 
   useEffect(() => {
-    if (profile.id) {
-      resource = medplum.readResource(profile.resourceType, profile.id).read();
-    }
-  }, [profile, pending]);
-
-  useEffect(() => {
-    setActiveInputName('');
-  }, [resource]);
-
-  useEffect(() => {
     if (file) {
       medplum.createBinary(file, file.name, file.type).then((value) => {
         if (resource && resource.id) {
@@ -164,7 +165,8 @@ export default function Profile(): JSX.Element | null {
 
   useEffect(() => {
     if (resource) {
-      const { telecom = [], address = [] } = resource;
+      const { telecom = [{ system: '', use: '', value: '' }], address = [{ line: ['', ''], city: '', state: '' }] } =
+        resource;
       const { system, use, value } = telecom[0];
       const { line = [], city, state } = address[0];
       setProfileValues({
