@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { profileContext } from '../../profileContext';
 import { UploadButton, useMedplum } from '@medplum/react';
-import { createReference, ProfileResource } from '@medplum/core';
-import { Attachment, Bundle, Communication, Patient } from '@medplum/fhirtypes';
+import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
+import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
 import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
 import Button from '../../components/Button';
 import getLocaleDate from '../../helpers/get-locale-date';
@@ -15,7 +15,8 @@ export default function Chat(): JSX.Element | null {
   const profile = useContext(profileContext);
   if (!profile.id || !profile.name) return null;
 
-  const [messages, setMessages] = useState<Bundle<Communication>>();
+  const subject = `${profile.resourceType}/${profile.id}`;
+  const [messages, setMessages] = useState<Communication[]>();
   const [profiles, setProfiles] = useState<ProfileResource[]>([]);
   const [messageValue, setMessageValue] = useState<string>('');
   const [attachment, setAttachment] = useState<Attachment>();
@@ -45,11 +46,7 @@ export default function Chat(): JSX.Element | null {
         payload: payload,
       })
       .then((value) => {
-        if (messages?.entry) {
-          setMessages({ ...messages, entry: [...messages.entry, { resource: value }] });
-        } else {
-          setMessages({ resourceType: 'Bundle', entry: [{ resource: value }] });
-        }
+        setMessages([...(messages ? messages : []), value]);
       })
       .then(() => {
         setMessageValue('');
@@ -60,29 +57,73 @@ export default function Chat(): JSX.Element | null {
 
   useEffect(() => {
     medplum
-      .search('Communication', `subject=${profile.resourceType}/${profile.id}`)
-      .then((value) => setMessages(value))
+      .graphql(
+        `
+          query GetCommunicationList($subject: String!) {
+            CommunicationList(subject: $subject) {
+              resourceType
+              id
+              meta {
+                lastUpdated
+              }
+              payload {
+                contentString
+                contentAttachment {
+                  url
+                  contentType
+                }
+              }
+              sender {
+                reference
+                resource {
+                  ... on Patient {
+                    resourceType
+                    id
+                    name {
+                      given
+                      family
+                    }
+                  }
+                  ... on Practitioner {
+                    resourceType
+                    id
+                    name {
+                      given
+                      family
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        'GetCommunicationList',
+        { subject }
+      )
+      .then((value) => setMessages(value.data.CommunicationList as Communication[]))
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    if (messages?.entry) {
-      const senders: string[] = [];
-      messages.entry.forEach(({ resource }) => {
-        if (resource?.sender?.reference) {
-          senders.push(resource.sender.reference);
-        }
-      });
-      const uniqueSenders = [...new Set(senders)];
-      uniqueSenders.forEach((reference) => {
-        const id = reference.split('/');
-        const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
-        medplum
-          .readResource(profileType, id[1])
-          .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
-          .catch((err) => console.error(err));
-      });
+    if (!messages) {
+      return;
     }
+
+    const senders: string[] = [];
+    messages.forEach((resource) => {
+      if (resource?.sender?.reference) {
+        senders.push(resource.sender.reference);
+      }
+    });
+    const uniqueSenders = [...new Set(senders)];
+    uniqueSenders.forEach((reference) => {
+      const id = reference.split('/');
+      const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
+      medplum
+        .readResource(profileType, id[1])
+        .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
+        .catch((err) => console.error(err));
+    });
   }, [messages]);
 
   return (
@@ -99,13 +140,21 @@ export default function Chat(): JSX.Element | null {
                 </div>
                 <div className="px-4 py-6 sm:px-6">
                   <ul role="list" className="space-y-8">
-                    {messages?.entry && profiles.length > 0 ? (
-                      messages.entry.map(({ resource }) => {
+                    {messages && profiles.length > 0 ? (
+                      messages.map((resource) => {
                         const profile = profiles.find((profile) => {
                           if (resource?.sender?.reference) {
                             return profile.id === resource.sender.reference.split('/')[1];
                           }
                         });
+                        const getName = (): string => {
+                          if (resource.sender?.resource) {
+                            const senderResource = resource.sender.resource as Patient | Practitioner;
+                            return senderResource.name ? formatHumanName(senderResource.name[0]) : '';
+                          } else if (resource.sender?.display) {
+                            return resource.sender.display;
+                          } else return '';
+                        };
                         return (
                           <li key={resource?.id}>
                             <div className="flex space-x-3">
@@ -116,9 +165,9 @@ export default function Chat(): JSX.Element | null {
                               )}
                               <div>
                                 <div className="text-sm">
-                                  {resource?.sender && (
+                                  {(resource.sender?.resource || resource.sender?.display) && (
                                     <a href="#" className="font-medium text-gray-900">
-                                      {resource.sender.display}
+                                      {getName()}
                                     </a>
                                   )}
                                 </div>
