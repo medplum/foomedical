@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open --project e2e"
   },
   "devDependencies": {
     "@headlessui/react": "^1.6.4",

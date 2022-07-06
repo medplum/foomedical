@@ -1,4 +1,4 @@
-const getLocaleDate = (stringDate?: string, isHoursDisplayed = false): string | null => {
+const getLocaleDate = (stringDate?: string, isHoursDisplayed = false, isMinutesDisplayed = false): string | null => {
   if (!stringDate) return null;
   const date = new Date(stringDate);
 
@@ -7,6 +7,7 @@ const getLocaleDate = (stringDate?: string, isHoursDisplayed = false): string | 
     month: 'short',
     day: 'numeric',
     hour: isHoursDisplayed ? '2-digit' : undefined,
+    minute: isMinutesDisplayed ? '2-digit' : undefined,
   });
 };
 
