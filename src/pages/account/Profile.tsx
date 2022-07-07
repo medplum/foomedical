@@ -7,7 +7,7 @@ import InfoSection from '../../components/InfoSection';
 import GeneralInfo from '../../components/GeneralInfo';
 import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
 import Input from '../../components/Input';
-import getGender from '../../helpers/get-gender';
+import getPronoun from '../../helpers/get-pronoun';
 import getLocaleDate from '../../helpers/get-locale-date';
 import generateId from '../../helpers/generate-id';
 
@@ -243,7 +243,7 @@ export default function Profile(): JSX.Element | null {
           },
           {
             label: 'Pronouns',
-            body: <p className="text-lg text-gray-600">{getGender(resource.gender)}</p>,
+            body: <p className="text-lg text-gray-600">{getPronoun(resource.gender)}</p>,
           }
         );
       } else {

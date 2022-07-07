@@ -6,7 +6,7 @@ import { SideMenuProps } from './SideMenu';
 import Loader from './Loader';
 
 export interface PageLayoutProps {
-  sideMenu: SideMenuProps;
+  sideMenu?: SideMenuProps;
   children: JSX.Element;
 }
 
@@ -16,8 +16,8 @@ export default function PageLayout({ children, sideMenu }: PageLayoutProps): JSX
       <Header />
       <main className="mb-auto">
         <div className="mx-auto my-8 grid max-w-3xl grid-cols-1 gap-6 bg-white px-4 sm:px-6 lg:max-w-6xl lg:grid-flow-col-dense lg:grid-cols-4">
-          <SideMenu {...sideMenu} />
-          <div className="lg:col-span-3 lg:col-start-2">
+          {sideMenu && <SideMenu {...sideMenu} />}
+          <div className={`${sideMenu ? 'lg:col-start-2' : ''} lg:col-span-4`}>
             <Suspense fallback={<Loader />}>{children}</Suspense>
           </div>
         </div>
