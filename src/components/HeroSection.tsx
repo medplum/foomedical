@@ -16,8 +16,8 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import logoUrl from '../img/logo-1050x180.png';
 import Button from './Button';
+import { ReactComponent as Logo } from '../img/logo.svg';
 
 const features = [
   {
@@ -86,11 +86,11 @@ export function HeroSection(): JSX.Element {
     <div className="relative bg-gray-50">
       <Popover className="relative bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
+          <div className="flex items-center justify-between space-x-6 py-6 lg:space-x-10">
+            <div className="flex justify-start">
               <a href="#">
                 <span className="sr-only">Workflow</span>
-                <img className="h-8 w-auto sm:h-10" src={logoUrl} alt="" />
+                <Logo className="h-8 w-auto lg:h-10" />
               </a>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
@@ -99,14 +99,14 @@ export function HeroSection(): JSX.Element {
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
             </div>
-            <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+            <Popover.Group as="nav" className="hidden space-x-4 md:flex lg:space-x-10">
               <Popover className="relative">
                 {({ open }) => (
                   <>
                     <Popover.Button
                       className={classNames(
                         open ? 'text-gray-900' : 'text-gray-500',
-                        'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+                        'group inline-flex items-center rounded-md bg-white text-base font-normal hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
                       )}
                     >
                       <span>Solutions</span>
@@ -165,10 +165,10 @@ export function HeroSection(): JSX.Element {
                 )}
               </Popover>
 
-              <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-base font-normal text-gray-500 hover:text-gray-900">
                 Pricing
               </a>
-              <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-base font-normal text-gray-500 hover:text-gray-900">
                 Docs
               </a>
 
@@ -178,7 +178,7 @@ export function HeroSection(): JSX.Element {
                     <Popover.Button
                       className={classNames(
                         open ? 'text-gray-900' : 'text-gray-500',
-                        'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
+                        'group inline-flex items-center rounded-md bg-white text-base font-normal hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
                       )}
                     >
                       <span>More</span>
@@ -246,8 +246,8 @@ export function HeroSection(): JSX.Element {
                 )}
               </Popover>
             </Popover.Group>
-            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-              <Link to="/signin" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+            <div className="hidden items-center justify-end md:flex">
+              <Link to="/signin" className="whitespace-nowrap text-base font-normal text-gray-500 hover:text-gray-900">
                 Sign in
               </Link>
               <Button label="Sign up" url="#" />
@@ -272,11 +272,7 @@ export function HeroSection(): JSX.Element {
               <div className="px-5 pt-5 pb-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-teal-600.svg"
-                      alt="Workflow"
-                    />
+                    <Logo className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
                     <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500">
@@ -302,18 +298,18 @@ export function HeroSection(): JSX.Element {
               </div>
               <div className="space-y-6 py-6 px-5">
                 <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                  <a href="#" className="text-base font-normal text-gray-900 hover:text-gray-700">
                     Pricing
                   </a>
 
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                  <a href="#" className="text-base font-normal text-gray-900 hover:text-gray-700">
                     Docs
                   </a>
                   {resources.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
+                      className="text-base font-normal text-gray-900 hover:text-gray-700"
                     >
                       {item.name}
                     </a>
@@ -322,13 +318,13 @@ export function HeroSection(): JSX.Element {
                 <div>
                   <a
                     href="#"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-teal-700"
+                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-normal text-white shadow-sm hover:bg-teal-700"
                   >
                     Sign up
                   </a>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500">
+                  <p className="mt-6 text-center text-base font-normal text-gray-500">
                     Existing customer?
-                    <Link to="/signin" className="text-teal-600 hover:text-teal-500">
+                    <Link to="/signin" className="ml-6 text-teal-600 hover:text-teal-500">
                       Sign in
                     </Link>
                   </p>
@@ -342,11 +338,11 @@ export function HeroSection(): JSX.Element {
       <main className="lg:relative">
         <div className="mx-auto w-full max-w-7xl pt-16 pb-20 text-center lg:py-48 lg:text-left">
           <div className="px-4 sm:px-8 lg:w-1/2 xl:pr-16">
-            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
+            <h1 className="text-4xl font-normal tracking-wider text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
               <span className="block xl:inline">An extraordinary</span>{' '}
               <span className="block text-teal-600 xl:inline">doctor&apos;s office</span>
             </h1>
-            <p className="mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
+            <p className="mx-auto mt-3 max-w-md text-xl font-normal text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
               fugiat veniam occaecat fugiat aliqua.
             </p>
@@ -354,7 +350,7 @@ export function HeroSection(): JSX.Element {
               <div className="rounded-md shadow">
                 <a
                   href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-8 py-3 text-base font-medium text-white hover:bg-teal-700 md:py-4 md:px-10 md:text-lg"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-8 py-3 text-lg font-normal text-white hover:bg-teal-700 md:py-4 md:px-10 md:text-lg"
                 >
                   Get started
                 </a>
@@ -362,7 +358,7 @@ export function HeroSection(): JSX.Element {
               <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
                 <a
                   href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-teal-600 hover:bg-gray-50 md:py-4 md:px-10 md:text-lg"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-lg font-normal text-teal-600 hover:bg-gray-50 md:py-4 md:px-10 md:text-lg"
                 >
                   Live demo
                 </a>
