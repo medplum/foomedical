@@ -51,5 +51,8 @@
     "**/*": [
       "prettier --write --ignore-unknown"
     ]
+  },
+  "dependencies": {
+    "vite-plugin-svgr": "^2.2.0"
   }
 }

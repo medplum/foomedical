@@ -32,11 +32,9 @@ export function FeatureSection(): JSX.Element {
     <div className="bg-white py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base font-semibold uppercase tracking-wide text-teal-600">Healthcare</h2>
-          <p className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-            A better way to get care
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          <h2 className="text-base font-normal uppercase tracking-wider text-teal-600">Healthcare</h2>
+          <p className="mt-2 text-4xl font-normal tracking-tight text-gray-900 sm:text-4xl">A better way to get care</p>
+          <p className="mt-4 max-w-2xl text-xl font-normal text-gray-500 lg:mx-auto">
             Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
             accusamus quisquam.
           </p>
@@ -47,10 +45,10 @@ export function FeatureSection(): JSX.Element {
             {features.map((feature) => (
               <div key={feature.name} className="relative">
                 <dt>
-                  <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-teal-500 text-white">
+                  <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-teal-500 text-black">
                     <feature.icon className="h-6 w-6" aria-hidden="true" />
                   </div>
-                  <p className="ml-16 text-lg font-medium leading-6 text-gray-900">{feature.name}</p>
+                  <p className="ml-16 text-lg leading-6 text-gray-900">{feature.name}</p>
                 </dt>
                 <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
               </div>
