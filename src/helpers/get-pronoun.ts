@@ -1,4 +1,4 @@
-const getGender = (genderString: string): string => {
+const getPronoun = (genderString: string): string => {
   const gender = genderString.toLowerCase();
 
   if (gender === 'male') return 'He/Him';
@@ -6,4 +6,4 @@ const getGender = (genderString: string): string => {
   return 'Unknown';
 };
 
-export default getGender;
+export default getPronoun;
