@@ -1,6 +1,6 @@
 import { createScriptTag } from '@medplum/react';
 
-const RECAPTCHA_SITE_KEY = '';
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 /**
  * Dynamically loads the recaptcha script.
