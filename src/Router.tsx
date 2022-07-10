@@ -9,6 +9,7 @@ import Account from './pages/account';
 import HealthRecord from './pages/health-record';
 import Observation from './pages/observation';
 import CarePlan from './pages/care-plan';
+import { RegisterPage } from './pages/RegisterPage';
 
 export interface RouterProps {
   profile: ProfileResource | undefined;
@@ -31,6 +32,7 @@ export default function Router({ profile }: RouterProps): JSX.Element {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="signin" element={<SignInPage />} />
+      <Route path="register" element={<RegisterPage />} />
       <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
   );
