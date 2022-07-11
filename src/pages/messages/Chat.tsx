@@ -259,7 +259,7 @@ export default function Chat(): JSX.Element | null {
                     </div>
                   </UploadButton>
                 </div>
-                <Button marginsUtils="ml-0" label="Comment" action={() => createResource(attachment)} />
+                <Button marginsUtils="ml-0" label="Send" action={() => createResource(attachment)} />
               </div>
             </div>
           </section>
