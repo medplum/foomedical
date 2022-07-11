@@ -46,11 +46,7 @@ export default function Chat(): JSX.Element | null {
         payload: payload,
       })
       .then((value) => {
-        if (messages) {
-          setMessages([...messages, value]);
-        } else {
-          setMessages([value]);
-        }
+        setMessages([...(messages ? messages : []), value]);
       })
       .then(() => {
         setMessageValue('');
@@ -63,69 +59,71 @@ export default function Chat(): JSX.Element | null {
     medplum
       .graphql(
         `
-      query GetCommunicationList($subject: String!) {
-        CommunicationList(subject: $subject) {
-          resourceType
-          id
-          meta {
-            lastUpdated
-          }
-          payload {
-            contentString
-            contentAttachment {
-              url
-              contentType
-            }
-          }
-          sender {
-            reference
-            resource {
-              ... on Patient {
-                resourceType
-                id
-                name {
-                  given
-                  family
+          query GetCommunicationList($subject: String!) {
+            CommunicationList(subject: $subject) {
+              resourceType
+              id
+              meta {
+                lastUpdated
+              }
+              payload {
+                contentString
+                contentAttachment {
+                  url
+                  contentType
                 }
               }
-              ... on Practitioner {
-                resourceType
-                id
-                name {
-                  given
-                  family
+              sender {
+                reference
+                resource {
+                  ... on Patient {
+                    resourceType
+                    id
+                    name {
+                      given
+                      family
+                    }
+                  }
+                  ... on Practitioner {
+                    resourceType
+                    id
+                    name {
+                      given
+                      family
+                    }
+                  }
                 }
               }
             }
           }
-        }
-      }
-    `,
+        `,
         'GetCommunicationList',
-        { subject: subject }
+        { subject }
       )
       .then((value) => setMessages(value.data.CommunicationList as Communication[]))
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    if (messages) {
-      const senders: string[] = [];
-      messages.forEach((resource) => {
-        if (resource?.sender?.reference) {
-          senders.push(resource.sender.reference);
-        }
-      });
-      const uniqueSenders = [...new Set(senders)];
-      uniqueSenders.forEach((reference) => {
-        const id = reference.split('/');
-        const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
-        medplum
-          .readResource(profileType, id[1])
-          .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
-          .catch((err) => console.error(err));
-      });
+    if (!messages) {
+      return;
     }
+
+    const senders: string[] = [];
+    messages.forEach((resource) => {
+      if (resource?.sender?.reference) {
+        senders.push(resource.sender.reference);
+      }
+    });
+    const uniqueSenders = [...new Set(senders)];
+    uniqueSenders.forEach((reference) => {
+      const id = reference.split('/');
+      const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
+      medplum
+        .readResource(profileType, id[1])
+        .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
+        .catch((err) => console.error(err));
+    });
   }, [messages]);
 
   return (
