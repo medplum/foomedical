@@ -5,6 +5,7 @@ import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { formatHumanName } from '@medplum/core';
 import { ReactComponent as Logo } from '../img/logo.svg';
+import { ReactComponent as AvatarPlaceholder } from '../img/avatar-placeholder.svg';
 
 const navigation = [
   { name: 'Health Record', href: '/health-record' },
@@ -107,11 +108,7 @@ export function Header(): JSX.Element {
                           {profile.photo ? (
                             <img className="h-10 w-10 rounded-full" src={profile.photo[0].url} alt="" />
                           ) : (
-                            <span className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
-                              <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                              </svg>
-                            </span>
+                            <AvatarPlaceholder className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100 p-1" />
                           )}
                         </div>
                         <div className="ml-3">
@@ -155,11 +152,7 @@ export function Header(): JSX.Element {
                   {profile.photo ? (
                     <img className="h-8 w-8 rounded-full" src={profile.photo[0].url} alt="" />
                   ) : (
-                    <span className="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
-                      <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </span>
+                    <AvatarPlaceholder className="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100 p-0.5" />
                   )}
                 </Menu.Button>
               </div>
