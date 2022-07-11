@@ -1,4 +1,6 @@
 import { MouseEventHandler } from 'react';
+import { ReactComponent as Pills } from '../img/pills.svg';
+import { ReactComponent as AvatarPlaceholder } from '../img/avatar-placeholder.svg';
 
 interface GeneralInfoProps {
   title?: string;
@@ -7,6 +9,7 @@ interface GeneralInfoProps {
   imageUrl?: string;
   onImageClick?: MouseEventHandler<HTMLElement>;
   imageAlt?: string;
+  isAvatarVisible?: boolean;
 }
 
 const GeneralInfo = ({
@@ -16,6 +19,7 @@ const GeneralInfo = ({
   imageUrl,
   onImageClick,
   imageAlt,
+  isAvatarVisible = true,
 }: GeneralInfoProps): JSX.Element => {
   return (
     <div className="mx-auto mb-5 flex max-w-xl flex-col items-center last:mb-0">
@@ -29,15 +33,16 @@ const GeneralInfo = ({
           alt={imageAlt}
         />
       ) : (
-        <span
-          className={`inline-block h-44 w-44 overflow-hidden rounded-full bg-gray-100 ${
-            onImageClick ? 'cursor-pointer' : null
-          }`}
-          onClick={(e) => (onImageClick ? onImageClick(e) : null)}
-        >
-          <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
+        <span onClick={(e) => (onImageClick ? onImageClick(e) : null)}>
+          {isAvatarVisible ? (
+            <AvatarPlaceholder
+              className={`inline-block h-44 w-44 overflow-hidden rounded-full bg-gray-100 p-2 ${
+                onImageClick ? 'cursor-pointer' : null
+              }`}
+            />
+          ) : (
+            <Pills className="h-44" />
+          )}
         </span>
       )}
       {title && <h2 className="mt-4 text-2xl font-extrabold text-gray-900 sm:text-3xl">{title}</h2>}
