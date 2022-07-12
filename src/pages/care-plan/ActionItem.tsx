@@ -1,0 +1,51 @@
+import { useParams } from 'react-router-dom';
+import { CodeableConceptDisplay, useMedplum } from '@medplum/react';
+import LinkToPreviousPage from '../../components/LinkToPreviousPage';
+import InfoSection from '../../components/InfoSection';
+import { CarePlan } from '@medplum/fhirtypes';
+import getLocaleDate from '../../helpers/get-locale-date';
+import generateId from '../../helpers/generate-id';
+
+const actionItemIdGenerator = generateId();
+
+export default function ActionItem(): JSX.Element {
+  const medplum = useMedplum();
+  const { itemId = '' } = useParams();
+
+  const resource: CarePlan = medplum.readResource('CarePlan', itemId).read();
+
+  return (
+    <>
+      <LinkToPreviousPage url="/care-plan/action-items" label="All Action Items" styles="mb-5" />
+      <InfoSection title="Details">
+        <div className="px-4 py-5 sm:px-6">
+          <div className="flex items-center space-x-3 border-b border-gray-200 pb-5">
+            <div className="flex-shrink-0">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-200">
+                <span className="font-medium leading-none text-amber-400">MT</span>
+              </span>
+            </div>
+            <div>
+              <div className="text-sm text-gray-700">
+                <p>Requested by Medical Team</p>
+              </div>
+              {resource.period?.end && (
+                <div className="mt-1 text-sm font-bold text-gray-900">
+                  <p>Accomplysh by {getLocaleDate(resource.period.end)}</p>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="space-y-5 pt-5">
+            {resource.activity &&
+              resource.activity.map((activity) => (
+                <div key={actionItemIdGenerator.next().value} className="text-base font-medium text-gray-900">
+                  <CodeableConceptDisplay value={activity.detail?.code} />
+                </div>
+              ))}
+          </div>
+        </div>
+      </InfoSection>
+    </>
+  );
+}
