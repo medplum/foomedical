@@ -250,7 +250,7 @@ export function HeroSection(): JSX.Element {
               <Link to="/signin" className="whitespace-nowrap text-base font-normal text-gray-500 hover:text-gray-900">
                 Sign in
               </Link>
-              <Button label="Sign up" url="#" />
+              <Button label="Sign up" url="/register" />
             </div>
           </div>
         </div>
