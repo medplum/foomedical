@@ -2,9 +2,10 @@ import { RegisterRequest } from '@medplum/core';
 import { OperationOutcome } from '@medplum/fhirtypes';
 import { Button, Document, Form, FormSection, Logo, Input, useMedplum } from '@medplum/react';
 import React, { useEffect, useState } from 'react';
-import { getRecaptcha, initRecaptcha } from '../helpers/recaptcha';
+import { getRecaptcha, initRecaptcha } from '../../helpers/recaptcha';
+import './RegisterPage.css';
 
-export function RegisterPage(): JSX.Element {
+export default function RegisterPage(): JSX.Element {
   const medplum = useMedplum();
   const [outcome, setOutcome] = useState<OperationOutcome>();
   const [success, setSuccess] = useState(false);

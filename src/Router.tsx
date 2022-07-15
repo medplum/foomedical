@@ -9,7 +9,7 @@ import Account from './pages/account';
 import HealthRecord from './pages/health-record';
 import Observation from './pages/observation';
 import CarePlan from './pages/care-plan';
-import { RegisterPage } from './pages/RegisterPage';
+import RegisterPage from './pages/register/RegisterPage';
 
 export interface RouterProps {
   profile: ProfileResource | undefined;
