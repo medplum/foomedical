@@ -10,7 +10,7 @@ export default function GetCare(): JSX.Element {
   return (
     <>
       {scheduleBundle.entry && scheduleBundle.entry[0].resource && (
-        <div className="flex w-full justify-center py-5">
+        <div className="flex w-full justify-center py-2 sm:py-5">
           <Document>
             <Scheduler schedule={scheduleBundle.entry[0].resource} />
           </Document>

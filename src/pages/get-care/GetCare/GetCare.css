@@ -93,8 +93,7 @@
 }
 
 .medplum-document {
-  margin: 20px auto 6px auto;
-  padding: 10px;
+  padding: 6px;
   clear: both;
   text-align: center;
 }
@@ -103,7 +102,7 @@
   background-color: var(--medplum-surface);
   max-width: 900px;
   margin: 8px auto 16px auto;
-  padding: 15px 25px;
+  padding: 12px 6px;
   text-align: left;
   border: 0.1px solid var(--medplum-gray-300);
   border-radius: 8px;
@@ -122,17 +121,6 @@
   margin: 8px 0 16px 0;
 }
 
-@media (max-width: 700px) {
-  .medplum-document {
-    margin: 10px auto 6px auto;
-    padding: 6px;
-  }
-
-  .medplum-document article {
-    padding: 6px 12px;
-  }
-}
-
 .medplum-document img,
 .medplum-document video {
   width: 100%;
@@ -146,18 +134,12 @@
 
 .medplum-calendar-container {
   display: flex;
+  flex-direction: column;
   min-height: 400px;
 }
 
 .medplum-calendar-info-pane {
-  min-width: 300px;
-  padding: 20px;
-  border-right: 1px solid #ddd;
-}
-
-.medplum-calendar-selection-pane {
-  min-width: 300px;
-  padding: 20px;
+  border-bottom: 1px solid #ddd;
 }
 
 .grecaptcha-badge {
@@ -381,10 +363,6 @@ fieldset.medplum-form-section > p {
   white-space: nowrap;
 }
 
-.medplum-calendar-table {
-  width: 350px;
-}
-
 .medplum-calendar-table th {
   font-weight: normal;
   font-size: 11px;
@@ -393,12 +371,12 @@ fieldset.medplum-form-section > p {
 }
 
 .medplum-calendar-table td {
-  padding: 2px 4px;
+  padding: 1px 2px;
 }
 
 .medplum-calendar-table button {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   color: #0060e6;
   font-size: 16px;
   font-weight: bold;
@@ -419,4 +397,57 @@ fieldset.medplum-form-section > p {
   cursor: default;
   color: #666;
   font-weight: normal;
+}
+
+@media (min-width: 640px) {
+  .medplum-calendar-info-pane {
+    padding: 10px;
+    min-width: 300px;
+  }
+  .medplum-calendar-selection-pane {
+    min-width: 300px;
+    padding: 10px;
+  }
+  .medplum-calendar-table td {
+    padding: 2px 4px;
+  }
+  .medplum-calendar-table button {
+    width: 44px;
+    height: 44px;
+  }
+  .medplum-document article {
+    padding: 12px 12px;
+  }
+  .medplum-calendar-table {
+    width: 350px;
+  }
+  .medplum-document {
+    margin: 10px auto 6px auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .medplum-calendar-container {
+    flex-direction: row;
+  }
+  .medplum-calendar-info-pane {
+    border-right: 1px solid #ddd;
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .medplum-calendar-info-pane {
+    padding: 20px;
+  }
+  .medplum-document {
+    margin: 20px auto 6px auto;
+    padding: 10px;
+  }
+  .medplum-document article {
+    padding: 15px 25px;
+  }
+  .medplum-calendar-selection-pane {
+    padding: 20px;
+  }
 }
