@@ -9,6 +9,7 @@ import Account from './pages/account';
 import HealthRecord from './pages/health-record';
 import Observation from './pages/observation';
 import CarePlan from './pages/care-plan';
+import GetCare from './pages/get-care';
 import { RegisterPage } from './pages/RegisterPage';
 
 export interface RouterProps {
@@ -24,6 +25,7 @@ export default function Router({ profile }: RouterProps): JSX.Element {
         <Route path="health-record/*" element={<HealthRecord />} />
         <Route path="Observation/*" element={<Observation />} />
         <Route path="care-plan/*" element={<CarePlan />} />
+        <Route path="get-care/*" element={<GetCare />} />
         <Route path="account/*" element={<Account />} />
         <Route path="signout" element={<SignOutPage />} />
       </Routes>

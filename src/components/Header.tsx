@@ -11,7 +11,7 @@ const navigation = [
   { name: 'Health Record', href: '/health-record' },
   { name: 'Messages', href: '/messages' },
   { name: 'Care Plan', href: '/care-plan' },
-  { name: 'Get Care', href: '#' },
+  { name: 'Get Care', href: '/get-care' },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '/account/profile' },
