@@ -1,12 +1,9 @@
-import { useParams } from 'react-router-dom';
-import { CodeableConceptDisplay, useMedplum } from '@medplum/react';
-import LinkToPreviousPage from '../../components/LinkToPreviousPage';
-import InfoSection from '../../components/InfoSection';
 import { CarePlan } from '@medplum/fhirtypes';
+import { CodeableConceptDisplay, useMedplum } from '@medplum/react';
+import { useParams } from 'react-router-dom';
+import InfoSection from '../../components/InfoSection';
+import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import getLocaleDate from '../../helpers/get-locale-date';
-import generateId from '../../helpers/generate-id';
-
-const actionItemIdGenerator = generateId();
 
 export default function ActionItem(): JSX.Element {
   const medplum = useMedplum();
@@ -38,8 +35,8 @@ export default function ActionItem(): JSX.Element {
           </div>
           <div className="space-y-5 pt-5">
             {resource.activity &&
-              resource.activity.map((activity) => (
-                <div key={actionItemIdGenerator.next().value} className="text-base font-medium text-gray-900">
+              resource.activity.map((activity, activityIndex) => (
+                <div key={activityIndex} className="text-base font-medium text-gray-900">
                   <CodeableConceptDisplay value={activity.detail?.code} />
                 </div>
               ))}

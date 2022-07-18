@@ -4,10 +4,7 @@ import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirt
 import { UploadButton, useMedplum, useMedplumProfile } from '@medplum/react';
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
-import generateId from '../../helpers/generate-id';
 import getLocaleDate from '../../helpers/get-locale-date';
-
-const chatIdGenerator = generateId();
 
 export default function Chat(): JSX.Element | null {
   const medplum = useMedplum();
@@ -170,8 +167,8 @@ export default function Chat(): JSX.Element | null {
                                 </div>
                                 {resource?.payload && (
                                   <div className="mt-1 flex flex-col items-start space-y-2 text-sm text-gray-700">
-                                    {resource.payload.map((content) => (
-                                      <React.Fragment key={chatIdGenerator.next().value}>
+                                    {resource.payload.map((content, contentIndex) => (
+                                      <React.Fragment key={contentIndex}>
                                         {content.contentString && <p>{content.contentString}</p>}
                                         {content.contentAttachment?.url && (
                                           <a

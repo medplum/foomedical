@@ -6,11 +6,8 @@ import GeneralInfo from '../../components/GeneralInfo';
 import InfoSection from '../../components/InfoSection';
 import Input from '../../components/Input';
 import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
-import generateId from '../../helpers/generate-id';
 import getLocaleDate from '../../helpers/get-locale-date';
 import getPronoun from '../../helpers/get-pronoun';
-
-const profileIdGenerator = generateId();
 
 export default function Profile(): JSX.Element | null {
   const medplum = useMedplum();
@@ -333,12 +330,10 @@ export default function Profile(): JSX.Element | null {
                 <div className="flex flex-col space-y-2">{inputs.contact}</div>
               ) : (
                 <>
-                  {resource.telecom.map(({ system, use, value }) => (
-                    <React.Fragment key={profileIdGenerator.next().value}>
-                      <span className="text-lg capitalize text-gray-600">
-                        {system} ({use}): {value}
-                      </span>
-                    </React.Fragment>
+                  {resource.telecom.map(({ system, use, value }, telecomIndex) => (
+                    <span key={telecomIndex} className="text-lg capitalize text-gray-600">
+                      {system} ({use}): {value}
+                    </span>
                   ))}
                 </>
               )}
@@ -405,10 +400,10 @@ export default function Profile(): JSX.Element | null {
                 <div className="flex flex-col space-y-2">{inputs.address}</div>
               ) : (
                 <>
-                  {resource.address.map(({ city, line, state }) => (
-                    <div key={profileIdGenerator.next().value}>
-                      {line?.map((line) => (
-                        <p className="text-lg text-gray-600" key={profileIdGenerator.next().value}>
+                  {resource.address.map(({ city, line, state }, addressIndex) => (
+                    <div key={addressIndex}>
+                      {line?.map((line, lineIndex) => (
+                        <p className="text-lg text-gray-600" key={lineIndex}>
                           {line}
                         </p>
                       ))}
