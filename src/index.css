@@ -7,14 +7,17 @@
     @apply mt-6 mb-8 text-center text-3xl font-extrabold text-gray-900;
   }
 
+  #signin label[for='firstName'],
+  #signin label[for='lastName'],
   #signin label[for='email'],
   #signin label[for='password'] {
     @apply block text-sm font-medium text-gray-700;
   }
 
+  #signin input[type='text'],
   #signin input[type='email'],
   #signin input[type='password'] {
-    @apply appearance-none block w-full mb-6 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm;
+    @apply mb-6 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm;
   }
 
   #signin .medplum-signin-buttons > div {
@@ -22,7 +25,7 @@
   }
 
   #signin input[type='checkbox'] {
-    @apply h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded;
+    @apply h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500;
   }
 
   #signin label[for='remember'] {
@@ -30,11 +33,56 @@
   }
 
   #signin button[type='submit'] {
-    @apply w-full flex justify-center my-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500;
+    @apply my-6 flex w-full justify-center rounded-md border border-transparent bg-teal-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
   }
 
-  #signin .medplum-signin-google-container {
-    margin-top: 40px;
-    margin-left: 90px;
+  #signin p {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
   }
+}
+
+.medplum-document {
+  margin: 10px auto 6px auto;
+  padding: 10px;
+  clear: both;
+  text-align: left;
+}
+
+.medplum-signin-google-container {
+  padding: 20px 0 10px 0;
+  margin: 20px 0 10px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medplum-signin-separator {
+  padding: 12px 0;
+  margin: 12px 0;
+  overflow: hidden;
+  text-align: center;
+  font-size: 12px;
+}
+
+.medplum-signin-separator::before,
+.medplum-signin-separator::after {
+  background-color: #aaa;
+  content: '';
+  display: inline-block;
+  height: 0.1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.medplum-signin-separator::before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.medplum-signin-separator::after {
+  left: 0.5em;
+  margin-right: -50%;
 }

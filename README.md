@@ -1,26 +1,25 @@
-# Medplum Hello World
+<h1 align="center">Foo Medical</h1>
+<p align="center">A free and open-source healthcare webapp from the Medplum team.</p>
 
-This example app demonstrates the following:
+![Foo Medical Screenshot](screenshot.png)
 
-- Creating a new React app with Vite and TypeScript
-- Adding Medplum dependencies
-- Adding basic URL routing
-- Using the Medplum client to search for FHIR resources
-- Using Medplum GraphQL queries
-- Using Medplum React controls to display FHIR data
+### Features
 
-## Getting Started
+* Completely free and open-source
+* Secure and compliant [Medplum](https://www.medplum.com) backend
+* Patient registration and authentication
+* Health records
+  * Lab results
+  * Medications
+  * Vaccines
+  * Vitals
+* Patient-provider messaging
+* Care plans
+* Patient scheduling
+* All data represented with [FHIR](https://hl7.org/FHIR/)
 
-First, install all the packages
+Foo Medical is designed to be forked and customized for your business's needs.
 
-```javascript
-npm install
-```
+### About Medplum
 
-Next, run the app
-
-```javascript
-npm run dev
-```
-
-This app should run on `http://localhost:3000/`
+Medplum is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less codce.
