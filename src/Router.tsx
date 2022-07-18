@@ -5,6 +5,7 @@ import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { ProfileResource } from '@medplum/core';
 import { profileContext } from './profileContext';
+import { HomePage } from './pages/HomePage';
 import Account from './pages/account';
 import HealthRecord from './pages/health-record';
 import Observation from './pages/observation';
@@ -20,7 +21,7 @@ export default function Router({ profile }: RouterProps): JSX.Element {
   return profile ? (
     <profileContext.Provider value={profile}>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/health-record/lab-results" />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="messages/*" element={<Messages />} />
         <Route path="health-record/*" element={<HealthRecord />} />
         <Route path="Observation/*" element={<Observation />} />
