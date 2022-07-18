@@ -7,8 +7,5 @@ export function App(): JSX.Element | null {
   if (medplum.isLoading()) {
     return null;
   }
-
-  const profile = medplum.getProfile();
-
-  return <Router profile={profile} />;
+  return <Router />;
 }

@@ -1,20 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { profileContext } from '../../profileContext';
-import { UploadButton, useMedplum } from '@medplum/react';
+import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
 import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
 import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
-import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
+import { UploadButton, useMedplum, useMedplumProfile } from '@medplum/react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
-import getLocaleDate from '../../helpers/get-locale-date';
 import generateId from '../../helpers/generate-id';
+import getLocaleDate from '../../helpers/get-locale-date';
 
 const chatIdGenerator = generateId();
 
 export default function Chat(): JSX.Element | null {
   const medplum = useMedplum();
-  const profile = useContext(profileContext);
-  if (!profile.id || !profile.name) return null;
-
+  const profile = useMedplumProfile() as ProfileResource;
   const subject = `${profile.resourceType}/${profile.id}`;
   const [messages, setMessages] = useState<Communication[]>();
   const [profiles, setProfiles] = useState<ProfileResource[]>([]);

@@ -1,22 +1,20 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { formatHumanName, formatGivenName, formatFamilyName, ProfileResource } from '@medplum/core';
-import { Button, useMedplum } from '@medplum/react';
-import { profileContext } from '../../profileContext';
-import { PencilIcon, CheckIcon, PlusIcon } from '@heroicons/react/solid';
-import InfoSection from '../../components/InfoSection';
+import { CheckIcon, PencilIcon, PlusIcon } from '@heroicons/react/solid';
+import { formatFamilyName, formatGivenName, formatHumanName, ProfileResource } from '@medplum/core';
+import { Button, useMedplum, useMedplumProfile } from '@medplum/react';
+import React, { useEffect, useRef, useState } from 'react';
 import GeneralInfo from '../../components/GeneralInfo';
-import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
+import InfoSection from '../../components/InfoSection';
 import Input from '../../components/Input';
-import getPronoun from '../../helpers/get-pronoun';
-import getLocaleDate from '../../helpers/get-locale-date';
+import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
 import generateId from '../../helpers/generate-id';
+import getLocaleDate from '../../helpers/get-locale-date';
+import getPronoun from '../../helpers/get-pronoun';
 
 const profileIdGenerator = generateId();
 
 export default function Profile(): JSX.Element | null {
-  const profile = useContext(profileContext);
-  if (!profile.id) return null;
   const medplum = useMedplum();
+  const profile = useMedplumProfile() as ProfileResource;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [resource, setResource] = useState<ProfileResource>();
