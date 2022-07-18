@@ -7,7 +7,6 @@ import InfoSection from '../../components/InfoSection';
 import Input from '../../components/Input';
 import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
 import getLocaleDate from '../../helpers/get-locale-date';
-import getPronoun from '../../helpers/get-pronoun';
 
 export default function Profile(): JSX.Element | null {
   const medplum = useMedplum();
@@ -216,31 +215,25 @@ export default function Profile(): JSX.Element | null {
         );
       }
       if (resource.gender) {
-        personalItems.push(
-          {
-            label: <p>Sex</p>,
-            body: (
-              <>
-                {activeInputName === 'gender' ? (
-                  <div className="flex space-x-2">{inputs.gender}</div>
-                ) : (
-                  <p className="text-lg text-gray-600">{resource.gender}</p>
-                )}
-                <Button
-                  onClick={() => {
-                    toggleInputButton('gender', [{ op: 'replace', path: '/gender', value: profileValues.gender }]);
-                  }}
-                >
-                  {toggleButtonIcons('gender')}
-                </Button>
-              </>
-            ),
-          },
-          {
-            label: 'Pronouns',
-            body: <p className="text-lg text-gray-600">{getPronoun(resource.gender)}</p>,
-          }
-        );
+        personalItems.push({
+          label: <p>Sex</p>,
+          body: (
+            <>
+              {activeInputName === 'gender' ? (
+                <div className="flex space-x-2">{inputs.gender}</div>
+              ) : (
+                <p className="text-lg text-gray-600">{resource.gender}</p>
+              )}
+              <Button
+                onClick={() => {
+                  toggleInputButton('gender', [{ op: 'replace', path: '/gender', value: profileValues.gender }]);
+                }}
+              >
+                {toggleButtonIcons('gender')}
+              </Button>
+            </>
+          ),
+        });
       } else {
         personalItems.push({
           label: <p>Sex</p>,
