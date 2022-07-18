@@ -1,5 +1,4 @@
-import { Scheduler } from '../../../components/Scheduler';
-import { Document, useMedplum } from '@medplum/react';
+import { Document, Scheduler, useMedplum } from '@medplum/react';
 import './GetCare.css';
 
 export default function GetCare(): JSX.Element {
