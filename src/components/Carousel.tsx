@@ -4,9 +4,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/outline';
 import { CarouselConfig } from '../constants/carouselConfig';
 import { MouseEvent, ReactNode } from 'react';
-import generateId from '../helpers/generate-id';
-
-const carouselIdGenerator = generateId();
 
 interface CarouselItem {
   img: ReactNode;
@@ -49,7 +46,7 @@ const Carousel = ({ items }: CarouselProps): JSX.Element => {
     <div className="mb-16 w-full md:mb-10">
       <Slider {...settings}>
         {items.map(({ img, title, description, url, label }) => (
-          <div key={carouselIdGenerator.next().value} className="h-full border border-gray-400 bg-white p-4">
+          <div key={title} className="h-full border border-gray-400 bg-white p-4">
             {img}
             <h2 className="mt-4 text-sm font-bold">{title}</h2>
             <p className="my-2 text-sm">{description}</p>

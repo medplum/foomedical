@@ -1,12 +1,10 @@
+import { useMedplumProfile } from '@medplum/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { GiftIcon, XIcon } from '@heroicons/react/outline';
 import Button from '../components/Button';
 import Carousel from '../components/Carousel';
-import { useContext } from 'react';
-import { profileContext } from '../profileContext';
-import { formatHumanName } from '@medplum/core';
-import generateId from '../helpers/generate-id';
+import { formatHumanName, ProfileResource } from '@medplum/core';
 import { ReactComponent as MedplumImage } from '../img/homePage/medplum.svg';
 import PeopleTalkImage from '../img/homePage/people-talk.jpg';
 import HealthVisitImage from '../img/homePage/health-visit.jpg';
@@ -15,8 +13,6 @@ import { ReactComponent as HealthRecordImage } from '../img/homePage/health-reco
 import { ReactComponent as PillImage } from '../img/homePage/pill.svg';
 import { ReactComponent as PharmacyImage } from '../img/homePage/pharmacy.svg';
 import { ReactComponent as DoctorImage } from '../img/homePage/doctor.svg';
-
-const homePageIdGenerator = generateId();
 
 const carouselItems = [
   {
@@ -90,7 +86,7 @@ const recommendations = [
 ];
 
 export function HomePage(): JSX.Element {
-  const profile = useContext(profileContext);
+  const profile = useMedplumProfile() as ProfileResource;
   const profileName = profile.name ? formatHumanName(profile.name[0]) : '';
 
   return (
@@ -202,7 +198,7 @@ export function HomePage(): JSX.Element {
           <div className="mt-10 flex w-full flex-col justify-center space-y-4 text-lg md:flex-row md:items-stretch md:space-y-0 md:space-x-4">
             {linkPages.map(({ href, img, title, description }) => (
               <a
-                key={homePageIdGenerator.next().value}
+                key={title}
                 href={href}
                 className="flex h-auto w-full flex-col items-center justify-center space-y-4 border border-gray-400 bg-white p-4 text-center"
               >
@@ -234,7 +230,7 @@ export function HomePage(): JSX.Element {
             <div className="w-full border border-gray-400 bg-white text-sm md:w-2/4">
               {recommendations.map((item) => (
                 <a
-                  key={homePageIdGenerator.next().value}
+                  key={item.title}
                   href="#"
                   className="block border-gray-400 p-4 text-center even:border-y md:text-left"
                 >
