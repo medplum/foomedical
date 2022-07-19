@@ -40,6 +40,26 @@
     padding-bottom: 8px;
     margin-bottom: 8px;
   }
+
+  .slick-track {
+    display: flex !important;
+  }
+  .slick-slide {
+    display: flex !important;
+    height: auto !important;
+  }
+
+  .slick-dots {
+    bottom: -2rem !important;
+  }
+
+  .slick-slide > div {
+    @apply mx-2;
+  }
+
+  .slick-list {
+    @apply -mx-2;
+  }
 }
 
 .medplum-document {

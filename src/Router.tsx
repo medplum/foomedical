@@ -1,5 +1,6 @@
 import { useMedplumProfile } from '@medplum/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
 import Account from './pages/account';
 import CarePlan from './pages/care-plan';
 import GetCare from './pages/get-care';
@@ -15,7 +16,7 @@ export default function Router(): JSX.Element {
   const profile = useMedplumProfile();
   return profile ? (
     <Routes>
-      <Route path="/" element={<Navigate replace to="/health-record/lab-results" />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="messages/*" element={<Messages />} />
       <Route path="health-record/*" element={<HealthRecord />} />
       <Route path="Observation/*" element={<Observation />} />
