@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 import react from '@vitejs/plugin-react';
-import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     coverage: {
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
     },
   },
 });
