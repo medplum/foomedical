@@ -6,7 +6,7 @@ import Carousel from '../components/Carousel';
 import { useContext } from 'react';
 import { profileContext } from '../profileContext';
 import { formatHumanName } from '@medplum/core';
-import { useId } from 'react';
+import generateId from '../helpers/generate-id';
 import { ReactComponent as MedplumImage } from '../img/homePage/medplum.svg';
 import PeopleTalkImage from '../img/homePage/people-talk.jpg';
 import HealthVisitImage from '../img/homePage/health-visit.jpg';
@@ -16,55 +16,40 @@ import { ReactComponent as PillImage } from '../img/homePage/pill.svg';
 import { ReactComponent as PharmacyImage } from '../img/homePage/pharmacy.svg';
 import { ReactComponent as DoctorImage } from '../img/homePage/doctor.svg';
 
+const homePageIdGenerator = generateId();
+
 const carouselItems = [
   {
     img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
     title: 'Welcome to Foo Medical',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Learn how we help',
+    url: '/get-care',
+    label: 'Learn how we help',
   },
   {
     img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
     title: 'Verify Email',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Send verification email',
+    url: '/account',
+    label: 'Send verification email',
   },
   {
     img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
     title: 'Select a PCP',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Choose a Primary Care Provider',
+    url: '/account/provider/choose-a-primary-care-povider',
+    label: 'Choose a Primary Care Provider',
   },
   {
     img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
     title: 'Emergency Contact',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Add emergency contact',
-  },
-  {
-    img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
-    title: 'Verify Email',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Send verification email',
-  },
-  {
-    img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
-    title: 'Select a PCP',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Choose a Primary Care Provider',
-  },
-  {
-    img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
-    title: 'Emergency Contact',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    link: 'Add emergency contact',
+    url: '/account',
+    label: 'Add emergency contact',
   },
 ];
 
@@ -105,17 +90,17 @@ const recommendations = [
 ];
 
 export function HomePage(): JSX.Element {
-  const id = useId();
   const profile = useContext(profileContext);
   const profileName = profile.name ? formatHumanName(profile.name[0]) : '';
+
   return (
     <div>
       <Header />
       <div className="flex justify-center bg-sky-100 py-4 px-6 text-sm text-gray-600">
         <span>
-          Invite your friends and colleagues{' '}
+          Invite your friends.{' '}
           <a href="#" className="font-semibold text-sky-700">
-            Share the code FOO100 now through end of year. See details.
+            Share the code NEWTOFOO for fast access. See details.
           </a>
         </span>
       </div>
@@ -137,7 +122,7 @@ export function HomePage(): JSX.Element {
         <div className="flex flex-col items-center justify-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
           <div className="flex items-center justify-start space-x-1 font-medium text-white">
             <GiftIcon className="h-8 w-8 stroke-1 text-lime-600" />
-            <p>Give the gift of Foo Medical</p>
+            <p>Give $50 off Foo Medical</p>
           </div>
           <Button label="Invite Friends" url="#" marginsUtils="m-0" />
         </div>
@@ -217,7 +202,7 @@ export function HomePage(): JSX.Element {
           <div className="mt-10 flex w-full flex-col justify-center space-y-4 text-lg md:flex-row md:items-stretch md:space-y-0 md:space-x-4">
             {linkPages.map(({ href, img, title, description }) => (
               <a
-                key={id}
+                key={homePageIdGenerator.next().value}
                 href={href}
                 className="flex h-auto w-full flex-col items-center justify-center space-y-4 border border-gray-400 bg-white p-4 text-center"
               >
@@ -232,7 +217,7 @@ export function HomePage(): JSX.Element {
           <div className="mt-10 flex w-full flex-col justify-center space-y-6 md:flex-row md:justify-start md:space-y-0 md:space-x-6">
             <div className="flex w-full flex-col items-center space-y-4 border border-gray-400 bg-white p-4 md:w-2/4 md:flex-row md:items-start md:space-x-2 md:space-y-0">
               <DoctorImage className="h-auto w-28 rounded-full" />
-              <div className="space-y-2 text-center md:text-left">
+              <div className="space-y-4 text-center md:text-left">
                 <h2 className="text-lg font-bold">Primary Care Provider</h2>
                 <p>Having a provider who knows you can lead to better health.</p>
                 <Button
@@ -248,7 +233,11 @@ export function HomePage(): JSX.Element {
             </div>
             <div className="w-full border border-gray-400 bg-white text-sm md:w-2/4">
               {recommendations.map((item) => (
-                <a key={id} href="#" className="block border-gray-400 p-4 text-center even:border-y md:text-left">
+                <a
+                  key={homePageIdGenerator.next().value}
+                  href="#"
+                  className="block border-gray-400 p-4 text-center even:border-y md:text-left"
+                >
                   <h2 className="font-bold">{item.title}</h2>
                   <p>{item.description}</p>
                 </a>

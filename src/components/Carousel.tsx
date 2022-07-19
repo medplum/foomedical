@@ -3,13 +3,17 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/outline';
 import { CarouselConfig } from '../constants/carouselConfig';
-import { useId, MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
+import generateId from '../helpers/generate-id';
+
+const carouselIdGenerator = generateId();
 
 interface CarouselItem {
   img: ReactNode;
   title: string;
   description: string;
-  link: string;
+  url: string;
+  label: string;
 }
 
 interface CarouselProps {
@@ -40,17 +44,17 @@ const Carousel = ({ items }: CarouselProps): JSX.Element => {
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
   };
-  const id = useId();
+
   return (
     <div className="mb-16 w-full md:mb-10">
       <Slider {...settings}>
-        {items.map((item) => (
-          <div key={id} className="h-full border border-gray-400 bg-white p-4">
-            {item.img}
-            <h2 className="mt-2 text-sm font-bold">{item.title}</h2>
-            <p className="my-2 text-sm">{item.description}</p>
-            <a href="#" className="text-sm text-blue-700">
-              {item.link}
+        {items.map(({ img, title, description, url, label }) => (
+          <div key={carouselIdGenerator.next().value} className="h-full border border-gray-400 bg-white p-4">
+            {img}
+            <h2 className="mt-4 text-sm font-bold">{title}</h2>
+            <p className="my-2 text-sm">{description}</p>
+            <a href={url} className="text-sm text-blue-700">
+              {label}
             </a>
           </div>
         ))}
