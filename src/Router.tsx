@@ -1,36 +1,30 @@
+import { useMedplumProfile } from '@medplum/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { LandingPage } from './pages/LandingPage';
-import Messages from './pages/messages';
-import { SignInPage } from './pages/SignInPage';
-import { SignOutPage } from './pages/SignOutPage';
-import { ProfileResource } from '@medplum/core';
-import { profileContext } from './profileContext';
 import { HomePage } from './pages/HomePage';
 import Account from './pages/account';
-import HealthRecord from './pages/health-record';
-import Observation from './pages/observation';
 import CarePlan from './pages/care-plan';
 import GetCare from './pages/get-care';
+import HealthRecord from './pages/health-record';
+import { LandingPage } from './pages/LandingPage';
+import Messages from './pages/messages';
+import Observation from './pages/observation';
 import { RegisterPage } from './pages/RegisterPage';
+import { SignInPage } from './pages/SignInPage';
+import { SignOutPage } from './pages/SignOutPage';
 
-export interface RouterProps {
-  profile: ProfileResource | undefined;
-}
-
-export default function Router({ profile }: RouterProps): JSX.Element {
+export default function Router(): JSX.Element {
+  const profile = useMedplumProfile();
   return profile ? (
-    <profileContext.Provider value={profile}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="messages/*" element={<Messages />} />
-        <Route path="health-record/*" element={<HealthRecord />} />
-        <Route path="Observation/*" element={<Observation />} />
-        <Route path="care-plan/*" element={<CarePlan />} />
-        <Route path="get-care/*" element={<GetCare />} />
-        <Route path="account/*" element={<Account />} />
-        <Route path="signout" element={<SignOutPage />} />
-      </Routes>
-    </profileContext.Provider>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="messages/*" element={<Messages />} />
+      <Route path="health-record/*" element={<HealthRecord />} />
+      <Route path="Observation/*" element={<Observation />} />
+      <Route path="care-plan/*" element={<CarePlan />} />
+      <Route path="get-care/*" element={<GetCare />} />
+      <Route path="account/*" element={<Account />} />
+      <Route path="signout" element={<SignOutPage />} />
+    </Routes>
   ) : (
     <Routes>
       <Route path="/" element={<LandingPage />} />

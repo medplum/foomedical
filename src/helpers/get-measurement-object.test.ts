@@ -20,7 +20,7 @@ describe('getMeasurementObject helper', () => {
     const result = getMeasurementObject('Blood Pressure', 'testRef', 'testFirstVal', 'testSecondVal');
 
     expect(result.code?.coding).toBeDefined();
-    expect(result.code?.coding![0]).toContain(expectedCoding);
+    expect(result.code?.coding?.[0]).toContain(expectedCoding);
   });
 
   test('should pass reference and value arguments to returned Observation object', () => {
@@ -33,8 +33,8 @@ describe('getMeasurementObject helper', () => {
 
     expect(result.component).toBeDefined();
     expect(result.component).toHaveLength(2);
-    expect(result.component![0].valueQuantity?.value).toBe(Number(testFirstValue));
-    expect(result.component![1].valueQuantity?.value).toBe(Number(testSecondValue));
+    expect(result.component?.[0].valueQuantity?.value).toBe(Number(testFirstValue));
+    expect(result.component?.[1].valueQuantity?.value).toBe(Number(testSecondValue));
   });
 
   test('should contain current timestamp', () => {

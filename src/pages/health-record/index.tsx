@@ -4,7 +4,7 @@ import PageLayout from '../../components/PageLayout';
 import { measurementsMeta } from './Measurement';
 
 const LabResults = lazy(() => import('./LabResults'));
-const MainResult = lazy(() => import('./MainResult/MainResult'));
+const MainResult = lazy(() => import('./MainResult'));
 const Medications = lazy(() => import('./Medications'));
 const Medication = lazy(() => import('./Medication'));
 const PrescriptionRenewal = lazy(() => import('./PrescriptionRenewal'));

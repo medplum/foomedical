@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useMedplum } from '@medplum/react';
-import { Bundle, CarePlan } from '@medplum/fhirtypes';
-import { Link } from 'react-router-dom';
 import { CalendarIcon } from '@heroicons/react/solid';
-import generateId from '../../helpers/generate-id';
-import getLocaleDate from '../../helpers/get-locale-date';
+import { Bundle, CarePlan } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageTitle from '../../components/PageTitle';
-
-const actionItemsIdGenerator = generateId();
+import getLocaleDate from '../../helpers/get-locale-date';
 
 const profile = 'Patient/00a52397-8c6f-44ee-8e4d-e2ca7229feb4';
 
@@ -35,55 +32,43 @@ function ActionItemsList({ actionItems, title }: ActionItemsListProps): JSX.Elem
       <PageTitle title={title} />
       <div className="overflow-hidden border bg-white sm:rounded-md">
         <ul role="list" className="divide-y divide-gray-200">
-          {actionItems &&
-            actionItems.map((resource) => {
-              if (resource) {
-                return (
-                  <React.Fragment key={resource.id}>
-                    <li key={actionItemsIdGenerator.next().value}>
-                      <Link to={resource.id || ''} className="block hover:bg-gray-50">
-                        <div className="px-4 py-4 sm:px-6">
-                          <div className="flex items-center justify-between">
-                            {resource.title && (
-                              <p className="truncate text-sm font-medium text-teal-600">{resource.title}</p>
-                            )}
-                            <div className="ml-2 flex flex-shrink-0">
-                              {resource.status && (
-                                <p
-                                  className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusStyles(
-                                    resource.status
-                                  )}`}
-                                >
-                                  {resource.status}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          {resource.period && (
-                            <div className="mt-2 sm:flex sm:justify-between">
-                              <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                <CalendarIcon
-                                  className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
-                                  aria-hidden="true"
-                                />
-                                <p>
-                                  <time>{getLocaleDate(resource.period.start)} </time>
-                                </p>
-                                {resource.period.end && (
-                                  <p>
-                                    <time>&nbsp;-&nbsp;{getLocaleDate(resource.period.end)}</time>
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-                    </li>
-                  </React.Fragment>
-                );
-              }
-            })}
+          {actionItems.map((resource) => (
+            <li key={resource.id}>
+              <Link to={resource.id || ''} className="block hover:bg-gray-50">
+                <div className="px-4 py-4 sm:px-6">
+                  <div className="flex items-center justify-between">
+                    {resource.title && <p className="truncate text-sm font-medium text-teal-600">{resource.title}</p>}
+                    <div className="ml-2 flex flex-shrink-0">
+                      {resource.status && (
+                        <p
+                          className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusStyles(
+                            resource.status
+                          )}`}
+                        >
+                          {resource.status}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {resource.period && (
+                    <div className="mt-2 sm:flex sm:justify-between">
+                      <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                        <CalendarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                        <p>
+                          <time>{getLocaleDate(resource.period.start)} </time>
+                        </p>
+                        {resource.period.end && (
+                          <p>
+                            <time>&nbsp;-&nbsp;{getLocaleDate(resource.period.end)}</time>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

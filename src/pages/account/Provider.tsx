@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useMedplum } from '@medplum/react';
-import { Link } from 'react-router-dom';
 import { formatHumanName } from '@medplum/core';
-import InfoSection from '../../components/InfoSection';
-import GeneralInfo from '../../components/GeneralInfo';
-import TwoColumnsList from '../../components/TwoColumnsList';
-import PageTitle from '../../components/PageTitle';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
-import generateId from '../../helpers/generate-id';
-
-const providerIdGenerator = generateId();
+import { useMedplum } from '@medplum/react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import GeneralInfo from '../../components/GeneralInfo';
+import InfoSection from '../../components/InfoSection';
+import PageTitle from '../../components/PageTitle';
+import TwoColumnsList from '../../components/TwoColumnsList';
 
 export default function Provider(): JSX.Element {
   const medplum = useMedplum();
@@ -28,22 +25,22 @@ export default function Provider(): JSX.Element {
         })
         .catch((err) => console.error(err));
     });
-  }, [patient]);
+  }, [medplum, patient]);
 
   return (
     <>
       <PageTitle title="My Provider" />
       {practitioners.length > 0 ? (
-        practitioners?.map(({ name, photo, address }) => {
+        practitioners?.map(({ name, photo, address }, practitionerIndex) => {
           const practitionerItems = [
             {
               label: 'Address',
               body: (
                 <>
-                  {address?.map(({ city, line, state }) => (
-                    <div key={providerIdGenerator.next().value}>
-                      {line?.map((line) => (
-                        <p className="text-lg text-gray-600" key={providerIdGenerator.next().value}>
+                  {address?.map(({ city, line, state }, addressIndex) => (
+                    <div key={addressIndex}>
+                      {line?.map((line, lineIndex) => (
+                        <p className="text-lg text-gray-600" key={lineIndex}>
                           {line}
                         </p>
                       ))}
@@ -58,7 +55,7 @@ export default function Provider(): JSX.Element {
           ];
 
           return (
-            <div className="mb-20 last:mb-0" key={providerIdGenerator.next().value}>
+            <div className="mb-20 last:mb-0" key={practitionerIndex}>
               <InfoSection title="My Primary Care Provider">
                 <div className="mx-auto px-4 py-5 text-center sm:px-6">
                   <GeneralInfo

@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import PageLayout from '../../components/PageLayout';
 import { sideMenu } from '../health-record';
 
-const ObservationResult = lazy(() => import('./ObservationResult/ObservationResult'));
+const ObservationResult = lazy(() => import('./ObservationResult'));
 
 export default function Observation(): JSX.Element {
   return (

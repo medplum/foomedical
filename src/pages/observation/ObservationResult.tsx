@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useMedplum, ResourceTable } from '@medplum/react';
 import { Observation } from '@medplum/fhirtypes';
-import LinkToPreviousPage from '../../../components/LinkToPreviousPage';
-import InfoSection from '../../../components/InfoSection';
-import NoData from '../../../components/NoData';
+import { ResourceTable, useMedplum } from '@medplum/react';
+import { useNavigate, useParams } from 'react-router-dom';
+import InfoSection from '../../components/InfoSection';
+import LinkToPreviousPage from '../../components/LinkToPreviousPage';
+import NoData from '../../components/NoData';
 import './ObservationResult.css';
 
 export default function ObservationResult(): JSX.Element {

@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/react';
-import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { InformationCircleIcon } from '@heroicons/react/outline';
+import { BundleEntry, Observation } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
+import MeasurementModal from '../../components/MeasurementModal';
 import getLocaleDate from '../../helpers/get-locale-date';
 import renderValue from '../../helpers/get-render-value';
-import MeasurementCodes from '../../constants/measurementCodes';
-import MeasurementModal from '../../components/MeasurementModal';
 
 interface measurementsMetaType {
   [key: string]: {
@@ -44,7 +43,7 @@ export const secondBorderColor = 'rgba(255, 119, 0, 1)';
 export const measurementsMeta: measurementsMetaType = {
   'blood-pressure': {
     id: 'blood-pressure',
-    code: MeasurementCodes['85354-9'][0].code,
+    code: '85354-9',
     title: 'Blood Pressure',
     description:
       'Your blood pressure is the pressure exerted on the walls of your blood vessels. When this pressure is high, it can damage your blood vessels and increase your risk for a heart attack or stroke. We measure your blood pressure periodically to make sure it is not staying high. Hypertention is a condition that refers to consistantly high blood pressure.',
@@ -63,7 +62,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'body-temperature': {
     id: 'body-temperature',
-    code: MeasurementCodes['8310-5'][0].code,
+    code: '8310-5',
     title: 'Body Temperature',
     description: 'Your body temperature values',
     chartDatasets: [
@@ -76,7 +75,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   height: {
     id: 'height',
-    code: MeasurementCodes['8302-2'][0].code,
+    code: '8302-2',
     title: 'Height',
     description: 'Your height values',
     chartDatasets: [
@@ -89,7 +88,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'respiratory-rate': {
     id: 'respiratory-rate',
-    code: MeasurementCodes['9279-1'][0].code,
+    code: '9279-1',
     title: 'Respiratory Rate',
     description: 'Your respiratory rate values',
     chartDatasets: [
@@ -102,7 +101,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   'heart-rate': {
     id: 'heart-rate',
-    code: MeasurementCodes['8867-4'][0].code,
+    code: '8867-4',
     title: 'Heart Rate',
     description: 'Your heart rate values',
     chartDatasets: [
@@ -115,7 +114,7 @@ export const measurementsMeta: measurementsMetaType = {
   },
   weight: {
     id: 'weight',
-    code: MeasurementCodes['29463-7'][0].code,
+    code: '29463-7',
     title: 'Weight',
     description: 'Your weight values',
     chartDatasets: [
@@ -130,8 +129,7 @@ export const measurementsMeta: measurementsMetaType = {
 
 const Measurement = (): JSX.Element | null => {
   const { measurementId } = useParams();
-  if (!measurementId) return null;
-  const { code, title, description, chartDatasets } = measurementsMeta[measurementId];
+  const { code, title, description, chartDatasets } = measurementsMeta[measurementId as string];
 
   const medplum = useMedplum();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -157,7 +155,11 @@ const Measurement = (): JSX.Element | null => {
         })),
       });
     }
-  }, [measurements]);
+  }, [chartDatasets, measurements]);
+
+  if (!measurementId) {
+    return null;
+  }
 
   const getDatasets = (index: number, measurements?: BundleEntry<Observation>[]): (number | undefined)[] => {
     if (measurements) {

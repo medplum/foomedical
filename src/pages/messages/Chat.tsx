@@ -1,20 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { profileContext } from '../../profileContext';
-import { UploadButton, useMedplum } from '@medplum/react';
+import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
 import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
 import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
-import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
+import { UploadButton, useMedplum, useMedplumProfile } from '@medplum/react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import getLocaleDate from '../../helpers/get-locale-date';
-import generateId from '../../helpers/generate-id';
-
-const chatIdGenerator = generateId();
 
 export default function Chat(): JSX.Element | null {
   const medplum = useMedplum();
-  const profile = useContext(profileContext);
-  if (!profile.id || !profile.name) return null;
-
+  const profile = useMedplumProfile() as ProfileResource;
   const subject = `${profile.resourceType}/${profile.id}`;
   const [messages, setMessages] = useState<Communication[]>();
   const [profiles, setProfiles] = useState<ProfileResource[]>([]);
@@ -102,7 +96,7 @@ export default function Chat(): JSX.Element | null {
       )
       .then((value) => setMessages(value.data.CommunicationList as Communication[]))
       .catch((err) => console.error(err));
-  }, []);
+  }, [medplum, subject]);
 
   useEffect(() => {
     if (!messages) {
@@ -124,7 +118,7 @@ export default function Chat(): JSX.Element | null {
         .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
         .catch((err) => console.error(err));
     });
-  }, [messages]);
+  }, [medplum, messages]);
 
   return (
     <div className="flex flex-col justify-between">
@@ -173,8 +167,8 @@ export default function Chat(): JSX.Element | null {
                                 </div>
                                 {resource?.payload && (
                                   <div className="mt-1 flex flex-col items-start space-y-2 text-sm text-gray-700">
-                                    {resource.payload.map((content) => (
-                                      <React.Fragment key={chatIdGenerator.next().value}>
+                                    {resource.payload.map((content, contentIndex) => (
+                                      <React.Fragment key={contentIndex}>
                                         {content.contentString && <p>{content.contentString}</p>}
                                         {content.contentAttachment?.url && (
                                           <a

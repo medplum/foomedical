@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import { useMedplum } from '@medplum/react';
+import { XIcon } from '@heroicons/react/outline';
 import { formatHumanName } from '@medplum/core';
 import { Practitioner } from '@medplum/fhirtypes';
-import { XIcon } from '@heroicons/react/outline';
+import { useMedplum } from '@medplum/react';
+import React, { useState } from 'react';
+import Button from '../../components/Button';
+import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import PageTitle from '../../components/PageTitle';
-import InfoSection from '../../components/InfoSection';
-import Button from '../../components/Button';
-import generateId from '../../helpers/generate-id';
-
-const idGenerator = generateId();
 
 const patientId = '3e27eaee-2c55-4400-926e-90982df528e9';
 
@@ -20,8 +17,11 @@ interface PractitionerModalProps {
 }
 
 const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModalProps): JSX.Element | null => {
-  if (!isOpen) return null;
   const medplum = useMedplum();
+
+  if (!isOpen) {
+    return null;
+  }
 
   const name = practitioner.name && formatHumanName(practitioner.name[0], { prefix: true });
 
@@ -62,10 +62,10 @@ const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModa
         <hr className="my-5 text-gray-600" />
         <div className="mb-5">
           <h6 className="text-xl text-gray-800">Office adress</h6>
-          {practitioner.address?.map(({ city, line, state }) => (
-            <div key={idGenerator.next().value}>
-              {line?.map((line) => (
-                <p className="text-lg text-gray-600" key={idGenerator.next().value}>
+          {practitioner.address?.map(({ city, line, state }, addressIndex) => (
+            <div key={addressIndex}>
+              {line?.map((line, lineIndex) => (
+                <p className="text-lg text-gray-600" key={lineIndex}>
                   {line}
                 </p>
               ))}

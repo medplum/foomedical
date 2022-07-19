@@ -1,11 +1,11 @@
-import { Fragment, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import { profileContext } from '../profileContext';
 import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
-import { formatHumanName } from '@medplum/core';
-import { ReactComponent as Logo } from '../img/logo.svg';
+import { formatHumanName, ProfileResource } from '@medplum/core';
+import { useMedplumProfile } from '@medplum/react';
+import { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as AvatarPlaceholder } from '../img/avatar-placeholder.svg';
+import { ReactComponent as Logo } from '../img/logo.svg';
 
 const navigation = [
   { name: 'Health Record', href: '/health-record' },
@@ -23,7 +23,7 @@ function classNames(...classes: string[]): string {
 }
 
 export function Header(): JSX.Element {
-  const profile = useContext(profileContext);
+  const profile = useMedplumProfile() as ProfileResource;
 
   return (
     <header className="bg-white shadow">
