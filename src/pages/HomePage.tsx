@@ -19,7 +19,7 @@ import { ReactComponent as DoctorImage } from '../img/homePage/doctor.svg';
 const carouselItems = [
   {
     img: <MedplumImage className="h-auto w-4/12 rounded-full" />,
-    title: 'Welcome to One Medical',
+    title: 'Welcome to Foo Medical',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
     link: 'Learn how we help',
@@ -100,7 +100,7 @@ const recommendations = [
   },
   {
     title: 'Request health record',
-    description: 'Get records sent to or from One Medical.',
+    description: 'Get records sent to or from Foo Medical.',
   },
 ];
 
@@ -113,9 +113,9 @@ export function HomePage(): JSX.Element {
       <Header />
       <div className="flex justify-center bg-sky-100 py-4 px-6 text-sm text-gray-600">
         <span>
-          $100 off for your friends{' '}
+          Invite your friends and colleagues{' '}
           <a href="#" className="font-semibold text-sky-700">
-            Share the code SUMMER100 now through 6/27. See details.
+            Share the code FOO100 now through end of year. See details.
           </a>
         </span>
       </div>
@@ -137,7 +137,7 @@ export function HomePage(): JSX.Element {
         <div className="flex flex-col items-center justify-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
           <div className="flex items-center justify-start space-x-1 font-medium text-white">
             <GiftIcon className="h-8 w-8 stroke-1 text-lime-600" />
-            <p>Give $50 off One Medical</p>
+            <p>Give the gift of Foo Medical</p>
           </div>
           <Button label="Invite Friends" url="#" marginsUtils="m-0" />
         </div>
