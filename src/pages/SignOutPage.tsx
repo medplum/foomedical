@@ -6,7 +6,7 @@ export function SignOutPage(): null {
 
   useEffect(() => {
     medplum.signOut().then(() => (window.location.href = '/'));
-  }, []);
+  }, [medplum]);
 
   return null;
 }

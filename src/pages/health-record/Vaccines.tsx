@@ -53,8 +53,6 @@ export default function ImmunizationList(): JSX.Element {
   const [pastVaccines, setPastVaccines] = useState<BundleEntry<Immunization>[]>([]);
   const [upcomingVaccines, setUpcomingVaccines] = useState<BundleEntry<Immunization>[]>([]);
 
-  const today = new Date();
-
   const bundle = medplum
     .search('Immunization', '_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
     .read();
@@ -67,6 +65,7 @@ export default function ImmunizationList(): JSX.Element {
       vaccines.find(({ resource }: BundleEntry<Immunization>, i) => {
         if (resource?.occurrenceDateTime) {
           const date = new Date(resource.occurrenceDateTime);
+          const today = new Date();
 
           if (date < today) {
             index = i;

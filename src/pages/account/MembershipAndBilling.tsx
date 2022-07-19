@@ -52,7 +52,7 @@ const MembershipAndBilling = (): JSX.Element => {
         }
       });
     }
-  }, [coverageBundle, pending]);
+  }, [medplum, coverageBundle, pending]);
 
   return (
     <>

@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/react';
-import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { InformationCircleIcon } from '@heroicons/react/outline';
+import { BundleEntry, Observation } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LineChart from '../../components/LineChart';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
+import MeasurementModal from '../../components/MeasurementModal';
+import MeasurementCodes from '../../constants/measurementCodes';
 import getLocaleDate from '../../helpers/get-locale-date';
 import renderValue from '../../helpers/get-render-value';
-import MeasurementCodes from '../../constants/measurementCodes';
-import MeasurementModal from '../../components/MeasurementModal';
 
 interface measurementsMetaType {
   [key: string]: {
@@ -130,8 +130,7 @@ export const measurementsMeta: measurementsMetaType = {
 
 const Measurement = (): JSX.Element | null => {
   const { measurementId } = useParams();
-  if (!measurementId) return null;
-  const { code, title, description, chartDatasets } = measurementsMeta[measurementId];
+  const { code, title, description, chartDatasets } = measurementsMeta[measurementId as string];
 
   const medplum = useMedplum();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -157,7 +156,11 @@ const Measurement = (): JSX.Element | null => {
         })),
       });
     }
-  }, [measurements]);
+  }, [chartDatasets, measurements]);
+
+  if (!measurementId) {
+    return null;
+  }
 
   const getDatasets = (index: number, measurements?: BundleEntry<Observation>[]): (number | undefined)[] => {
     if (measurements) {

@@ -96,7 +96,7 @@ export default function Chat(): JSX.Element | null {
       )
       .then((value) => setMessages(value.data.CommunicationList as Communication[]))
       .catch((err) => console.error(err));
-  }, []);
+  }, [medplum, subject]);
 
   useEffect(() => {
     if (!messages) {
@@ -118,7 +118,7 @@ export default function Chat(): JSX.Element | null {
         .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
         .catch((err) => console.error(err));
     });
-  }, [messages]);
+  }, [medplum, messages]);
 
   return (
     <div className="flex flex-col justify-between">

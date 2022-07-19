@@ -1,7 +1,7 @@
+import { DiagnosticReport } from '@medplum/fhirtypes';
+import { DiagnosticReportDisplay, useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMedplum, DiagnosticReportDisplay } from '@medplum/react';
-import { DiagnosticReport } from '@medplum/fhirtypes';
 import NoData from '../../components/NoData';
 
 export default function MainResult(): JSX.Element {
@@ -14,7 +14,7 @@ export default function MainResult(): JSX.Element {
       .readResource('DiagnosticReport', resultId)
       .then((value) => setResource(value as DiagnosticReport))
       .catch((err) => console.error(err));
-  }, []);
+  }, [medplum, resultId]);
 
   return <>{resource ? <DiagnosticReportDisplay value={resource} /> : <NoData title="results" />}</>;
 }

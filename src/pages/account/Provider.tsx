@@ -25,7 +25,7 @@ export default function Provider(): JSX.Element {
         })
         .catch((err) => console.error(err));
     });
-  }, [patient]);
+  }, [medplum, patient]);
 
   return (
     <>

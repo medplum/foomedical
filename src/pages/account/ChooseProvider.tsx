@@ -17,8 +17,11 @@ interface PractitionerModalProps {
 }
 
 const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModalProps): JSX.Element | null => {
-  if (!isOpen) return null;
   const medplum = useMedplum();
+
+  if (!isOpen) {
+    return null;
+  }
 
   const name = practitioner.name && formatHumanName(practitioner.name[0], { prefix: true });
 
