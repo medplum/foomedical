@@ -1,15 +1,16 @@
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { BundleEntry, Observation } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
-import { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
-import LineChart from '../../components/LineChart';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import MeasurementModal from '../../components/MeasurementModal';
 import getLocaleDate from '../../helpers/get-locale-date';
 import renderValue from '../../helpers/get-render-value';
+
+const LineChart = React.lazy(() => import('../../components/LineChart'));
 
 interface measurementsMetaType {
   [key: string]: {
@@ -181,7 +182,11 @@ const Measurement = (): JSX.Element | null => {
         <h1 className="text-3xl font-extrabold">{title}</h1>
         <Button marginsUtils="ml-0" label="Add Measurement" action={handleAddMeasurement} />
       </div>
-      {chartData && <LineChart chartData={chartData} />}
+      {chartData && (
+        <Suspense fallback={null}>
+          <LineChart chartData={chartData} />
+        </Suspense>
+      )}
       {description && (
         <div className="mb-10 overflow-hidden border bg-white p-4 sm:rounded-md">
           <div className="mb-3 flex items-center text-gray-600">
