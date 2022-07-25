@@ -94,9 +94,9 @@ export function HomePage(): JSX.Element {
       <Header />
       <div className="flex justify-center bg-sky-100 py-4 px-6 text-sm text-gray-600">
         <span>
-          Invite your friends.{' '}
+          Put announcement text here.{' '}
           <a href="#" className="font-semibold text-sky-700">
-            Share the code NEWTOFOO for fast access. See details.
+            Links are useful as well.
           </a>
         </span>
       </div>
@@ -106,10 +106,10 @@ export function HomePage(): JSX.Element {
             <div className="mb-4">
               <h1 className="text-center text-3xl font-extrabold md:text-left">
                 <p>Hi {profileName},</p>
-                <p>we&apos;re here to help.</p>
+                <p>let&apos;s get started.</p>
               </h1>
             </div>
-            <Button url="/get-care" label="Get Care" marginsUtils="m-0" paddingUtils="px-8 py-2" />
+            <Button url="/get-care" label="Appointments" marginsUtils="m-0" paddingUtils="px-8 py-2" />
           </div>
           <img className="max-h-72 w-auto" src={PeopleTalkImage} alt="People talk photo" />
         </div>
@@ -118,9 +118,9 @@ export function HomePage(): JSX.Element {
         <div className="flex flex-col items-center justify-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
           <div className="flex items-center justify-start space-x-1 font-medium text-white">
             <GiftIcon className="h-8 w-8 stroke-1 text-lime-600" />
-            <p>Give $50 off Foo Medical</p>
+            <p>Put notices in this banner</p>
           </div>
-          <Button label="Invite Friends" url="#" marginsUtils="m-0" />
+          <Button label="Take Action" url="#" marginsUtils="m-0" />
         </div>
       </div>
       <div className="w-full bg-stone-100">
@@ -130,7 +130,7 @@ export function HomePage(): JSX.Element {
             <BetterSleepImage className="h-auto w-24 flex-none rounded-full" />
             <div className="flex flex-col items-center md:items-start">
               <div className="mb-2 text-center md:text-left">
-                <h2 className="mb-2 text-lg font-bold">Better sleep, better health</h2>
+                <h2 className="mb-2 text-lg font-bold">Better rest, better health</h2>
                 <p className="mb-2 text-sm">
                   Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus
                   porttitor, auctor. Tellus rutrum sagittis, enim, nulla auctor mattis, magna urna commodo: amet.
@@ -165,7 +165,7 @@ export function HomePage(): JSX.Element {
                 <h3 className="text-xs font-bold uppercase text-green-700">Now available</h3>
               </div>
               <div className="text-center md:text-left">
-                <h2 className="mt-2 text-lg font-bold">Remote Mental Health Visit</h2>
+                <h2 className="mt-2 text-lg font-bold">Remote Dermatology Visit</h2>
                 <p className="mt-2 mb-4 text-sm">
                   Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus
                   porttitor, auctor. Tellus rutrum sagittis, enim, nulla auctor mattis, magna urna commodo: amet.
@@ -215,7 +215,7 @@ export function HomePage(): JSX.Element {
               <DoctorImage className="h-auto w-28 rounded-full" />
               <div className="space-y-4 text-center md:text-left">
                 <h2 className="text-lg font-bold">Primary Care Provider</h2>
-                <p>Having a provider who knows you can lead to better health.</p>
+                <p>Having a consistent, trusted provider can lead to better health.</p>
                 <Button
                   label="Choose Provider"
                   url="account/provider"
