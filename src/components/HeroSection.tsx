@@ -18,6 +18,8 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './Button';
 import { ReactComponent as Logo } from '../img/logo.svg';
+import WorkingEnvironmentImage from '../img/landingPage/working-environment.jpg';
+import DoctorImage from '../img/landingPage/doctor.jpg';
 
 const features = [
   {
@@ -83,7 +85,7 @@ function classNames(...classes: string[]): string {
 
 export function HeroSection(): JSX.Element {
   return (
-    <div className="relative bg-gray-50">
+    <div className="bg-gradient-radial relative from-teal-50">
       <Popover className="relative bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center justify-between space-x-6 py-6 lg:space-x-10">
@@ -334,43 +336,42 @@ export function HeroSection(): JSX.Element {
           </Popover.Panel>
         </Transition>
       </Popover>
-
-      <main className="lg:relative">
-        <div className="mx-auto w-full max-w-7xl pt-16 pb-20 text-center lg:py-48 lg:text-left">
-          <div className="px-4 sm:px-8 lg:w-1/2 xl:pr-16">
-            <h1 className="text-4xl font-normal tracking-wider text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
-              <span className="block xl:inline">An extraordinary</span>{' '}
-              <span className="block text-teal-600 xl:inline">doctor&apos;s office</span>
+      <img
+        className="block h-40 w-full object-cover md:hidden"
+        src={WorkingEnvironmentImage}
+        alt="Working Environment"
+      />
+      <main className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="flex w-full flex-col items-center pt-8 pb-8 text-left sm:items-start sm:pb-36 md:py-36">
+          <div className="flex flex-col items-center sm:items-start">
+            <h1 className="text-center text-3xl font-medium tracking-wider text-gray-900 sm:text-left sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+              <p>An extraordinary</p>
+              <p className="text-teal-600">doctor&apos;s office</p>
             </h1>
-            <p className="mx-auto mt-3 max-w-md text-xl font-normal text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
+            <p className="mt-6 w-full max-w-xs text-lg font-normal text-neutral-600 sm:max-w-none md:max-w-sm lg:max-w-lg lg:text-xl">
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
               fugiat veniam occaecat fugiat aliqua.
             </p>
-            <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
+            <div className="mt-8 sm:flex sm:justify-center md:mt-20 lg:justify-start">
               <div className="rounded-md shadow">
                 <a
                   href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-8 py-3 text-lg font-normal text-white hover:bg-teal-700 md:py-4 md:px-10 md:text-lg"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 py-4 px-20 text-lg font-normal text-white hover:bg-teal-700"
                 >
                   Get started
                 </a>
               </div>
-              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-                <a
-                  href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-white px-8 py-3 text-lg font-normal text-teal-600 hover:bg-gray-50 md:py-4 md:px-10 md:text-lg"
-                >
-                  Live demo
-                </a>
-              </div>
             </div>
           </div>
-        </div>
-        <div className="relative h-64 w-full sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-1/2">
           <img
-            className="absolute inset-0 h-full w-full object-cover"
-            src="https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
-            alt=""
+            className="xl:h-128 xl:w-128 z-10 hidden md:absolute md:top-52 md:right-3 md:inline md:h-80 md:w-80 md:rounded-full md:object-cover lg:right-6 lg:top-48 lg:h-96 lg:w-96 xl:top-36 xl:right-16"
+            src={WorkingEnvironmentImage}
+            alt="Working Environment"
+          />
+          <img
+            className="z-10 mt-8 h-72 w-72 rounded-full object-cover sm:absolute sm:right-16 sm:-bottom-14 sm:mt-0 sm:h-64 sm:w-64 md:right-52 lg:inset-x-0 lg:mx-auto lg:h-72 lg:w-72 xl:h-80 xl:w-80"
+            src={DoctorImage}
+            alt="Doctor"
           />
         </div>
       </main>
