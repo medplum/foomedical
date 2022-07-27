@@ -33,7 +33,7 @@ export function FeatureSection(): JSX.Element {
   return (
     <div className="relative bg-white py-8 sm:py-12 md:py-40">
       <img
-        className="lg:h-128 lg:w-128 xl:h-156 xl:w-156 -top-16 -right-24 z-10 hidden md:absolute md:top-16 md:inline md:h-96 md:w-96 md:rounded-full md:object-cover lg:-top-8 lg:-right-24 xl:-right-32 xl:-top-32"
+        className="-top-16 -right-24 z-10 hidden md:absolute md:top-16 md:inline md:h-96 md:w-96 md:rounded-full md:object-cover lg:-top-8 lg:-right-24 lg:h-128 lg:w-128 xl:-right-32 xl:-top-32 xl:h-156 xl:w-156"
         src={LaboratoryImage}
         alt="Laboratory"
       />
@@ -57,7 +57,7 @@ export function FeatureSection(): JSX.Element {
             accusamus quisquam.
           </p>
         </div>
-        <div className="mt-8 md:mt-60">
+        <div className="mt-8 md:mt-28 lg:mt-44 xl:mt-60">
           <div className="flex flex-col items-center space-y-6 sm:space-y-10 md:items-end">
             {features.map((feature) => (
               <div
@@ -71,7 +71,7 @@ export function FeatureSection(): JSX.Element {
               </div>
             ))}
             <img
-              className="sm:h-156 sm:w-156 lg:h-216 lg:w-216 xl:h-264 xl:w-264 z-10 h-72 w-72 rounded-full object-cover md:absolute md:-left-[21rem] md:bottom-52 lg:bottom-56 lg:-left-[27rem] xl:bottom-20 xl:-left-[36rem]"
+              className="z-10 h-72 w-72 rounded-full object-cover sm:h-156 sm:w-156 md:absolute md:-left-[21rem] md:bottom-52 lg:bottom-56 lg:-left-[27rem] lg:h-216 lg:w-216 xl:bottom-10 xl:-left-[36rem] xl:h-264 xl:w-264"
               src={EngineeringImage}
               alt="Engineering"
             />
