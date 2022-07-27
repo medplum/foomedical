@@ -85,7 +85,7 @@ function classNames(...classes: string[]): string {
 
 export function HeroSection(): JSX.Element {
   return (
-    <div className="bg-gradient-radial relative from-teal-50">
+    <div className="relative bg-gradient-radial from-teal-50">
       <Popover className="relative bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center justify-between space-x-6 py-6 lg:space-x-10">
@@ -130,7 +130,7 @@ export function HeroSection(): JSX.Element {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             {features.map((item) => (
@@ -202,7 +202,7 @@ export function HeroSection(): JSX.Element {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                      <Popover.Panel className="absolute left-1/2 z-20 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             {resources.map((item) => (
@@ -268,7 +268,7 @@ export function HeroSection(): JSX.Element {
         >
           <Popover.Panel
             focus
-            className="absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden"
+            className="absolute inset-x-0 top-0 z-20 origin-top-right transform p-2 transition md:hidden"
           >
             <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-5 pt-5 pb-6">
@@ -364,7 +364,7 @@ export function HeroSection(): JSX.Element {
             </div>
           </div>
           <img
-            className="xl:h-128 xl:w-128 z-10 hidden md:absolute md:top-52 md:right-3 md:inline md:h-80 md:w-80 md:rounded-full md:object-cover lg:right-6 lg:top-48 lg:h-96 lg:w-96 xl:top-36 xl:right-16"
+            className="z-10 hidden md:absolute md:top-52 md:right-3 md:inline md:h-80 md:w-80 md:rounded-full md:object-cover lg:right-6 lg:top-48 lg:h-96 lg:w-96 xl:top-36 xl:right-16 xl:h-128 xl:w-128"
             src={WorkingEnvironmentImage}
             alt="Working Environment"
           />

@@ -5,7 +5,7 @@ import { HeroSection } from '../components/HeroSection';
 export function LandingPage(): JSX.Element {
   return (
     <>
-      <div className="overflow-x-hidden">
+      <div className="overflow-hidden">
         <HeroSection />
         <FeatureSection />
       </div>
