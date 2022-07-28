@@ -2,7 +2,7 @@ import { Menu, Popover, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { formatHumanName, ProfileResource } from '@medplum/core';
 import { useMedplumProfile } from '@medplum/react';
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as AvatarPlaceholder } from '../img/avatar-placeholder.svg';
 import { ReactComponent as Logo } from '../img/logo.svg';
@@ -28,21 +28,21 @@ export function Header(): JSX.Element {
   return (
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <Popover className="flex h-16 justify-between">
+        <Popover className="flex h-20 justify-between">
           <div className="flex px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
               <a href="/">
-                <Logo className="h-8 w-auto" />
+                <Logo className="h-10 w-60" />
               </a>
             </div>
-            <nav aria-label="Global" className="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
-              {navigation.map((item) => (
-                <NavLink key={item.name} to={item.href} className="px-3 py-2 text-sm font-medium text-gray-900">
-                  {item.name}
-                </NavLink>
-              ))}
-            </nav>
           </div>
+          <nav aria-label="Global" className="hidden lg:flex lg:items-center lg:space-x-4 xl:space-x-7">
+            {navigation.map((item) => (
+              <NavLink key={item.name} to={item.href} className="text-lg text-neutral-500 hover:text-neutral-900">
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
           <div className="flex items-center lg:hidden">
             {/* Mobile menu button */}
             <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
@@ -106,9 +106,9 @@ export function Header(): JSX.Element {
                       <div className="flex items-center px-5">
                         <div className="flex-shrink-0">
                           {profile.photo ? (
-                            <img className="h-10 w-10 rounded-full" src={profile.photo[0].url} alt="" />
+                            <img className="h-11 w-11 rounded-full" src={profile.photo[0].url} alt="" />
                           ) : (
-                            <AvatarPlaceholder className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100 p-1" />
+                            <AvatarPlaceholder className="inline-block h-11 w-11 overflow-hidden rounded-full bg-gray-100 p-1" />
                           )}
                         </div>
                         <div className="ml-3">
@@ -143,16 +143,16 @@ export function Header(): JSX.Element {
               </Transition.Child>
             </div>
           </Transition.Root>
-          <div className="hidden lg:ml-4 lg:flex lg:items-center">
+          <div className="hidden justify-end lg:flex lg:w-60 lg:items-center">
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-4 flex-shrink-0">
+            <Menu as="div" className="relative flex-shrink-0">
               <div>
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <span className="sr-only">Open user menu</span>
                   {profile.photo ? (
-                    <img className="h-8 w-8 rounded-full" src={profile.photo[0].url} alt="" />
+                    <img className="h-11 w-11 rounded-full" src={profile.photo[0].url} alt="" />
                   ) : (
-                    <AvatarPlaceholder className="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100 p-0.5" />
+                    <AvatarPlaceholder className="inline-block h-11 w-11 overflow-hidden rounded-full bg-gray-100 p-0.5" />
                   )}
                 </Menu.Button>
               </div>
