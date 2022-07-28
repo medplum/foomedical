@@ -1,12 +1,11 @@
 import { CalendarIcon } from '@heroicons/react/solid';
-import { Bundle, CarePlan } from '@medplum/fhirtypes';
+import { getReferenceString } from '@medplum/core';
+import { Bundle, CarePlan, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from '../../components/PageTitle';
 import getLocaleDate from '../../helpers/get-locale-date';
-
-const profile = 'Patient/00a52397-8c6f-44ee-8e4d-e2ca7229feb4';
 
 const getStatusStyles = (status: string): string => {
   switch (status) {
@@ -77,10 +76,11 @@ function ActionItemsList({ actionItems, title }: ActionItemsListProps): JSX.Elem
 
 export default function ActionItems(): JSX.Element {
   const medplum = useMedplum();
+  const patient = medplum.getProfile() as Patient;
   const [activeActionItems, setActiveActionItems] = useState<CarePlan[]>([]);
   const [actionItems, setActionItems] = useState<CarePlan[]>([]);
 
-  const carePlanBundle: Bundle<CarePlan> = medplum.search('CarePlan', `_sort=-_lastUpdated&subject=${profile}`).read();
+  const carePlanBundle: Bundle<CarePlan> = medplum.search('CarePlan', 'subject=' + getReferenceString(patient)).read();
 
   useEffect(() => {
     if (carePlanBundle.entry) {

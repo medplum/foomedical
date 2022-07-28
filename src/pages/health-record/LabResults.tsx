@@ -1,6 +1,8 @@
+import { ChevronRightIcon } from '@heroicons/react/solid';
+import { getReferenceString } from '@medplum/core';
+import { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
-import { ChevronRightIcon } from '@heroicons/react/solid';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
 import PageTitle from '../../components/PageTitle';
@@ -8,10 +10,8 @@ import getLocaleDate from '../../helpers/get-locale-date';
 
 export default function LabResults(): JSX.Element {
   const medplum = useMedplum();
-
-  const bundle = medplum
-    .search('DiagnosticReport', '_sort=-_lastUpdated&subject=Patient/0beab6fe-fc9c-4276-af71-4df508097eb2')
-    .read();
+  const patient = medplum.getProfile() as Patient;
+  const bundle = medplum.search('DiagnosticReport', 'subject=' + getReferenceString(patient)).read();
 
   return (
     <>

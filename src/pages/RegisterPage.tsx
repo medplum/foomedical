@@ -22,7 +22,7 @@ export function RegisterPage(): JSX.Element {
             <div className="flex flex-col justify-between lg:pr-8">
               <RegisterForm
                 type="patient"
-                projectId="0545eccf-bc2a-4d67-8b04-b3894fd94874"
+                projectId="9602358d-eeb0-4de8-bccf-e2438b5c9162"
                 googleClientId="679052511930-8dqur4mmg8egbttgos5pmr4ljtf3etbb.apps.googleusercontent.com"
                 recaptchaSiteKey="6LfFd_8gAAAAAOCVrZQ_aF2CN5b7s91NEYIu5GxL"
                 onSuccess={() => navigate('/')}

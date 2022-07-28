@@ -4,10 +4,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import Input from './Input';
 import getMeasurementObject from '../helpers/get-measurement-object';
+import { Patient, Reference } from '@medplum/fhirtypes';
 
 interface MeasurementModalProps {
+  subject: Reference<Patient>;
   type: string;
-  profile: string;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -30,7 +31,7 @@ interface measurementModalInputTypes {
   placeholder: string;
 }
 
-export default function MeasurementModal({ type, profile, isOpen, onClose }: MeasurementModalProps): JSX.Element {
+export default function MeasurementModal({ subject, type, isOpen, onClose }: MeasurementModalProps): JSX.Element {
   const medplum = useMedplum();
 
   const [modalValues, setModalValues] = useState<MeasurementValues>({
@@ -49,7 +50,7 @@ export default function MeasurementModal({ type, profile, isOpen, onClose }: Mea
 
   const createMeasurement = (firstValue: string, secondValue?: string): void => {
     medplum
-      .createResource(getMeasurementObject(type, profile, firstValue, secondValue))
+      .createResource(getMeasurementObject(subject, type, firstValue, secondValue))
       .then(() => onClose())
       .catch((err) => console.error(err));
   };

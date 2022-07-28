@@ -1,8 +1,8 @@
-import { Observation } from '@medplum/fhirtypes';
+import { Observation, Patient, Reference } from '@medplum/fhirtypes';
 
 const getMeasurementObject = (
+  subject: Reference<Patient>,
   type: string,
-  reference: string,
   firstValue: string,
   secondValue?: string
 ): Observation => {
@@ -12,9 +12,7 @@ const getMeasurementObject = (
     case 'Blood Pressure':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {
@@ -69,9 +67,7 @@ const getMeasurementObject = (
     case 'Body Temperature':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {
@@ -99,9 +95,7 @@ const getMeasurementObject = (
     case 'Height':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {
@@ -124,9 +118,7 @@ const getMeasurementObject = (
     case 'Respiratory Rate':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {
@@ -149,9 +141,7 @@ const getMeasurementObject = (
     case 'Heart Rate':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {
@@ -174,9 +164,7 @@ const getMeasurementObject = (
     case 'Weight':
       return {
         resourceType: 'Observation',
-        subject: {
-          reference: reference,
-        },
+        subject,
         code: {
           coding: [
             {

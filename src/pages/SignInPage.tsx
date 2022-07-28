@@ -20,7 +20,7 @@ export function SignInPage(): JSX.Element {
           <div className="relative py-16 px-4 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8">
             <div className="flex flex-col justify-between lg:pr-8">
               <SignInForm
-                projectId="0545eccf-bc2a-4d67-8b04-b3894fd94874"
+                projectId="9602358d-eeb0-4de8-bccf-e2438b5c9162"
                 googleClientId="679052511930-8dqur4mmg8egbttgos5pmr4ljtf3etbb.apps.googleusercontent.com"
                 onSuccess={() => navigate('/')}
               >

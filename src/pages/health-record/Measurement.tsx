@@ -1,5 +1,6 @@
 import { InformationCircleIcon } from '@heroicons/react/outline';
-import { BundleEntry, Observation } from '@medplum/fhirtypes';
+import { createReference, getReferenceString } from '@medplum/core';
+import { BundleEntry, Observation, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -133,12 +134,11 @@ const Measurement = (): JSX.Element | null => {
   const { code, title, description, chartDatasets } = measurementsMeta[measurementId as string];
 
   const medplum = useMedplum();
+  const patient = medplum.getProfile() as Patient;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [chartData, setChartData] = useState<chartDataType>();
 
-  const profile = 'Patient/0beab6fe-fc9c-4276-af71-4df508097eb2';
-
-  const measurements = medplum.search('Observation', `code=${code}&_sort=date&patient=${profile}`).read();
+  const measurements = medplum.search('Observation', `code=${code}&patient=${getReferenceString(patient)}`).read();
 
   useEffect(() => {
     if (measurements.entry) {
@@ -221,8 +221,8 @@ const Measurement = (): JSX.Element | null => {
         </div>
       </InfoSection>
       <MeasurementModal
+        subject={createReference(patient)}
         type={title}
-        profile={profile}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(!isModalOpen)}
       />

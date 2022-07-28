@@ -1,10 +1,12 @@
+import { getReferenceString } from '@medplum/core';
+import { Patient } from '@medplum/fhirtypes';
 import { Document, Scheduler, useMedplum } from '@medplum/react';
 import './GetCare.css';
 
 export default function GetCare(): JSX.Element {
   const medplum = useMedplum();
-
-  const scheduleBundle = medplum.search('Schedule', 'actor=Patient/4b916f75-38da-42a1-9591-981cfae9098c').read();
+  const patient = medplum.getProfile() as Patient;
+  const scheduleBundle = medplum.search('Schedule', 'actor=' + getReferenceString(patient)).read();
 
   return (
     <>

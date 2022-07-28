@@ -1,14 +1,12 @@
 import { XIcon } from '@heroicons/react/outline';
-import { formatHumanName } from '@medplum/core';
-import { Practitioner } from '@medplum/fhirtypes';
+import { formatHumanName, getReferenceString } from '@medplum/core';
+import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import PageTitle from '../../components/PageTitle';
-
-const patientId = '3e27eaee-2c55-4400-926e-90982df528e9';
 
 interface PractitionerModalProps {
   practitioner: Practitioner;
@@ -18,6 +16,7 @@ interface PractitionerModalProps {
 
 const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModalProps): JSX.Element | null => {
   const medplum = useMedplum();
+  const patient = medplum.getProfile() as Patient;
 
   if (!isOpen) {
     return null;
@@ -36,7 +35,9 @@ const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModa
     };
 
     medplum
-      .patchResource('Patient', patientId, [{ op: 'replace', path: '/generalPractitioner', value: [newPractitioner] }])
+      .patchResource('Patient', patient.id as string, [
+        { op: 'replace', path: '/generalPractitioner', value: [newPractitioner] },
+      ])
       .catch((err) => console.error(err));
 
     handleClose();
@@ -109,8 +110,8 @@ const PractitionerItem = ({ practitioner }: PractitionerItemProps): JSX.Element 
 
 const ChooseProvider = (): JSX.Element => {
   const medplum = useMedplum();
-
-  const practitioners = medplum.search('Practitioner', `patient=Patient/${patientId}`).read();
+  const patient = medplum.getProfile() as Patient;
+  const practitioners = medplum.search('Practitioner', `patient=${getReferenceString(patient)}`).read();
 
   return (
     <>

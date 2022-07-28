@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useMedplum } from '@medplum/react';
-import { BundleEntry, Immunization } from '@medplum/fhirtypes';
 import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
-import PageTitle from '../../components/PageTitle';
+import { getReferenceString } from '@medplum/core';
+import { BundleEntry, Immunization, Patient } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
+import { useEffect, useState } from 'react';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
+import PageTitle from '../../components/PageTitle';
 import getLocaleDate from '../../helpers/get-locale-date';
 
 interface VaccineProps {
@@ -50,12 +51,10 @@ const Vaccine = ({ resource }: VaccineProps): JSX.Element => {
 
 export default function ImmunizationList(): JSX.Element {
   const medplum = useMedplum();
+  const patient = medplum.getProfile() as Patient;
   const [pastVaccines, setPastVaccines] = useState<BundleEntry<Immunization>[]>([]);
   const [upcomingVaccines, setUpcomingVaccines] = useState<BundleEntry<Immunization>[]>([]);
-
-  const bundle = medplum
-    .search('Immunization', '_sort=-date&patient=Patient/3e27eaee-2c55-4400-926e-90982df528e9')
-    .read();
+  const bundle = medplum.search('Immunization', 'patient=' + getReferenceString(patient)).read();
 
   useEffect(() => {
     if (bundle.entry) {
