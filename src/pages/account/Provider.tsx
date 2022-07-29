@@ -10,9 +10,8 @@ import TwoColumnsList from '../../components/TwoColumnsList';
 
 export default function Provider(): JSX.Element {
   const medplum = useMedplum();
+  const patient = medplum.getProfile() as Patient;
   const [practitioners, setPractitioners] = useState<Practitioner[]>([]);
-
-  const patient: Patient = medplum.readResource('Patient', '3e27eaee-2c55-4400-926e-90982df528e9').read();
 
   useEffect(() => {
     patient?.generalPractitioner?.forEach((practitioners) => {
