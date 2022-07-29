@@ -28,6 +28,10 @@
 
 Foo Medical is designed to be forked and customized for your business's needs.
 
+### Data Setup
+
+When you log into Foo Medical a set of sample FHIR records is created on your behalf.  The ability to run automations is part of the Medplum platform using a framework called [Bots](https://docs.medplum.com/app/bots).  The Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/examples/sample-account-setup.ts).
+
 ### About Medplum
 
-Medplum is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less codce.
+Medplum is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.

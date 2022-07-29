@@ -32,7 +32,7 @@ const carouselItems = [
   },
   {
     img: <TaskIcon />,
-    title: 'Select a PCP',
+    title: 'Select a Doctor',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
     url: '/account/provider/choose-a-primary-care-povider',
@@ -93,9 +93,9 @@ export function HomePage(): JSX.Element {
       <Header />
       <div className="flex justify-center bg-teal-100 py-4 px-6 text-sm text-neutral-600">
         <span>
-          Invite your friends.{' '}
+          Announcements go here.{' '}
           <a href="#" className="font-medium text-teal-600">
-            Share the code NEWTOFOO for fast access. See details.
+            Include links if needed.
           </a>
         </span>
       </div>
@@ -120,8 +120,14 @@ export function HomePage(): JSX.Element {
       <div className="flex w-full justify-center bg-teal-900 py-4 px-2 sm:px-4 lg:px-8">
         <div className="flex flex-col items-center space-y-4 font-medium text-white md:flex-row md:space-y-0 md:space-x-6">
           <GiftIcon className="h-10 w-10 stroke-1 text-white" />
-          <p>Give $50 off Foo Medical</p>
-          <Button label="Invite Friends" url="#" marginsUtils="m-0" paddingUtils="px-10 py-4" fontUtils="medium" />
+          <p>Put calls to action here</p>
+          <Button
+            label="Send Message"
+            url="/messages"
+            marginsUtils="m-0"
+            paddingUtils="px-10 py-4"
+            fontUtils="medium"
+          />
         </div>
       </div>
       <div className="w-full bg-gray-50">

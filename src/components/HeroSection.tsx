@@ -71,7 +71,7 @@ const resources = [
     href: '#',
     icon: CalendarIcon,
   },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
+  { name: 'Privacy', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
 ];
 const recentPosts = [
   { id: 1, name: 'Vaccination recommendations for travel', href: '#' },
@@ -349,13 +349,16 @@ export function HeroSection(): JSX.Element {
               <p className="text-teal-600">doctor&apos;s office</p>
             </h1>
             <p className="mt-6 w-full max-w-xs text-lg font-normal text-neutral-600 sm:max-w-none md:max-w-sm lg:max-w-lg lg:text-xl">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+              This is not actually a medical practice, this is a sample{' '}
+              <a href="https://github.com/medplum/foomedical" target="_blank">
+                open source application
+              </a>{' '}
+              for developers to clone, customize and run.
             </p>
             <div className="mt-8 sm:flex sm:justify-center md:mt-20 lg:justify-start">
               <div className="rounded-md shadow">
                 <a
-                  href="#"
+                  href="/register"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 py-4 px-20 text-lg font-normal text-white hover:bg-teal-700"
                 >
                   Get started
