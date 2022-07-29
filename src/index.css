@@ -50,7 +50,7 @@
   }
 
   .slick-dots {
-    bottom: -2rem !important;
+    bottom: 1rem !important;
   }
 
   .slick-slide > div {
@@ -59,6 +59,7 @@
 
   .slick-list {
     @apply -mx-2;
+    @apply py-14;
   }
 }
 
