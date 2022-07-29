@@ -34,7 +34,7 @@ const features = [
     description: 'Speak directly to your customers in a more meaningful way.',
     icon: CursorClickIcon,
   },
-  { name: 'Security', href: '#', description: "Your customers' data will be safe and secure.", icon: ShieldCheckIcon },
+  { name: 'Privacy', href: '#', description: "Your customers' data will be safe and secure.", icon: ShieldCheckIcon },
   {
     name: 'Integrations',
     href: '#',
@@ -74,9 +74,9 @@ const resources = [
   { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
 ];
 const recentPosts = [
-  { id: 1, name: 'Boost your conversion rate', href: '#' },
-  { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-  { id: 3, name: 'Improve your customer experience', href: '#' },
+  { id: 1, name: 'Vaccination recommendations for travel', href: '#' },
+  { id: 2, name: 'Importing your own health record', href: '#' },
+  { id: 3, name: 'Get to a diagnosis faster', href: '#' },
 ];
 
 function classNames(...classes: string[]): string {
@@ -111,7 +111,7 @@ export function HeroSection(): JSX.Element {
                         'group inline-flex items-center rounded-md bg-white text-base font-normal hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2'
                       )}
                     >
-                      <span>Solutions</span>
+                      <span>Services</span>
                       <ChevronDownIcon
                         className={classNames(
                           open ? 'text-gray-600' : 'text-gray-400',
@@ -168,10 +168,10 @@ export function HeroSection(): JSX.Element {
               </Popover>
 
               <a href="#" className="text-base font-normal text-gray-500 hover:text-gray-900">
-                Pricing
+                Counseling
               </a>
               <a href="#" className="text-base font-normal text-gray-500 hover:text-gray-900">
-                Docs
+                Physicians
               </a>
 
               <Popover className="relative">
