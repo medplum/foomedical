@@ -5,9 +5,9 @@ const renderValue = (resource: Observation): JSX.Element => {
     return (
       <>
         <p>
-          {resource.component[1].valueQuantity?.value}
+          {resource.component[1].valueQuantity?.value?.toFixed(1)}
           &nbsp;/&nbsp;
-          {resource.component[0].valueQuantity?.value}&nbsp;
+          {resource.component[0].valueQuantity?.value?.toFixed(1)}&nbsp;
           {resource.component[0].valueQuantity?.unit?.replace(/\[|\]/g, '')}
         </p>
       </>
@@ -16,7 +16,7 @@ const renderValue = (resource: Observation): JSX.Element => {
     return (
       <>
         <p>
-          {resource?.valueQuantity?.value}&nbsp;
+          {resource?.valueQuantity?.value?.toFixed(1)}&nbsp;
           {resource?.valueQuantity?.unit?.replace('/', '/ ')}
         </p>
       </>
