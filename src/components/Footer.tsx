@@ -1,10 +1,10 @@
 import React from 'react';
 
 const navigation = [
-  { name: 'Getting started', href: '#' },
-  { name: 'Playing with Medplum', href: '#' },
-  { name: 'Open Source', href: '#' },
-  { name: 'Documentation', href: '#' },
+  { name: 'Getting started', href: 'https://docs.medplum.com/tutorials/api-basics/create-fhir-data' },
+  { name: 'Playing with Medplum', href: 'https://docs.medplum.com/tutorials' },
+  { name: 'Open Source', href: 'https://github.com/medplum/foomedical' },
+  { name: 'Documentation', href: 'https://docs.medplum.com/' },
 ];
 
 export function Footer(): JSX.Element {

@@ -4,7 +4,7 @@ import EngineeringImage from '../img/landingPage/engineering.jpg';
 
 const features = [
   {
-    name: 'Competitive exchange rates',
+    name: 'Comprehsive Care Plans',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
     icon: GlobeAltIcon,
@@ -16,13 +16,13 @@ const features = [
     icon: ScaleIcon,
   },
   {
-    name: 'Transfers are instant',
+    name: '24/7 Messaging',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
     icon: LightningBoltIcon,
   },
   {
-    name: 'Mobile notifications',
+    name: 'Clinically rigorous',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
     icon: AnnotationIcon,
