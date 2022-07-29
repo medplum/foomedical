@@ -100,7 +100,7 @@ export function HomePage(): JSX.Element {
         </span>
       </div>
       <div className="bg-hero-background bg-cover bg-left-top">
-        <section className="mx-auto max-w-7xl px-2 shadow-2xl sm:px-4 md:shadow-none lg:px-8">
+        <section className="mx-auto max-w-7xl px-6 shadow-2xl sm:px-4 md:shadow-none lg:px-8">
           <div className="py-20">
             <div className="flex flex-col items-start md:w-128 lg:w-156">
               <h1 className="max-w-xs text-3xl sm:text-4xl md:max-w-none md:text-5xl lg:text-6xl">
