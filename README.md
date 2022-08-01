@@ -4,6 +4,9 @@
   <a href="https://github.com/medplum/foomedical/actions">
     <img src="https://github.com/medplum/foomedical/actions/workflows/build.yml/badge.svg" />
   </a>
+  <a href="https://github.com/medplum/foomedical/blob/main/LICENSE.txt">
+    <img src="https://img.shields.io/badge/license-Apache-blue.svg" />
+  </a>
   <a href="https://sonarcloud.io/project/overview?id=medplum_foomedical">
     <img src="https://sonarcloud.io/api/project_badges/measure?project=medplum_foomedical&metric=alert_status&token=3760929adde88ce7da87782be8d811f8b5cec0f4" />
   </a>
