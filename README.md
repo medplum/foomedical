@@ -14,10 +14,13 @@
 
 ![Foo Medical Screenshot](screenshot.png)
 
+### What is Foo Medical?
+[Foo Medical](https://foomedical.com/) is a **ready to use medical practice sample app** that's open source. It's meant for developers to clone, customize and run.
+
 ### Features
 
 * Completely free and open-source
-* Secure and compliant [Medplum](https://www.medplum.com) backend
+* Secure and compliant [Medplum](https://www.medplum.com) backend, which is also open source
 * Patient registration and authentication
 * Health records
   * Lab results
@@ -27,14 +30,60 @@
 * Patient-provider messaging
 * Care plans
 * Patient scheduling
-* All data represented with [FHIR](https://hl7.org/FHIR/)
+* All data represented in [FHIR](https://hl7.org/FHIR/)
 
-Foo Medical is designed to be forked and customized for your business's needs.
+Foo Medical is designed to be forked and customized for your business' needs.  Register on [foomedical.com](https://foomedical.com/) to see it in action.
+
+### Getting Started
+
+First, [fork](https://github.com/medplum/foomedical/fork) and clone the repo.
+
+Next, install the app from your terminal
+
+```bash
+npm install
+```
+
+Next, run the app
+
+```bash
+npm run dev
+```
+
+This app should run on `http://localhost:3000/`
+
+Log into the app on localhost using the same credentials you created on [foomedical.com](https://foomedical.com/) and you are ready to start customizing.
+
+### Deploying your app
+
+To get started deploying your app we recommend making an account on [Vercel](https://vercel.com/), free accounts are available.
+
+* Create a [New Project](https://vercel.com/new) on Vercel
+* Link your Github account and load in your forked Foo Medical repository
+* All your settings should be preset, just click Deploy
+
+### Account Setup
+
+By default, your locally running Foo Medical app is pointing to the hosted Medplum service. Foo Medical registers signups to a test project.
+
+To send patients to your own organization you will need to [register a new Project on Medplum](https://docs.medplum.com/tutorials/app/register) and configure your app [register form](https://docs.medplum.com/storybook/index.html?path=/docs/medplum-registerform--basic) to point to your own project.
+
+Contact us on [Discord Server](https://discord.gg/UBAWwvrVeN) with any questions.
 
 ### Data Setup
 
-When you log into Foo Medical a set of sample FHIR records is created on your behalf.  The ability to run automations is part of the Medplum platform using a framework called [Bots](https://docs.medplum.com/app/bots).  The Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/examples/sample-account-setup.ts).
+When you log into Foo Medical a set of sample FHIR records is created on your behalf.  The ability to run automations is part of the Medplum platform using a framework called [Bots](https://docs.medplum.com/app/bots).  For reference, Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/examples/sample-account-setup.ts).
+
+### Compliance
+
+Medplum backend is HIPAA compliant and SOC 2 certified.  Getting an account set up requires registering on [medplum.com](https://www.medplum.com/).  Feel free to ask us questions in real time on our [Discord Server](https://discord.gg/UBAWwvrVeN).
 
 ### About Medplum
 
-Medplum is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.
+[Medplum](https://www.medplum.com/) is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.
+
+Medplum supports self-hosting, and provides a [hosted service](https://app.medplum.com/). [Foo Medical](https://foomedical.com/) uses the hosted service as a backend.
+
+* Read our [documentation](https://docs.medplum.com/)
+* Browse our [react component library](https://docs.medplum.com/storybook/index.html?)
+* Join our [Discord](https://discord.gg/UBAWwvrVeN)
