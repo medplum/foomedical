@@ -7,7 +7,7 @@ export default function GetCare(): JSX.Element {
   const medplum = useMedplum();
   const profile = medplum.getProfile() as ProfileResource;
 
-  const scheduleBundle = medplum.search('Schedule', 'actor=' + getReferenceString(profile)).read();
+  const scheduleBundle = medplum.search('Schedule').read();
 
   return (
     <>
