@@ -1,9 +1,11 @@
-import { CarePlan } from '@medplum/fhirtypes';
-import { CodeableConceptDisplay, useMedplum } from '@medplum/react';
+import { Fragment } from 'react';
+import { CarePlan, Reference, RequestGroup } from '@medplum/fhirtypes';
+import { CodeableConceptDisplay, RequestGroupDisplay, useMedplum } from '@medplum/react';
 import { useParams } from 'react-router-dom';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import getLocaleDate from '../../helpers/get-locale-date';
+import './ActionItem.css';
 
 export default function ActionItem(): JSX.Element {
   const medplum = useMedplum();
@@ -35,11 +37,23 @@ export default function ActionItem(): JSX.Element {
           </div>
           <div className="space-y-5 pt-5">
             {resource.activity &&
-              resource.activity.map((activity, activityIndex) => (
-                <div key={activityIndex} className="text-base font-medium text-gray-900">
-                  <CodeableConceptDisplay value={activity.detail?.code} />
-                </div>
-              ))}
+              resource.activity.map((activity, activityIndex) => {
+                return (
+                  <Fragment key={activityIndex}>
+                    {activity.reference ? (
+                      <RequestGroupDisplay
+                        value={activity.reference as Reference<RequestGroup>}
+                        onStart={() => {}}
+                        onEdit={() => {}}
+                      />
+                    ) : (
+                      <div className="text-base font-medium text-gray-900">
+                        <CodeableConceptDisplay value={activity.detail?.code} />
+                      </div>
+                    )}
+                  </Fragment>
+                );
+              })}
           </div>
         </div>
       </InfoSection>
