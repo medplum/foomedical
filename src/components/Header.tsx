@@ -105,7 +105,7 @@ export function Header(): JSX.Element {
                     <div className="pt-4 pb-2">
                       <div className="flex items-center px-5">
                         <div className="flex-shrink-0">
-                          {profile.photo ? (
+                          {profile.photo && profile.photo?.length > 0 ? (
                             <img className="h-11 w-11 rounded-full" src={profile.photo[0].url} alt="" />
                           ) : (
                             <AvatarPlaceholder className="inline-block h-11 w-11 overflow-hidden rounded-full bg-gray-100 p-1" />
@@ -149,7 +149,7 @@ export function Header(): JSX.Element {
               <div>
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <span className="sr-only">Open user menu</span>
-                  {profile.photo ? (
+                  {profile.photo && profile.photo?.length > 0 ? (
                     <img className="h-11 w-11 rounded-full" src={profile.photo[0].url} alt="" />
                   ) : (
                     <AvatarPlaceholder className="inline-block h-11 w-11 overflow-hidden rounded-full bg-gray-100 p-0.5" />
