@@ -14,7 +14,7 @@ export default function Profile(): JSX.Element | null {
   const profile = useMedplumProfile() as Patient | Practitioner;
   const resource = medplum.readResource(profile.resourceType, profile.id as string).read();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>(null);
   const [profileValues, setProfileValues] = useState({
     given: '',
     family: '',
@@ -115,14 +115,17 @@ export default function Profile(): JSX.Element | null {
     if (file) {
       medplum.createBinary(file, file.name, file.type).then((value) => {
         if (resource && resource.id) {
-          if (resource.photo && resource.photo[0].url) {
+          if (resource.photo && resource.photo.length > 0) {
             medplum
               .patchResource(resource.resourceType, resource.id, [
                 { op: 'replace', path: '/photo/0/contentType', value: value.contentType },
                 { op: 'replace', path: '/photo/0/title', value: file.name },
                 { op: 'replace', path: '/photo/0/url', value: value.url },
               ])
-              .then(() => setPending(!pending));
+              .then(() => {
+                setFile(null);
+                setPending(!pending);
+              });
           } else {
             medplum
               .patchResource(resource.resourceType, resource.id, [
@@ -138,7 +141,10 @@ export default function Profile(): JSX.Element | null {
                   ],
                 },
               ])
-              .then(() => setPending(!pending));
+              .then(() => {
+                setFile(null);
+                setPending(!pending);
+              });
           }
         }
       });
@@ -450,7 +456,7 @@ export default function Profile(): JSX.Element | null {
       <GeneralInfo
         title={resource?.name ? formatHumanName(resource?.name[0], { prefix: true }) : ''}
         image="avatar"
-        imageUrl={resource?.photo ? resource.photo[0].url : ''}
+        imageUrl={resource?.photo && resource.photo.length > 0 ? resource.photo[0].url : ''}
         onImageClick={handleUploadFile}
         imageAlt="profile-image"
       />
