@@ -13,6 +13,7 @@ export default function Chat(): JSX.Element | null {
   const subject = `${profile.resourceType}/${profile.id}`;
   const [messages, setMessages] = useState<Communication[]>();
   const [profiles, setProfiles] = useState<ProfileResource[]>([]);
+  const [pending, setPending] = useState<boolean>(true);
   const [messageValue, setMessageValue] = useState<string>('');
   const [attachment, setAttachment] = useState<Attachment>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -95,7 +96,13 @@ export default function Chat(): JSX.Element | null {
         'GetCommunicationList',
         { subject }
       )
-      .then((value) => setMessages(value.data.CommunicationList as Communication[]))
+      .then((value) => {
+        if (value.data.CommunicationList?.length > 0) {
+          setMessages(value.data.CommunicationList as Communication[]);
+        } else {
+          setPending(false);
+        }
+      })
       .catch((err) => console.error(err));
   }, [medplum, subject]);
 
@@ -116,7 +123,10 @@ export default function Chat(): JSX.Element | null {
       const profileType = id[0] as 'Patient' | 'Practitioner' | 'RelatedPerson';
       medplum
         .readResource(profileType, id[1])
-        .then((value) => setProfiles((prevState) => [...prevState, value as ProfileResource]))
+        .then((value) => {
+          setProfiles((prevState) => [...prevState, value as ProfileResource]);
+          setPending(false);
+        })
         .catch((err) => console.error(err));
     });
   }, [medplum, messages]);
@@ -137,75 +147,79 @@ export default function Chat(): JSX.Element | null {
                     </div>
                     <div className="px-4 py-6 sm:px-6">
                       <ul role="list" className="space-y-8">
-                        {messages.map((resource) => {
-                          const profile = profiles.find((profile) => {
-                            if (resource?.sender?.reference) {
-                              return profile.id === resource.sender.reference.split('/')[1];
-                            }
-                          });
-                          const getName = (): string => {
-                            if (resource.sender?.resource) {
-                              const senderResource = resource.sender.resource as Patient | Practitioner;
-                              return senderResource.name ? formatHumanName(senderResource.name[0]) : '';
-                            } else if (resource.sender?.display) {
-                              return resource.sender.display;
-                            } else return '';
-                          };
-                          return (
-                            <li key={resource?.id}>
-                              <div className="flex space-x-3">
-                                {profile?.photo && (
-                                  <div className="flex-shrink-0">
-                                    <img className="h-10 w-10 rounded-full" src={profile.photo[0].url} alt="" />
-                                  </div>
-                                )}
-                                <div>
-                                  <div className="text-sm">
-                                    {(resource.sender?.resource || resource.sender?.display) && (
-                                      <a href="#" className="font-medium text-gray-900">
-                                        {getName()}
-                                      </a>
-                                    )}
-                                  </div>
-                                  {resource?.payload && (
-                                    <div className="mt-1 flex flex-col items-start space-y-2 text-sm text-gray-700">
-                                      {resource.payload.map((content, contentIndex) => (
-                                        <React.Fragment key={contentIndex}>
-                                          {content.contentString && <p>{content.contentString}</p>}
-                                          {content.contentAttachment?.url && (
-                                            <a
-                                              href={content.contentAttachment.url}
-                                              target="_blank"
-                                              rel="noreferrer"
-                                              download
-                                              className="group flex items-center rounded-sm border border-gray-200 px-2 py-1"
-                                            >
-                                              <DocumentArrowDownIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
-                                              Download attached file
-                                            </a>
-                                          )}
-                                        </React.Fragment>
-                                      ))}
+                        {messages && profiles.length > 0 ? (
+                          messages.map((resource) => {
+                            const profile = profiles.find((profile) => {
+                              if (resource?.sender?.reference) {
+                                return profile.id === resource.sender.reference.split('/')[1];
+                              }
+                            });
+                            const getName = (): string => {
+                              if (resource.sender?.resource) {
+                                const senderResource = resource.sender.resource as Patient | Practitioner;
+                                return senderResource.name ? formatHumanName(senderResource.name[0]) : '';
+                              } else if (resource.sender?.display) {
+                                return resource.sender.display;
+                              } else return '';
+                            };
+                            return (
+                              <li key={resource?.id}>
+                                <div className="flex space-x-3">
+                                  {profile?.photo && (
+                                    <div className="flex-shrink-0">
+                                      <img className="h-10 w-10 rounded-full" src={profile.photo[0].url} alt="" />
                                     </div>
                                   )}
-                                  <div className="mt-2 space-x-2 text-sm">
-                                    <span className="font-medium text-gray-500">
-                                      {getLocaleDate(resource?.meta?.lastUpdated, true, true)}
-                                    </span>
-                                    <span className="font-medium text-gray-500">&middot;</span>{' '}
-                                    <button
-                                      type="button"
-                                      className="font-medium text-gray-900"
-                                      onClick={() => replyMessage()}
-                                    >
-                                      Reply
-                                    </button>
+                                  <div>
+                                    <div className="text-sm">
+                                      {(resource.sender?.resource || resource.sender?.display) && (
+                                        <a href="#" className="font-medium text-gray-900">
+                                          {getName()}
+                                        </a>
+                                      )}
+                                    </div>
+                                    {resource?.payload && (
+                                      <div className="mt-1 flex flex-col items-start space-y-2 text-sm text-gray-700">
+                                        {resource.payload.map((content, contentIndex) => (
+                                          <React.Fragment key={contentIndex}>
+                                            {content.contentString && <p>{content.contentString}</p>}
+                                            {content.contentAttachment?.url && (
+                                              <a
+                                                href={content.contentAttachment.url}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                download
+                                                className="group flex items-center rounded-sm border border-gray-200 px-2 py-1"
+                                              >
+                                                <DocumentArrowDownIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
+                                                Download attached file
+                                              </a>
+                                            )}
+                                          </React.Fragment>
+                                        ))}
+                                      </div>
+                                    )}
+                                    <div className="mt-2 space-x-2 text-sm">
+                                      <span className="font-medium text-gray-500">
+                                        {getLocaleDate(resource?.meta?.lastUpdated, true, true)}
+                                      </span>
+                                      <span className="font-medium text-gray-500">&middot;</span>{' '}
+                                      <button
+                                        type="button"
+                                        className="font-medium text-gray-900"
+                                        onClick={() => replyMessage()}
+                                      >
+                                        Reply
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </li>
-                          );
-                        })}
+                              </li>
+                            );
+                          })
+                        ) : (
+                          <p className="text-md text-center text-gray-700">No messages here yet...</p>
+                        )}
                       </ul>
                     </div>
                   </div>
