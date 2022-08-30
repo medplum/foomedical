@@ -1,4 +1,4 @@
-import { CalendarIcon, LocationMarkerIcon } from '@heroicons/react/solid';
+import { CalendarIcon, MapPinIcon } from '@heroicons/react/24/solid';
 import { getReferenceString } from '@medplum/core';
 import { BundleEntry, Immunization, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
@@ -30,7 +30,7 @@ const Vaccine = ({ resource }: VaccineProps): JSX.Element => {
           <div className="mt-2 sm:flex sm:justify-between">
             <div className="sm:flex">
               <p className="flex items-center text-sm text-gray-500">
-                <LocationMarkerIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                <MapPinIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                 {resource?.location?.display}
               </p>
             </div>

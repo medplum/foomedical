@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMedplum } from '@medplum/react';
 import { formatHumanName } from '@medplum/core';
 import { MedicationRequest, Patient } from '@medplum/fhirtypes';
-import { BeakerIcon } from '@heroicons/react/outline';
+import { BeakerIcon } from '@heroicons/react/24/outline';
 import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';

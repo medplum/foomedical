@@ -1,7 +1,7 @@
 import { useMedplumProfile } from '@medplum/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { GiftIcon, XIcon } from '@heroicons/react/outline';
+import { GiftIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Button from '../components/Button';
 import Carousel from '../components/Carousel';
 import { formatHumanName } from '@medplum/core';
@@ -146,7 +146,7 @@ export function HomePage(): JSX.Element {
               </div>
               <Button label="Invite Friends" url="#" marginsUtils="m-0" paddingUtils="px-10 py-4" fontUtils="medium" />
               <a href="#" className="absolute top-4 right-4">
-                <XIcon className="h-auto w-6 cursor-pointer stroke-1 text-gray-900" />
+                <XMarkIcon className="h-auto w-6 cursor-pointer stroke-1 text-gray-900" />
               </a>
             </div>
           </div>
@@ -172,7 +172,7 @@ export function HomePage(): JSX.Element {
               </div>
             </div>
             <a href="#" className="absolute top-4 right-4 h-8">
-              <XIcon className="h-auto w-6 stroke-1 text-white md:text-gray-900" />
+              <XMarkIcon className="h-auto w-6 stroke-1 text-white md:text-gray-900" />
             </a>
           </div>
           <div className="mt-10 flex w-full flex-col justify-center space-y-4 text-lg md:flex-row md:items-stretch md:space-y-0 md:space-x-4">

@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { formatHumanName, getReferenceString } from '@medplum/core';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
@@ -52,7 +52,7 @@ const PractitionerModal = ({ practitioner, isOpen, setIsOpen }: PractitionerModa
         className={`${displayState} fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6`}
       >
         <button type="button" onClick={handleClose}>
-          <XIcon className="absolute top-2 right-2 h-6 w-6 text-gray-600" />
+          <XMarkIcon className="absolute top-2 right-2 h-6 w-6 text-gray-600" />
         </button>
         <div className="flex items-center gap-3">
           {!!practitioner.photo?.length && (
