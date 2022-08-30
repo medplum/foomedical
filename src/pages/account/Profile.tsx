@@ -1,4 +1,4 @@
-import { CheckIcon, PencilIcon, PlusIcon } from '@heroicons/react/solid';
+import { CheckIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { formatFamilyName, formatGivenName, formatHumanName } from '@medplum/core';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { Button, useMedplum, useMedplumProfile } from '@medplum/react';

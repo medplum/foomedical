@@ -1,4 +1,4 @@
-import { CalendarIcon } from '@heroicons/react/solid';
+import { CalendarIcon } from '@heroicons/react/24/solid';
 import { getReferenceString } from '@medplum/core';
 import { Bundle, CarePlan, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';

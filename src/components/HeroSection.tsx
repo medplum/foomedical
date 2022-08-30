@@ -1,19 +1,19 @@
 import { Popover, Transition } from '@headlessui/react';
 import {
-  BookmarkAltIcon,
+  BookmarkSquareIcon,
   CalendarIcon,
   ChartBarIcon,
-  CursorClickIcon,
-  MenuIcon,
+  CursorArrowRaysIcon,
+  Bars3Icon,
   PhoneIcon,
   PlayIcon,
-  RefreshIcon,
+  ArrowPathIcon,
   ShieldCheckIcon,
-  SupportIcon,
-  ViewGridIcon,
-  XIcon,
-} from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+  LifebuoyIcon,
+  Squares2X2Icon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './Button';
@@ -32,20 +32,20 @@ const features = [
     name: 'Engagement',
     href: '#',
     description: 'Speak directly to your customers in a more meaningful way.',
-    icon: CursorClickIcon,
+    icon: CursorArrowRaysIcon,
   },
   { name: 'Privacy', href: '#', description: "Your customers' data will be safe and secure.", icon: ShieldCheckIcon },
   {
     name: 'Integrations',
     href: '#',
     description: "Connect with third-party tools that you're already using.",
-    icon: ViewGridIcon,
+    icon: Squares2X2Icon,
   },
   {
     name: 'Automations',
     href: '#',
     description: 'Build strategic funnels that will drive your customers to convert',
-    icon: RefreshIcon,
+    icon: ArrowPathIcon,
   },
 ];
 const callsToAction = [
@@ -57,13 +57,13 @@ const resources = [
     name: 'Help Center',
     description: 'Get all of your questions answered in our forums or contact support.',
     href: '#',
-    icon: SupportIcon,
+    icon: LifebuoyIcon,
   },
   {
     name: 'Guides',
     description: 'Learn how to maximize our platform to get the most out of it.',
     href: '#',
-    icon: BookmarkAltIcon,
+    icon: BookmarkSquareIcon,
   },
   {
     name: 'Events',
@@ -98,7 +98,7 @@ export function HeroSection(): JSX.Element {
             <div className="-my-2 -mr-2 md:hidden">
               <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500">
                 <span className="sr-only">Open menu</span>
-                <MenuIcon className="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
             </div>
             <Popover.Group as="nav" className="hidden space-x-4 md:flex lg:space-x-10">
@@ -279,7 +279,7 @@ export function HeroSection(): JSX.Element {
                   <div className="-mr-2">
                     <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500">
                       <span className="sr-only">Close menu</span>
-                      <XIcon className="h-6 w-6" aria-hidden="true" />
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
                   </div>
                 </div>

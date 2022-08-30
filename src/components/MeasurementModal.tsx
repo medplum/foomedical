@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { useMedplum } from '@medplum/react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import Input from './Input';
 import getMeasurementObject from '../helpers/get-measurement-object';
 import { Patient, Reference } from '@medplum/fhirtypes';
@@ -157,7 +157,7 @@ export default function MeasurementModal({ subject, type, isOpen, onClose }: Mea
                     onClick={onClose}
                   >
                     <span className="sr-only">Close</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">

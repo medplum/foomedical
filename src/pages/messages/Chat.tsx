@@ -1,4 +1,4 @@
-import { DocumentAddIcon, DocumentDownloadIcon, DocumentIcon } from '@heroicons/react/solid';
+import { DocumentPlusIcon, DocumentArrowDownIcon, DocumentIcon } from '@heroicons/react/24/solid';
 import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
 import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
 import { UploadButton, useMedplum, useMedplumProfile } from '@medplum/react';
@@ -191,7 +191,7 @@ export default function Chat(): JSX.Element | null {
                                                 download
                                                 className="group flex items-center rounded-sm border border-gray-200 px-2 py-1"
                                               >
-                                                <DocumentDownloadIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
+                                                <DocumentArrowDownIcon className="mr-1 h-6 w-6 text-teal-600 group-hover:text-teal-700" />
                                                 Download attached file
                                               </a>
                                             )}
@@ -257,7 +257,7 @@ export default function Chat(): JSX.Element | null {
                             {attachment ? (
                               <DocumentIcon className="h-6 w-6 text-white" />
                             ) : (
-                              <DocumentAddIcon className="h-6 w-6 text-white" />
+                              <DocumentPlusIcon className="h-6 w-6 text-white" />
                             )}
                           </div>
                           <div className="inline-flex items-center justify-center whitespace-nowrap rounded-r-md border border-gray-200 bg-white px-4 py-2 text-gray-700 shadow-sm">

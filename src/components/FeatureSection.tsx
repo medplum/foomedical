@@ -1,4 +1,4 @@
-import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline';
+import { ChatBubbleBottomCenterTextIcon, GlobeAltIcon, BoltIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import LaboratoryImage from '../img/landingPage/laboratory.jpg';
 import EngineeringImage from '../img/landingPage/engineering.jpg';
 
@@ -19,13 +19,13 @@ const features = [
     name: '24/7 Messaging',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-    icon: LightningBoltIcon,
+    icon: BoltIcon,
   },
   {
     name: 'Clinically rigorous',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-    icon: AnnotationIcon,
+    icon: ChatBubbleBottomCenterTextIcon,
   },
 ];
 

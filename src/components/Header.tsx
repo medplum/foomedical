@@ -1,5 +1,5 @@
 import { Menu, Popover, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { formatHumanName, ProfileResource } from '@medplum/core';
 import { useMedplumProfile } from '@medplum/react';
 import React, { Fragment } from 'react';
@@ -47,7 +47,7 @@ export function Header(): JSX.Element {
             {/* Mobile menu button */}
             <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
               <span className="sr-only">Open main menu</span>
-              <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+              <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
           <Transition.Root as={Fragment}>
@@ -86,7 +86,7 @@ export function Header(): JSX.Element {
                         <div className="-mr-2">
                           <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                             <span className="sr-only">Close menu</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </Popover.Button>
                         </div>
                       </div>
