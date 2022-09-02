@@ -10,6 +10,7 @@ import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import MeasurementModal from '../../components/MeasurementModal';
 import getLocaleDate from '../../helpers/get-locale-date';
 import renderValue from '../../helpers/get-render-value';
+import NoData from '../../components/NoData';
 
 const LineChart = React.lazy(() => import('../../components/LineChart'));
 
@@ -196,30 +197,34 @@ const Measurement = (): JSX.Element | null => {
           <p className="text-base text-gray-600">{description}</p>
         </div>
       )}
-      <InfoSection
-        title={
-          <div className="flex justify-between">
-            <p>Measurements</p>
-            <p>Your Value</p>
+      {measurements.entry?.length ? (
+        <InfoSection
+          title={
+            <div className="flex justify-between">
+              <p>Measurements</p>
+              <p>Your Value</p>
+            </div>
+          }
+        >
+          <div className="px-4 pt-4 pb-2">
+            {measurements.entry &&
+              [...measurements.entry].reverse().map(({ resource }) => {
+                if (!resource) return null;
+
+                const time = getLocaleDate(resource.effectiveDateTime, true);
+
+                return (
+                  <div className="mb-2 flex justify-between" key={resource.id}>
+                    {time && <p>{time}</p>}
+                    {renderValue(resource)}
+                  </div>
+                );
+              })}
           </div>
-        }
-      >
-        <div className="px-4 pt-4 pb-2">
-          {measurements.entry &&
-            [...measurements.entry].reverse().map(({ resource }) => {
-              if (!resource) return null;
-
-              const time = getLocaleDate(resource.effectiveDateTime, true);
-
-              return (
-                <div className="mb-2 flex justify-between" key={resource.id}>
-                  {time && <p>{time}</p>}
-                  {renderValue(resource)}
-                </div>
-              );
-            })}
-        </div>
-      </InfoSection>
+        </InfoSection>
+      ) : (
+        <NoData title="measurements" />
+      )}
       <MeasurementModal
         subject={createReference(patient)}
         type={title}

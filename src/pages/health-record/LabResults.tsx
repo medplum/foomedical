@@ -16,8 +16,8 @@ export default function LabResults(): JSX.Element {
   return (
     <>
       <PageTitle title="Lab Results" />
-      {bundle.entry ? (
-        <InfoSection title="Past Results">
+      {bundle.entry?.length ? (
+        <InfoSection title="Lab Results">
           <ul role="list" className="divide-y divide-gray-200">
             {bundle.entry.map(({ resource }) => (
               <li key={resource?.id}>
@@ -47,7 +47,7 @@ export default function LabResults(): JSX.Element {
           </ul>
         </InfoSection>
       ) : (
-        <NoData title="results" />
+        <NoData title="lab results" />
       )}
     </>
   );

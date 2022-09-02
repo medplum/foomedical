@@ -318,12 +318,12 @@ export function HeroSection(): JSX.Element {
                   ))}
                 </div>
                 <div>
-                  <a
-                    href="#"
+                  <Link
+                    to="/register"
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-base font-normal text-white shadow-sm hover:bg-teal-700"
                   >
                     Sign up
-                  </a>
+                  </Link>
                   <p className="mt-6 text-center text-base font-normal text-gray-500">
                     Existing customer?
                     <Link to="/signin" className="ml-6 text-teal-600 hover:text-teal-500">
@@ -350,7 +350,7 @@ export function HeroSection(): JSX.Element {
             </h1>
             <p className="mt-6 w-full max-w-xs text-lg font-normal text-neutral-600 sm:max-w-none md:max-w-sm lg:max-w-lg lg:text-xl">
               This is not actually a medical practice, this is a sample{' '}
-              <a href="https://github.com/medplum/foomedical" target="_blank">
+              <a href="https://github.com/medplum/foomedical" target="_blank" rel="noreferrer">
                 open source application
               </a>{' '}
               for developers to clone, customize and run.

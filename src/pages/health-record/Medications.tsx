@@ -16,9 +16,9 @@ export default function Medications(): JSX.Element {
 
   return (
     <>
-      <PageTitle title={title} />
-      {bundle.entry ? (
-        <InfoSection title={`Active ${title}`}>
+      <PageTitle title="Medications" />
+      {bundle.entry?.length ? (
+        <InfoSection title="Medications">
           <ul role="list" className="divide-y divide-gray-200">
             {bundle.entry.map(({ resource }) => (
               <li key={resource?.id}>
@@ -38,7 +38,7 @@ export default function Medications(): JSX.Element {
           </ul>
         </InfoSection>
       ) : (
-        <NoData title={title} />
+        <NoData title="medications" />
       )}
     </>
   );

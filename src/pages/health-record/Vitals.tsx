@@ -18,8 +18,8 @@ export default function Vitals(): JSX.Element {
   return (
     <>
       <PageTitle title="Vitals" />
-      <GridSection array={headers}>
-        {bundle.entry ? (
+      {bundle.entry?.length ? (
+        <GridSection array={headers}>
           <ul role="list" className="divide-y divide-gray-200 border-b-2  border-solid border-gray-200">
             {bundle.entry.map(({ resource }) => (
               <li key={resource?.meta?.lastUpdated}>
@@ -39,10 +39,10 @@ export default function Vitals(): JSX.Element {
               </li>
             ))}
           </ul>
-        ) : (
-          <NoData title="results" />
-        )}
-      </GridSection>
+        </GridSection>
+      ) : (
+        <NoData title="vitals" />
+      )}
     </>
   );
 }

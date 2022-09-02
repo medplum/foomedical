@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import InfoSection from '../../components/InfoSection';
 import PageTitle from '../../components/PageTitle';
 import TwoColumnsList from '../../components/TwoColumnsList';
+import NoData from '../../components/NoData';
 
 const MembershipAndBilling = (): JSX.Element => {
   const medplum = useMedplum();
@@ -59,43 +60,49 @@ const MembershipAndBilling = (): JSX.Element => {
   return (
     <>
       <PageTitle title="Membership & Billing" />
-      {resources.map(({ id, payor, type, subscriberId, status }) => (
-        <InfoSection
-          title="Medical Billing"
-          key={id}
-          onButtonClick={status === 'active' ? handleCancelButton : undefined}
-          id={id}
-        >
-          <TwoColumnsList
-            items={[
-              {
-                label: 'Insurance',
-                body: (
-                  <div className="flex flex-col">
-                    {payor && <p className="text-lg text-gray-600">{payor[0].display}</p>}
-                    {type && <p className="text-lg capitalize text-gray-600">Category: {type.text}</p>}
-                    {subscriberId && <p className="text-lg text-gray-600">Member ID: {subscriberId}</p>}
-                    {status && <p className="text-lg text-gray-600">Status: {getCoverageStatus(status)}</p>}
-                  </div>
-                ),
-              },
-              {
-                label: 'Online Bills',
-                body: (
-                  <div className="flex flex-col items-start">
-                    <button onClick={handleViewPayments} className="text-lg text-sky-700">
-                      View payments
-                    </button>
-                    <p className="inline-block text-lg text-gray-600">
-                      Pay current bills, check your balance, and view previous payments.
-                    </p>
-                  </div>
-                ),
-              },
-            ]}
-          />
-        </InfoSection>
-      ))}
+      {resources.length ? (
+        <>
+          {resources.map(({ id, payor, type, subscriberId, status }) => (
+            <InfoSection
+              title="Medical Billing"
+              key={id}
+              onButtonClick={status === 'active' ? handleCancelButton : undefined}
+              id={id}
+            >
+              <TwoColumnsList
+                items={[
+                  {
+                    label: 'Insurance',
+                    body: (
+                      <div className="flex flex-col">
+                        {payor && <p className="text-lg text-gray-600">{payor[0].display}</p>}
+                        {type && <p className="text-lg capitalize text-gray-600">Category: {type.text}</p>}
+                        {subscriberId && <p className="text-lg text-gray-600">Member ID: {subscriberId}</p>}
+                        {status && <p className="text-lg text-gray-600">Status: {getCoverageStatus(status)}</p>}
+                      </div>
+                    ),
+                  },
+                  {
+                    label: 'Online Bills',
+                    body: (
+                      <div className="flex flex-col items-start">
+                        <button onClick={handleViewPayments} className="text-lg text-sky-700">
+                          View payments
+                        </button>
+                        <p className="inline-block text-lg text-gray-600">
+                          Pay current bills, check your balance, and view previous payments.
+                        </p>
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            </InfoSection>
+          ))}
+        </>
+      ) : (
+        <NoData title="membership & billing" />
+      )}
     </>
   );
 };
