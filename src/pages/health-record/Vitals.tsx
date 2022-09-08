@@ -27,10 +27,14 @@ export default function Vitals(): JSX.Element {
                   <a href="#" className="block hover:bg-gray-50">
                     <div className="flex items-center py-4">
                       <div className="flex min-w-0 flex-1 items-center">
-                        <div className="grid min-w-0 flex-1 grid-cols-3">
+                        <div className="grid min-w-0 flex-1 grid-cols-2 sm:grid-cols-3">
                           <GridCell item={resource?.code?.coding[0].display} color="teal" />
-                          <GridCell item={renderValue(resource)} color="gray" />
-                          <GridCell item={getLocaleDate(resource?.meta?.lastUpdated)} color="gray" />
+                          <GridCell className="hidden" item={renderValue(resource)} color="gray" />
+                          <GridCell className="hidden" item={getLocaleDate(resource?.meta?.lastUpdated)} color="gray" />
+                          <div className="sm:hidden">
+                            <GridCell item={renderValue(resource)} color="gray" />
+                            <GridCell item={getLocaleDate(resource?.meta?.lastUpdated)} color="gray" />
+                          </div>
                         </div>
                       </div>
                     </div>

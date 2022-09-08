@@ -23,7 +23,7 @@ export default function Account(): JSX.Element {
         <Route index element={<Navigate replace to={sideMenu.menu[0].href} />} />
         <Route path="profile" element={<Profile />} />
         <Route path="provider/*" element={<Provider />} />
-        <Route path="provider/choose-a-primary-care-povider" element={<ChooseProvider />} />
+        <Route path="provider/choose-a-primary-care-provider" element={<ChooseProvider />} />
         <Route path="membership-and-billing" element={<MembershipAndBilling />} />
       </Routes>
     </PageLayout>
