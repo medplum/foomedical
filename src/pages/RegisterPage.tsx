@@ -22,9 +22,9 @@ export function RegisterPage(): JSX.Element {
             <div className="flex flex-col justify-between lg:pr-8">
               <RegisterForm
                 type="patient"
-                projectId={process.env.MEDPLUM_PROJECT_ID ? process.env.MEDPLUM_PROJECT_ID : ''}
-                googleClientId={process.env.MEDPLUM_GOOGLE_CLIENT_ID}
-                recaptchaSiteKey={process.env.MEDPLUM_RECAPTCHA_SITE_KEY ? process.env.MEDPLUM_RECAPTCHA_SITE_KEY : ''}              
+                projectId={process.env.MEDPLUM_PROJECT_ID ? process.env.MEDPLUM_PROJECT_ID : ""}
+                googleClientId={process.env.MEDPLUM_GOOGLE_CLIENT_ID ? process.env.MEDPLUM_GOOGLE_CLIENT_ID : ""}
+                recaptchaSiteKey={process.env.MEDPLUM_RECAPTCHA_SITE_KEY ? process.env.MEDPLUM_RECAPTCHA_SITE_KEY : ""}              
                 onSuccess={() => navigate('/')}
               >
                 <h2>Register with Foo Medical</h2>
