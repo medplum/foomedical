@@ -1,7 +1,7 @@
 import { CheckIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { formatFamilyName, formatGivenName, formatHumanName } from '@medplum/core';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
-import { Button, useMedplum, useMedplumProfile } from '@medplum/react';
+import { useMedplum, useMedplumProfile } from '@medplum/react';
 import React, { useEffect, useRef, useState } from 'react';
 import GeneralInfo from '../../components/GeneralInfo';
 import InfoSection from '../../components/InfoSection';
@@ -187,7 +187,7 @@ export default function Profile(): JSX.Element | null {
             ) : (
               <p className="text-lg text-gray-600">{formatHumanName(resource.name[0])}</p>
             )}
-            <Button
+            <button
               onClick={() =>
                 toggleInputButton('name', [
                   { op: 'replace', path: '/name/0/given/0', value: profileValues.given },
@@ -196,7 +196,7 @@ export default function Profile(): JSX.Element | null {
               }
             >
               {toggleButtonIcons('name')}
-            </Button>
+            </button>
           </>
         ),
       },
@@ -216,13 +216,13 @@ export default function Profile(): JSX.Element | null {
           ) : (
             <p className="text-lg text-gray-600">{resource.gender}</p>
           )}
-          <Button
+          <button
             onClick={() => {
               toggleInputButton('gender', [{ op: 'replace', path: '/gender', value: profileValues.gender }]);
             }}
           >
             {toggleButtonIcons('gender')}
-          </Button>
+          </button>
         </>
       ),
     });
@@ -234,21 +234,21 @@ export default function Profile(): JSX.Element | null {
           {activeInputName === 'gender' ? (
             <div className="flex space-x-2">
               {inputs.gender}
-              <Button
+              <button
                 onClick={() => {
                   toggleInputButton('gender', [{ op: 'add', path: '/gender', value: profileValues.gender }]);
                 }}
               >
                 <CheckIcon className="h-8 w-8 self-center text-gray-400 hover:text-emerald-700" />
-              </Button>
+              </button>
             </div>
           ) : (
-            <Button onClick={() => setActiveInputName('gender')}>
+            <button onClick={() => setActiveInputName('gender')}>
               <div className="flex items-center text-gray-400 hover:text-emerald-700">
                 <PlusIcon className="mr-2 h-5 w-5 self-center" aria-hidden="true" />
                 <p className="text-lg">add gender information</p>
               </div>
-            </Button>
+            </button>
           )}
         </>
       ),
@@ -264,13 +264,13 @@ export default function Profile(): JSX.Element | null {
           ) : (
             <p className="text-lg text-gray-600">{getLocaleDate(resource.birthDate)}</p>
           )}
-          <Button
+          <button
             onClick={() => {
               toggleInputButton('birthDate', [{ op: 'replace', path: '/birthDate', value: profileValues.birthDate }]);
             }}
           >
             {toggleButtonIcons('birthDate')}
-          </Button>
+          </button>
         </>
       ),
     });
@@ -282,21 +282,21 @@ export default function Profile(): JSX.Element | null {
           {activeInputName === 'birthDate' ? (
             <div className="flex space-x-2">
               {inputs.birthDate}
-              <Button
+              <button
                 onClick={() => {
                   toggleInputButton('birthDate', [{ op: 'add', path: '/birthDate', value: profileValues.birthDate }]);
                 }}
               >
                 <CheckIcon className="h-8 w-8 self-center text-gray-400 hover:text-emerald-700" />
-              </Button>
+              </button>
             </div>
           ) : (
-            <Button onClick={() => setActiveInputName('birthDate')}>
+            <button onClick={() => setActiveInputName('birthDate')}>
               <div className="flex items-center text-gray-400 hover:text-emerald-700">
                 <PlusIcon className="mr-2 h-5 w-5 self-center" aria-hidden="true" />
                 <p className="text-lg">add birth date information</p>
               </div>
-            </Button>
+            </button>
           )}
         </>
       ),
@@ -318,7 +318,7 @@ export default function Profile(): JSX.Element | null {
               ))}
             </>
           )}
-          <Button
+          <button
             onClick={() => {
               toggleInputButton('contact', [
                 { op: 'replace', path: '/telecom/0/system', value: profileValues.contactSystem },
@@ -328,7 +328,7 @@ export default function Profile(): JSX.Element | null {
             }}
           >
             {toggleButtonIcons('contact')}
-          </Button>
+          </button>
         </>
       ),
     });
@@ -340,7 +340,7 @@ export default function Profile(): JSX.Element | null {
           {activeInputName === 'contact' ? (
             <div className="flex space-x-2">
               <div className="flex flex-col space-y-2">{inputs.contact}</div>
-              <Button
+              <button
                 onClick={() => {
                   toggleInputButton('contact', [
                     {
@@ -358,15 +358,15 @@ export default function Profile(): JSX.Element | null {
                 }}
               >
                 <CheckIcon className="h-8 w-8 self-center text-gray-400 hover:text-emerald-700" />
-              </Button>
+              </button>
             </div>
           ) : (
-            <Button onClick={() => setActiveInputName('contact')}>
+            <button onClick={() => setActiveInputName('contact')}>
               <div className="flex items-center text-gray-400 hover:text-emerald-700">
                 <PlusIcon className="mr-2 h-5 w-5 self-center" aria-hidden="true" />
                 <p className="text-lg">add contact information</p>
               </div>
-            </Button>
+            </button>
           )}
         </>
       ),
@@ -395,7 +395,7 @@ export default function Profile(): JSX.Element | null {
               ))}
             </>
           )}
-          <Button
+          <button
             onClick={() => {
               toggleInputButton('address', [
                 { op: 'replace', path: '/address/0/line/0', value: profileValues.line1 },
@@ -406,7 +406,7 @@ export default function Profile(): JSX.Element | null {
             }}
           >
             {toggleButtonIcons('address')}
-          </Button>
+          </button>
         </>
       ),
     });
@@ -418,7 +418,7 @@ export default function Profile(): JSX.Element | null {
           {activeInputName === 'address' ? (
             <div className="flex space-x-2">
               <div className="flex flex-col space-y-2">{inputs.address}</div>
-              <Button
+              <button
                 onClick={() => {
                   toggleInputButton('address', [
                     {
@@ -436,15 +436,15 @@ export default function Profile(): JSX.Element | null {
                 }}
               >
                 <CheckIcon className="h-8 w-8 self-center text-gray-400 hover:text-emerald-700" />
-              </Button>
+              </button>
             </div>
           ) : (
-            <Button onClick={() => setActiveInputName('address')}>
+            <button onClick={() => setActiveInputName('address')}>
               <div className="flex items-center text-gray-400 hover:text-emerald-700">
                 <PlusIcon className="mr-2 h-5 w-5 self-center" aria-hidden="true" />
                 <p className="text-lg">add address information</p>
               </div>
-            </Button>
+            </button>
           )}
         </>
       ),

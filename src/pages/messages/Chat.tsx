@@ -1,10 +1,10 @@
-import { DocumentPlusIcon, DocumentArrowDownIcon, DocumentIcon } from '@heroicons/react/24/solid';
+import { DocumentArrowDownIcon, DocumentIcon, DocumentPlusIcon } from '@heroicons/react/24/solid';
 import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
 import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
-import { UploadButton, useMedplum, useMedplumProfile } from '@medplum/react';
+import { AttachmentButton, useMedplum, useMedplumProfile } from '@medplum/react';
 import React, { useEffect, useRef, useState } from 'react';
-import Loader from '../../components/Loader';
 import Button from '../../components/Button';
+import Loader from '../../components/Loader';
 import getLocaleDate from '../../helpers/get-locale-date';
 
 export default function Chat(): JSX.Element | null {
@@ -252,20 +252,22 @@ export default function Chat(): JSX.Element | null {
                     </div>
                     <div className="flex flex-col items-end justify-end space-y-6 bg-gray-50 px-4 pb-6 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6 sm:px-6">
                       <div>
-                        <UploadButton onUpload={(value: Attachment) => setAttachment(value)}>
-                          <div className="group flex">
-                            <div className="flex items-center rounded-l-md bg-teal-600 px-2 group-hover:bg-teal-700">
-                              {attachment ? (
-                                <DocumentIcon className="h-6 w-6 text-white" />
-                              ) : (
-                                <DocumentPlusIcon className="h-6 w-6 text-white" />
-                              )}
+                        <AttachmentButton onUpload={(value: Attachment) => setAttachment(value)}>
+                          {(props) => (
+                            <div {...props} className="group flex">
+                              <div className="flex items-center rounded-l-md bg-teal-600 px-2 group-hover:bg-teal-700">
+                                {attachment ? (
+                                  <DocumentIcon className="h-6 w-6 text-white" />
+                                ) : (
+                                  <DocumentPlusIcon className="h-6 w-6 text-white" />
+                                )}
+                              </div>
+                              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-r-md border border-gray-200 bg-white px-4 py-2 text-gray-700 shadow-sm">
+                                {attachment ? attachment.title : 'No file chosen'}
+                              </div>
                             </div>
-                            <div className="inline-flex items-center justify-center whitespace-nowrap rounded-r-md border border-gray-200 bg-white px-4 py-2 text-gray-700 shadow-sm">
-                              {attachment ? attachment.title : 'No file chosen'}
-                            </div>
-                          </div>
-                        </UploadButton>
+                          )}
+                        </AttachmentButton>
                       </div>
                       <Button marginsUtils="ml-0" label="Send" action={() => createResource(attachment)} />
                     </div>

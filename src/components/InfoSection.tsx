@@ -1,5 +1,4 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { Button } from '@medplum/react';
 
 interface InfoSectionProps {
   title: string | JSX.Element;
@@ -19,9 +18,9 @@ const InfoSection = ({ title, children, onButtonClick, id = '' }: InfoSectionPro
       >
         <h3 className="text-lg leading-6 text-gray-500">{title}</h3>
         {onButtonClick && (
-          <Button onClick={() => onButtonClick(id)}>
+          <button onClick={() => onButtonClick(id)}>
             <XMarkIcon className="h-6 w-6 self-center text-gray-400 hover:text-red-700" />
-          </Button>
+          </button>
         )}
       </div>
       <div>{children}</div>

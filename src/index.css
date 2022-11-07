@@ -24,12 +24,8 @@
     @apply flex items-center;
   }
 
-  #signin input[type='checkbox'] {
-    @apply h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500;
-  }
-
-  #signin label[for='remember'] {
-    @apply ml-2 block text-sm text-gray-900;
+  #signin .mantine-Checkbox-body {
+    display: none !important;
   }
 
   #signin button[type='submit'] {
