@@ -59,9 +59,7 @@ Log into the app on localhost using the same credentials you created on [foomedi
 
 To get started deploying your app we recommend making an account on [Vercel](https://vercel.com/), free accounts are available.
 
-- Create a [New Project](https://vercel.com/new) on Vercel
-- Link your Github account and load in your forked Foo Medical repository
-- All your settings should be preset, just click Deploy
+You can deploy this application by [clicking here](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fmedplum%2Ffoomedical&showOptionalTeamCreation=false).
 
 ### Account Setup
 
