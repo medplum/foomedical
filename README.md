@@ -44,6 +44,12 @@ Next, install the app from your terminal
 npm install
 ```
 
+Next, create `.env` configuration file and update with your own values
+
+```
+cp .env.development .env
+```
+
 Next, run the app
 
 ```bash
