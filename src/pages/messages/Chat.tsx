@@ -1,11 +1,10 @@
 import { DocumentArrowDownIcon, DocumentIcon, DocumentPlusIcon } from '@heroicons/react/24/solid';
-import { createReference, formatHumanName, ProfileResource } from '@medplum/core';
+import { createReference, formatDateTime, formatHumanName, ProfileResource } from '@medplum/core';
 import { Attachment, Communication, Patient, Practitioner } from '@medplum/fhirtypes';
 import { AttachmentButton, useMedplum, useMedplumProfile } from '@medplum/react';
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
-import getLocaleDate from '../../helpers/get-locale-date';
 
 export default function Chat(): JSX.Element | null {
   const medplum = useMedplum();
@@ -202,7 +201,7 @@ export default function Chat(): JSX.Element | null {
                                       )}
                                       <div className="mt-2 space-x-2 text-sm">
                                         <span className="font-medium text-gray-500">
-                                          {getLocaleDate(resource?.meta?.lastUpdated, true, true)}
+                                          {formatDateTime(resource?.meta?.lastUpdated)}
                                         </span>
                                         <span className="font-medium text-gray-500">&middot;</span>{' '}
                                         <button

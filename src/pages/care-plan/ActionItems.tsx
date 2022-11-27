@@ -1,11 +1,10 @@
 import { CalendarIcon } from '@heroicons/react/24/solid';
-import { getReferenceString } from '@medplum/core';
+import { formatDate, getReferenceString } from '@medplum/core';
 import { Bundle, CarePlan, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
-import PageTitle from '../../components/PageTitle';
-import getLocaleDate from '../../helpers/get-locale-date';
 import NoData from '../../components/NoData';
+import PageTitle from '../../components/PageTitle';
 
 const getStatusStyles = (status: string): string => {
   switch (status) {
@@ -63,11 +62,11 @@ export default function ActionItems(): JSX.Element {
                                   aria-hidden="true"
                                 />
                                 <p>
-                                  <time>{getLocaleDate(resource.period.start)} </time>
+                                  <time>{formatDate(resource.period.start)} </time>
                                 </p>
                                 {resource.period.end && (
                                   <p>
-                                    <time>&nbsp;-&nbsp;{getLocaleDate(resource.period.end)}</time>
+                                    <time>&nbsp;-&nbsp;{formatDate(resource.period.end)}</time>
                                   </p>
                                 )}
                               </div>

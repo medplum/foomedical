@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import { createReference, getReferenceString } from '@medplum/core';
+import { createReference, formatDate, formatDateTime, formatObservationValue, getReferenceString } from '@medplum/core';
 import { BundleEntry, Observation, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import React, { Suspense, useEffect, useState } from 'react';
@@ -8,8 +8,6 @@ import Button from '../../components/Button';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import MeasurementModal from '../../components/MeasurementModal';
-import getLocaleDate from '../../helpers/get-locale-date';
-import renderValue from '../../helpers/get-render-value';
 import NoData from '../../components/NoData';
 
 const LineChart = React.lazy(() => import('../../components/LineChart'));
@@ -145,7 +143,7 @@ const Measurement = (): JSX.Element | null => {
     if (measurements.entry) {
       const labels = measurements.entry.map(({ resource }) => {
         if (resource?.effectiveDateTime) {
-          return getLocaleDate(resource?.effectiveDateTime);
+          return formatDate(resource?.effectiveDateTime);
         }
       });
 
@@ -211,12 +209,12 @@ const Measurement = (): JSX.Element | null => {
               [...measurements.entry].reverse().map(({ resource }) => {
                 if (!resource) return null;
 
-                const time = getLocaleDate(resource.effectiveDateTime, true);
+                const time = formatDateTime(resource.effectiveDateTime);
 
                 return (
                   <div className="mb-2 flex justify-between" key={resource.id}>
                     {time && <p>{time}</p>}
-                    {renderValue(resource)}
+                    <p>{formatObservationValue(resource)}</p>
                   </div>
                 );
               })}

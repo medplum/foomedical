@@ -1,14 +1,13 @@
+import { formatDate, formatTiming } from '@medplum/core';
+import { MedicationRequest } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/react';
-import { MedicationRequest } from '@medplum/fhirtypes';
-import getTimingRepeat from '../../helpers/get-timing-repeat';
-import getLocaleDate from '../../helpers/get-locale-date';
-import LinkToPreviousPage from '../../components/LinkToPreviousPage';
-import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
-import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
+import LinkToPreviousPage from '../../components/LinkToPreviousPage';
 import NoData from '../../components/NoData';
+import PageTitle from '../../components/PageTitle';
+import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
 
 export default function Medication(): JSX.Element {
   const medplum = useMedplum();
@@ -25,7 +24,7 @@ export default function Medication(): JSX.Element {
         label: 'Instruction',
         body: (
           <div className="flex flex-col">
-            <p className="text-lg text-gray-600">{getTimingRepeat(resource.dosageInstruction[0].timing?.repeat)}</p>
+            <p className="text-lg text-gray-600">{formatTiming(resource.dosageInstruction[0].timing)}</p>
             {resource.dosageInstruction[0].text && (
               <p className="text-lg text-gray-600">{resource.dosageInstruction[0].text}</p>
             )}
@@ -38,7 +37,7 @@ export default function Medication(): JSX.Element {
         label: 'Last prescribed',
         body: (
           <p className="text-lg text-gray-600">
-            {getLocaleDate(resource.authoredOn)} by {resource.requester?.display}
+            {formatDate(resource.authoredOn)} by {resource.requester?.display}
           </p>
         ),
       });

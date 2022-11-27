@@ -1,12 +1,11 @@
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { getReferenceString } from '@medplum/core';
+import { formatDate, getReferenceString } from '@medplum/core';
 import { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import { Link } from 'react-router-dom';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
 import PageTitle from '../../components/PageTitle';
-import getLocaleDate from '../../helpers/get-locale-date';
 
 export default function LabResults(): JSX.Element {
   const medplum = useMedplum();
@@ -29,7 +28,7 @@ export default function LabResults(): JSX.Element {
                           <div className="text-black-500 mb-2 flex items-center text-lg last:mb-0">
                             <p>
                               <time>
-                                {resource?.meta?.lastUpdated ? getLocaleDate(resource?.meta?.lastUpdated) : null}
+                                {resource?.meta?.lastUpdated ? formatDate(resource?.meta?.lastUpdated) : null}
                               </time>
                             </p>
                           </div>

@@ -1,16 +1,14 @@
+import { BeakerIcon } from '@heroicons/react/24/outline';
+import { formatDate, formatHumanName, formatTiming } from '@medplum/core';
+import { MedicationRequest, Patient } from '@medplum/fhirtypes';
+import { useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMedplum } from '@medplum/react';
-import { formatHumanName } from '@medplum/core';
-import { MedicationRequest, Patient } from '@medplum/fhirtypes';
-import { BeakerIcon } from '@heroicons/react/24/outline';
-import PageTitle from '../../components/PageTitle';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
-import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
+import PageTitle from '../../components/PageTitle';
 import RenewalNotification, { NotificationValues } from '../../components/RenewalNotification';
-import getTimingRepeat from '../../helpers/get-timing-repeat';
-import getLocaleDate from '../../helpers/get-locale-date';
+import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
 
 export default function PrescriptionRenewal(): JSX.Element {
   const medplum = useMedplum();
@@ -74,7 +72,7 @@ export default function PrescriptionRenewal(): JSX.Element {
     if (resource.authoredOn) {
       prescriptionData.push({
         label: 'Last prescribed',
-        body: <p className="text-lg text-gray-600">{getLocaleDate(resource.authoredOn)}</p>,
+        body: <p className="text-lg text-gray-600">{formatDate(resource.authoredOn)}</p>,
       });
     }
     if (resource.status) {
@@ -108,9 +106,7 @@ export default function PrescriptionRenewal(): JSX.Element {
               <div className="flex flex-col justify-center">
                 <p className="mb-1 text-lg font-bold last:mb-0">{resource.medicationCodeableConcept?.text}</p>
                 {resource.dosageInstruction && (
-                  <p className="text-lg text-gray-600">
-                    {getTimingRepeat(resource.dosageInstruction[0].timing?.repeat)}
-                  </p>
+                  <p className="text-lg text-gray-600">{formatTiming(resource.dosageInstruction[0].timing)}</p>
                 )}
               </div>
             </div>
