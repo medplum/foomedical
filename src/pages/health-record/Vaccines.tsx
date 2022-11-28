@@ -1,19 +1,18 @@
 import { CalendarIcon, MapPinIcon } from '@heroicons/react/24/solid';
-import { getReferenceString } from '@medplum/core';
+import { formatDate, getReferenceString } from '@medplum/core';
 import { BundleEntry, Immunization, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import { useEffect, useState } from 'react';
 import InfoSection from '../../components/InfoSection';
 import NoData from '../../components/NoData';
 import PageTitle from '../../components/PageTitle';
-import getLocaleDate from '../../helpers/get-locale-date';
 
 interface VaccineProps {
   resource: Immunization;
 }
 
 const Vaccine = ({ resource }: VaccineProps): JSX.Element => {
-  const date = resource?.occurrenceDateTime ? getLocaleDate(resource?.occurrenceDateTime) : null;
+  const date = resource?.occurrenceDateTime ? formatDate(resource?.occurrenceDateTime) : null;
 
   return (
     <li key={resource?.id}>

@@ -1,12 +1,10 @@
-import { getReferenceString } from '@medplum/core';
+import { formatDate, formatObservationValue, getReferenceString } from '@medplum/core';
 import { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import GridCell from '../../components/GridCell';
 import GridSection from '../../components/GridSection';
 import NoData from '../../components/NoData';
 import PageTitle from '../../components/PageTitle';
-import getLocaleDate from '../../helpers/get-locale-date';
-import renderValue from '../../helpers/get-render-value';
 
 const headers = ['Measurements', 'Your Value', 'Last updated'];
 
@@ -29,8 +27,8 @@ export default function Vitals(): JSX.Element {
                       <div className="flex min-w-0 flex-1 items-center">
                         <div className="grid min-w-0 flex-1 grid-cols-3">
                           <GridCell item={resource?.code?.coding[0].display} color="teal" />
-                          <GridCell item={renderValue(resource)} color="gray" />
-                          <GridCell item={getLocaleDate(resource?.meta?.lastUpdated)} color="gray" />
+                          <GridCell item={formatObservationValue(resource)} color="gray" />
+                          <GridCell item={formatDate(resource?.meta?.lastUpdated)} color="gray" />
                         </div>
                       </div>
                     </div>

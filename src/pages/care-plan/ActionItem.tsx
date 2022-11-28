@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
+import { formatDate } from '@medplum/core';
 import { CarePlan, Reference, RequestGroup } from '@medplum/fhirtypes';
 import { CodeableConceptDisplay, RequestGroupDisplay, useMedplum } from '@medplum/react';
+import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import InfoSection from '../../components/InfoSection';
 import LinkToPreviousPage from '../../components/LinkToPreviousPage';
-import getLocaleDate from '../../helpers/get-locale-date';
 import './ActionItem.css';
 
 export default function ActionItem(): JSX.Element {
@@ -30,7 +30,7 @@ export default function ActionItem(): JSX.Element {
               </div>
               {resource.period?.end && (
                 <div className="mt-1 text-sm font-bold text-gray-900">
-                  <p>Accomplysh by {getLocaleDate(resource.period.end)}</p>
+                  <p>Accomplish by {formatDate(resource.period.end)}</p>
                 </div>
               )}
             </div>

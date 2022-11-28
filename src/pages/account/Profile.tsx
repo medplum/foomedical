@@ -1,5 +1,5 @@
 import { CheckIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
-import { formatFamilyName, formatGivenName, formatHumanName } from '@medplum/core';
+import { formatDate, formatFamilyName, formatGivenName, formatHumanName } from '@medplum/core';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { useMedplum, useMedplumProfile } from '@medplum/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -7,7 +7,6 @@ import GeneralInfo from '../../components/GeneralInfo';
 import InfoSection from '../../components/InfoSection';
 import Input from '../../components/Input';
 import TwoColumnsList, { TwoColumnsListItemProps } from '../../components/TwoColumnsList';
-import getLocaleDate from '../../helpers/get-locale-date';
 
 export default function Profile(): JSX.Element | null {
   const medplum = useMedplum();
@@ -262,7 +261,7 @@ export default function Profile(): JSX.Element | null {
           {activeInputName === 'birthDate' ? (
             <div className="flex space-x-2">{inputs.birthDate}</div>
           ) : (
-            <p className="text-lg text-gray-600">{getLocaleDate(resource.birthDate)}</p>
+            <p className="text-lg text-gray-600">{formatDate(resource.birthDate)}</p>
           )}
           <button
             onClick={() => {
