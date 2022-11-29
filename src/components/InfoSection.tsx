@@ -1,31 +1,38 @@
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { Card, CloseButton, createStyles, Title } from '@mantine/core';
+import React from 'react';
+
+const useStyles = createStyles((theme) => ({
+  titleSection: {
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+    border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[3]}`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+    padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
+  },
+
+  title: {
+    fontWeight: 500,
+  },
+}));
 
 interface InfoSectionProps {
   title: string | JSX.Element;
-  children: JSX.Element;
+  children: React.ReactNode;
   onButtonClick?: (id: string) => void;
   resourceType?: string;
   id?: string;
 }
 
-const InfoSection = ({ title, children, onButtonClick, id = '' }: InfoSectionProps): JSX.Element => {
+export function InfoSection({ title, children, onButtonClick, id = '' }: InfoSectionProps): JSX.Element {
+  const { classes } = useStyles();
   return (
-    <div className="mb-10 overflow-hidden rounded-md border last:mb-0">
-      <div
-        className={`border-b border-gray-100 bg-gray-100 px-4 py-5 sm:px-6 ${
-          onButtonClick ? 'flex justify-between' : ''
-        }`}
-      >
-        <h3 className="text-lg leading-6 text-gray-500">{title}</h3>
-        {onButtonClick && (
-          <button onClick={() => onButtonClick(id)}>
-            <XMarkIcon className="h-6 w-6 self-center text-gray-400 hover:text-red-700" />
-          </button>
-        )}
-      </div>
-      <div>{children}</div>
-    </div>
+    <Card withBorder radius="md" shadow="sm" p="xl" mb="xl" style={{ width: '100%' }}>
+      <Card.Section className={classes.titleSection}>
+        <Title order={4} className={classes.title}>
+          {title}
+        </Title>
+        {onButtonClick && <CloseButton onClick={() => onButtonClick(id)} />}
+      </Card.Section>
+      <Card.Section>{children}</Card.Section>
+    </Card>
   );
-};
-
-export default InfoSection;
+}

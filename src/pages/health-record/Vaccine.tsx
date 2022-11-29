@@ -1,21 +1,21 @@
 import { Box, Title } from '@mantine/core';
-import { CarePlan } from '@medplum/fhirtypes';
+import { Immunization } from '@medplum/fhirtypes';
 import { ResourceTable, useMedplum } from '@medplum/react';
 import { useParams } from 'react-router-dom';
 import { InfoSection } from '../../components/InfoSection';
 
-export function ActionItem(): JSX.Element {
+export function Vaccine(): JSX.Element {
   const medplum = useMedplum();
-  const { itemId } = useParams();
-  const resource: CarePlan = medplum.readResource('CarePlan', itemId as string).read();
+  const { vaccineId = '' } = useParams();
+  const vaccine: Immunization = medplum.readResource('Immunization', vaccineId).read();
 
   return (
     <Box p="xl">
       <Title order={2} mb="md">
-        {resource.title}
+        {vaccine.vaccineCode?.text}
       </Title>
-      <InfoSection title="Action Item">
-        <ResourceTable value={resource} ignoreMissingValues />
+      <InfoSection title="Vaccine">
+        <ResourceTable value={vaccine} ignoreMissingValues />
       </InfoSection>
     </Box>
   );

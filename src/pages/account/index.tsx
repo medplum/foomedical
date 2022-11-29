@@ -1,11 +1,7 @@
-import { lazy } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import PageLayout from '../../components/PageLayout';
-
-const Profile = lazy(() => import('./Profile'));
-const Provider = lazy(() => import('./Provider'));
-const MembershipAndBilling = lazy(() => import('./MembershipAndBilling'));
-const ChooseProvider = lazy(() => import('./ChooseProvider'));
+import { Container, Group } from '@mantine/core';
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { SideMenu } from '../../components/SideMenu';
 
 export const sideMenu = {
   title: 'Account',
@@ -16,16 +12,17 @@ export const sideMenu = {
   ],
 };
 
-export default function Account(): JSX.Element {
+export function AccountPage(): JSX.Element {
   return (
-    <PageLayout sideMenu={sideMenu}>
-      <Routes>
-        <Route index element={<Navigate replace to={sideMenu.menu[0].href} />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="provider/*" element={<Provider />} />
-        <Route path="provider/choose-a-primary-care-povider" element={<ChooseProvider />} />
-        <Route path="membership-and-billing" element={<MembershipAndBilling />} />
-      </Routes>
-    </PageLayout>
+    <Container>
+      <Group align="top">
+        <SideMenu {...sideMenu} />
+        <div style={{ width: 800, flex: 800 }}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
+        </div>
+      </Group>
+    </Container>
   );
 }

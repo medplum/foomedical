@@ -13,7 +13,6 @@ dist
 dist-ssr
 *.local
 coverage
-e2e/cypress.env.json
 
 # Editor directories and files
 .vscode/*

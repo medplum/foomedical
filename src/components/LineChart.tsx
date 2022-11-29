@@ -1,14 +1,5 @@
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import type { ChartData } from 'chart.js';
+import { lazy, Suspense } from 'react';
 
 const lineChartOptions = {
   responsive: true,
@@ -25,23 +16,24 @@ const lineChartOptions = {
 };
 
 interface LineChartProps {
-  chartData: {
-    labels: (string | null | undefined)[];
-    datasets: {
-      label: string;
-      data: (number | undefined)[];
-      backgroundColor: string;
-      borderColor?: string;
-    }[];
-  };
+  chartData: ChartData<'line', number[]>;
 }
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+const AsyncLine = lazy(async () => {
+  const { CategoryScale, Chart, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } = await import(
+    'chart.js'
+  );
+  Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+  const { Line } = await import('react-chartjs-2');
+  return { default: Line };
+});
 
-const LineChart = ({ chartData }: LineChartProps): JSX.Element => (
-  <div className="my-5">
-    <Line options={lineChartOptions} data={chartData} />
-  </div>
-);
-
-export default LineChart;
+export function LineChart({ chartData }: LineChartProps): JSX.Element {
+  return (
+    <div className="my-5">
+      <Suspense fallback={<div>Loading...</div>}>
+        <AsyncLine options={lineChartOptions} data={chartData} />
+      </Suspense>
+    </div>
+  );
+}

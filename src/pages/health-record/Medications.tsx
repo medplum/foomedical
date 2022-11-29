@@ -1,45 +1,37 @@
-import { ChevronRightIcon } from '@heroicons/react/24/solid';
+import { Box, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 import { getReferenceString } from '@medplum/core';
 import { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
-import { Link } from 'react-router-dom';
-import InfoSection from '../../components/InfoSection';
-import NoData from '../../components/NoData';
-import PageTitle from '../../components/PageTitle';
+import { IconChevronRight } from '@tabler/icons';
+import { useNavigate } from 'react-router-dom';
+import { InfoButton } from '../../components/InfoButton';
+import { InfoSection } from '../../components/InfoSection';
 
-const title = 'Medications';
-
-export default function Medications(): JSX.Element {
+export function Medications(): JSX.Element {
+  const theme = useMantineTheme();
+  const navigate = useNavigate();
   const medplum = useMedplum();
   const patient = medplum.getProfile() as Patient;
-  const bundle = medplum.search('MedicationRequest', 'patient=' + getReferenceString(patient)).read();
+  const medications = medplum.searchResources('MedicationRequest', 'patient=' + getReferenceString(patient)).read();
 
   return (
-    <>
-      <PageTitle title="Medications" />
-      {bundle.entry?.length ? (
-        <InfoSection title="Medications">
-          <ul role="list" className="divide-y divide-gray-200">
-            {bundle.entry.map(({ resource }) => (
-              <li key={resource?.id}>
-                {resource?.id && (
-                  <Link to={resource?.id} className="block hover:bg-gray-50">
-                    <div className="flex items-center justify-between px-4 py-4 sm:px-6">
-                      <div>
-                        <p className="text-sm font-medium text-teal-600">{resource?.medicationCodeableConcept?.text}</p>
-                        <p className="mt-1 text-sm text-gray-500">{resource?.requester?.display}</p>
-                      </div>
-                      <ChevronRightIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-                    </div>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </InfoSection>
-      ) : (
-        <NoData title="medications" />
-      )}
-    </>
+    <Box p="xl">
+      <Title mb="lg">Medications</Title>
+      <InfoSection title="Medications">
+        <Stack spacing={0}>
+          {medications.map((med) => (
+            <InfoButton key={med.id} onClick={() => navigate(`./${med.id}`)}>
+              <div>
+                <Text c={theme.fn.primaryColor()} fw={500} mb={4}>
+                  {med?.medicationCodeableConcept?.text}
+                </Text>
+                <Text c="gray.6">{med.requester?.display}</Text>
+              </div>
+              <IconChevronRight color={theme.colors.gray[5]} />
+            </InfoButton>
+          ))}
+        </Stack>
+      </InfoSection>
+    </Box>
   );
 }
