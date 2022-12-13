@@ -71,7 +71,7 @@ You can deploy this application by [clicking here](https://vercel.com/new/clone?
 
 By default, your locally running Foo Medical app is pointing to the hosted Medplum service. Foo Medical registers signups to a test project.
 
-To send patients to your own organization you will need to [register a new Project on Medplum](https://docs.medplum.com/tutorials/app/register) and configure your app [register form component](https://docs.medplum.com/storybook/index.html?path=/docs/medplum-registerform--basic) in [src/pages/RegisterPage.tsx](https://github.com/medplum/foomedical/blob/main/src/pages/RegisterPage.tsx#L23-L29) and [src/pages/SignInPage.tsx](https://github.com/medplum/foomedical/blob/221dda547b977205cf185131f592fb937535148a/src/pages/SignInPage.tsx#L22-L26) to point to your own project.
+To send patients to your own organization you will need to [register a new Project on Medplum](https://docs.medplum.com/tutorials/app/register) and configure your environment variables to point to your own project (see [.env.development](https://github.com/medplum/foomedical/blob/main/.env.development) for an example).
 
 If you are using the Medplum Hosted service, you can login to your Medplum Instance and add the following identifiers to your [Project Site Settings](https://app.medplum.com/admin/sites)
 
