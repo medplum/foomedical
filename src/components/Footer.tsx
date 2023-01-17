@@ -1,27 +1,38 @@
-import React from 'react';
+import { Anchor, Container, createStyles, Divider, SimpleGrid, Stack, Text } from '@mantine/core';
 
-const navigation = [
-  { name: 'Getting started', href: 'https://docs.medplum.com/tutorials/api-basics/create-fhir-data' },
-  { name: 'Playing with Medplum', href: 'https://docs.medplum.com/tutorials' },
-  { name: 'Open Source', href: 'https://github.com/medplum/foomedical' },
-  { name: 'Documentation', href: 'https://docs.medplum.com/' },
-];
+const useStyles = createStyles((theme) => ({
+  footer: {
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+  },
+
+  inner: {
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+    borderTop: `1px solid ${theme.colors.gray[2]}`,
+    padding: theme.spacing.xl,
+    textAlign: 'center',
+  },
+}));
 
 export function Footer(): JSX.Element {
+  const { classes } = useStyles();
+
   return (
-    <footer className="border-t border-neutral-200 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <nav
-          className="flex w-full flex-col items-center justify-between space-y-4 border-b border-neutral-200 py-10 md:flex-row md:space-y-0"
-          aria-label="Footer"
-        >
-          {navigation.map((item) => (
-            <a key={item.name} href={item.href} className="text-lg text-neutral-500 hover:text-neutral-900">
-              {item.name}
-            </a>
-          ))}
-        </nav>
-        <p className="py-12 text-center text-sm text-neutral-900">&copy; 2022 Foo Medical, Inc. All rights reserved.</p>
+    <footer className={classes.footer}>
+      <div className={classes.inner}>
+        <Container p="xl">
+          <Stack spacing="xl">
+            <SimpleGrid cols={4}>
+              <Anchor href="https://www.medplum.com/docs/tutorials/api-basics/create-fhir-data">Getting started</Anchor>
+              <Anchor href="https://www.medplum.com/docs/tutorials">Playing with Medplum</Anchor>
+              <Anchor href="https://github.com/medplum/foomedical">Open Source</Anchor>
+              <Anchor href="https://www.medplum.com/docs">Documentation</Anchor>
+            </SimpleGrid>
+            <Divider />
+            <Text color="dimmed" size="sm">
+              &copy; {new Date().getFullYear()} Foo Medical, Inc. All rights reserved.
+            </Text>
+          </Stack>
+        </Container>
       </div>
     </footer>
   );

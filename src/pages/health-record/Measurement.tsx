@@ -1,38 +1,24 @@
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import { Alert, Box, Button, Group, Modal, NumberInput, Stack, Table, Title } from '@mantine/core';
 import { createReference, formatDate, formatDateTime, formatObservationValue, getReferenceString } from '@medplum/core';
-import { BundleEntry, Observation, Patient } from '@medplum/fhirtypes';
-import { useMedplum } from '@medplum/react';
-import React, { Suspense, useEffect, useState } from 'react';
+import { Observation, ObservationComponent, Patient } from '@medplum/fhirtypes';
+import { Document, Form, useMedplum } from '@medplum/react';
+import { IconAlertCircle } from '@tabler/icons';
+import { ChartData, ChartDataset } from 'chart.js';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Button from '../../components/Button';
-import InfoSection from '../../components/InfoSection';
-import LinkToPreviousPage from '../../components/LinkToPreviousPage';
-import MeasurementModal from '../../components/MeasurementModal';
-import NoData from '../../components/NoData';
+import { LineChart } from '../../components/LineChart';
 
-const LineChart = React.lazy(() => import('../../components/LineChart'));
-
-interface measurementsMetaType {
-  [key: string]: {
-    id: string;
-    code: string;
-    title: string;
-    description: string;
-    chartDatasets: {
-      label: string;
-      backgroundColor: string;
-      borderColor: string;
-    }[];
-  };
-}
-
-interface chartDataType {
-  labels: (string | null | undefined)[];
-  datasets: {
+interface ObservationType {
+  id: string;
+  code: string;
+  title: string;
+  description: string;
+  chartDatasets: {
     label: string;
-    data: (number | undefined)[];
+    code?: string;
+    unit: string;
     backgroundColor: string;
-    borderColor?: string;
+    borderColor: string;
   }[];
 }
 
@@ -41,7 +27,7 @@ export const borderColor = 'rgba(29, 112, 214, 1)';
 export const secondBackgroundColor = 'rgba(255, 119, 0, 0.7)';
 export const secondBorderColor = 'rgba(255, 119, 0, 1)';
 
-export const measurementsMeta: measurementsMetaType = {
+export const measurementsMeta: Record<string, ObservationType> = {
   'blood-pressure': {
     id: 'blood-pressure',
     code: '85354-9',
@@ -51,11 +37,15 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Diastolic',
+        code: '8462-4',
+        unit: 'mm[Hg]',
         backgroundColor: secondBackgroundColor,
         borderColor: secondBorderColor,
       },
       {
         label: 'Systolic',
+        code: '8480-6',
+        unit: 'mm[Hg]',
         backgroundColor,
         borderColor,
       },
@@ -69,6 +59,7 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Body Temperature',
+        unit: 'C',
         backgroundColor,
         borderColor,
       },
@@ -82,6 +73,7 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Height',
+        unit: 'in',
         backgroundColor,
         borderColor,
       },
@@ -95,6 +87,7 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Respiratory Rate',
+        unit: 'breaths/minute',
         backgroundColor,
         borderColor,
       },
@@ -108,6 +101,7 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Heart Rate',
+        unit: 'beats/minute',
         backgroundColor,
         borderColor,
       },
@@ -121,6 +115,7 @@ export const measurementsMeta: measurementsMetaType = {
     chartDatasets: [
       {
         label: 'Weight',
+        unit: 'lbs',
         backgroundColor,
         borderColor,
       },
@@ -128,109 +123,131 @@ export const measurementsMeta: measurementsMetaType = {
   },
 };
 
-const Measurement = (): JSX.Element | null => {
+export function Measurement(): JSX.Element | null {
   const { measurementId } = useParams();
   const { code, title, description, chartDatasets } = measurementsMeta[measurementId as string];
-
   const medplum = useMedplum();
   const patient = medplum.getProfile() as Patient;
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [chartData, setChartData] = useState<chartDataType>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [chartData, setChartData] = useState<ChartData<'line', number[]>>();
 
-  const measurements = medplum.search('Observation', `code=${code}&patient=${getReferenceString(patient)}`).read();
+  const observations = medplum
+    .searchResources('Observation', `code=${code}&patient=${getReferenceString(patient)}`)
+    .read();
 
   useEffect(() => {
-    if (measurements.entry) {
-      const labels = measurements.entry.map(({ resource }) => {
-        if (resource?.effectiveDateTime) {
-          return formatDate(resource?.effectiveDateTime);
+    if (observations) {
+      const labels: string[] = [];
+      const datasets: ChartDataset<'line', number[]>[] = chartDatasets.map((item) => ({ ...item, data: [] }));
+      for (const obs of observations) {
+        labels.push(formatDate(obs.effectiveDateTime));
+        if (chartDatasets.length === 1) {
+          datasets[0].data.push(obs.valueQuantity?.value as number);
+        } else {
+          for (let i = 0; i < chartDatasets.length; i++) {
+            datasets[i].data.push((obs.component as ObservationComponent[])[i].valueQuantity?.value as number);
+          }
         }
-      });
-
-      setChartData({
-        labels,
-        datasets: chartDatasets.map((item, i) => ({
-          ...item,
-          data: getDatasets(i, measurements.entry),
-        })),
-      });
+      }
+      setChartData({ labels, datasets });
     }
-  }, [chartDatasets, measurements]);
+  }, [chartDatasets, observations]);
 
-  if (!measurementId) {
-    return null;
+  function addObservation(formData: Record<string, string>): void {
+    console.log(formData);
+
+    const obs: Observation = {
+      resourceType: 'Observation',
+      status: 'preliminary',
+      subject: createReference(patient),
+      effectiveDateTime: new Date().toISOString(),
+      code: {
+        coding: [
+          {
+            code,
+            display: title,
+            system: 'http://loinc.org',
+          },
+        ],
+        text: title,
+      },
+    };
+
+    if (chartDatasets.length === 1) {
+      obs.valueQuantity = {
+        value: parseFloat(formData[chartDatasets[0].label]),
+        system: 'http://unitsofmeasure.org',
+        unit: chartDatasets[0].unit,
+        code: chartDatasets[0].unit,
+      };
+    } else {
+      obs.component = chartDatasets.map((item) => ({
+        code: {
+          coding: [
+            {
+              code: '8462-4',
+              display: 'Diastolic Blood Pressure',
+              system: 'http://loinc.org',
+            },
+          ],
+          text: item.label,
+        },
+        valueQuantity: {
+          value: parseFloat(formData[item.label]),
+          system: 'http://unitsofmeasure.org',
+          unit: item.unit,
+          code: item.unit,
+        },
+      }));
+    }
+
+    medplum.createResource(obs).then(() => setModalOpen(false));
   }
 
-  const getDatasets = (index: number, measurements?: BundleEntry<Observation>[]): (number | undefined)[] => {
-    if (measurements) {
-      return measurements.map(({ resource }) =>
-        resource?.component?.length ? resource?.component[index].valueQuantity?.value : resource?.valueQuantity?.value
-      );
-    }
-    return [];
-  };
-
-  const handleAddMeasurement = (): void => {
-    setIsModalOpen(true);
-  };
-
   return (
-    <>
-      <LinkToPreviousPage url="/health-record/vitals" label="Vitals" />
-      <div className="mt-5 flex flex-col items-start space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-        <h1 className="text-3xl font-extrabold">{title}</h1>
-        <Button marginsUtils="ml-0" label="Add Measurement" action={handleAddMeasurement} />
-      </div>
-      {chartData && (
-        <Suspense fallback={null}>
-          <LineChart chartData={chartData} />
-        </Suspense>
+    <Document>
+      <Group position="apart" mb="xl">
+        <Title order={1}>{title}</Title>
+        <Button onClick={() => setModalOpen(true)}>Add Measurement</Button>
+      </Group>
+      {chartData && <LineChart chartData={chartData} />}
+      <Box my="xl">
+        <Alert icon={<IconAlertCircle size={16} />} title="What is this measurement?" color="gray" radius="md">
+          {description}
+        </Alert>
+      </Box>
+      {observations?.length && (
+        <Table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Your Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {observations.map((obs) => (
+              <tr key={obs.id}>
+                <td>{formatDateTime(obs.effectiveDateTime as string)}</td>
+                <td>{formatObservationValue(obs)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       )}
-      {description && (
-        <div className="mb-10 overflow-hidden border bg-white p-4 sm:rounded-md">
-          <div className="mb-3 flex items-center text-gray-600">
-            <InformationCircleIcon className="mr-2 h-6 w-6 flex-shrink-0" />
-            <h3 className="text-lg font-bold">What is this measurement?</h3>
-          </div>
-          <p className="text-base text-gray-600">{description}</p>
-        </div>
-      )}
-      {measurements.entry?.length ? (
-        <InfoSection
-          title={
-            <div className="flex justify-between">
-              <p>Measurements</p>
-              <p>Your Value</p>
-            </div>
-          }
-        >
-          <div className="px-4 pt-4 pb-2">
-            {measurements.entry &&
-              [...measurements.entry].reverse().map(({ resource }) => {
-                if (!resource) return null;
-
-                const time = formatDateTime(resource.effectiveDateTime);
-
-                return (
-                  <div className="mb-2 flex justify-between" key={resource.id}>
-                    {time && <p>{time}</p>}
-                    <p>{formatObservationValue(resource)}</p>
-                  </div>
-                );
-              })}
-          </div>
-        </InfoSection>
-      ) : (
-        <NoData title="measurements" />
-      )}
-      <MeasurementModal
-        subject={createReference(patient)}
-        type={title}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(!isModalOpen)}
-      />
-    </>
+      <Modal size="lg" opened={modalOpen} onClose={() => setModalOpen(false)} title={title}>
+        <Form onSubmit={addObservation}>
+          <Stack spacing="md">
+            <Group grow noWrap>
+              {chartDatasets.map((component) => (
+                <NumberInput key={component.label} label={component.label} name={component.label} />
+              ))}
+            </Group>
+            <Group position="right">
+              <Button type="submit">Add</Button>
+            </Group>
+          </Stack>
+        </Form>
+      </Modal>
+    </Document>
   );
-};
-
-export default Measurement;
+}
