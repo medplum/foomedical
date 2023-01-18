@@ -12,6 +12,6 @@
   "testMatch": ["**/src/**/*.test.ts", "**/src/**/*.test.tsx"],
   "setupFilesAfterEnv": ["./src/test.setup.js"],
   "coverageDirectory": "coverage",
-  "coverageReporters": ["json", "text"],
+  "coverageReporters": ["json", "text", "lcov"],
   "collectCoverageFrom": ["**/src/**/*"]
 }
