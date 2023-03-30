@@ -2,7 +2,7 @@ import { Anchor, Box, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { formatDate, getReferenceString } from '@medplum/core';
 import { Immunization, Patient } from '@medplum/fhirtypes';
 import { StatusBadge, useMedplum } from '@medplum/react';
-import { IconCalendar, IconMapPin } from '@tabler/icons';
+import { IconCalendar, IconMapPin } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';

@@ -6,7 +6,7 @@ const useStyles = createStyles((theme) => ({
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
     border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[3]}`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
-    padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
+    padding: `${theme.spacing.md} ${theme.spacing.md}`,
   },
 
   title: {

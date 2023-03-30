@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ResourceAvatar, useMedplumProfile } from '@medplum/react';
-import { IconChevronDown, IconLogout, IconSettings, IconUserCircle } from '@tabler/icons';
+import { IconChevronDown, IconLogout, IconSettings, IconUserCircle } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from './Logo';
@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   logoButton: {
-    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     transition: 'background-color 100ms ease',
 
@@ -69,7 +69,7 @@ const useStyles = createStyles((theme) => ({
 
   user: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     transition: 'background-color 100ms ease',
 
@@ -120,7 +120,7 @@ export function Header(): JSX.Element {
             width={260}
             shadow="xl"
             position="bottom-end"
-            transition="pop-top-right"
+            transitionProps={{ transition: 'pop-top-right' }}
             onClose={() => setUserMenuOpened(false)}
             onOpen={() => setUserMenuOpened(true)}
           >

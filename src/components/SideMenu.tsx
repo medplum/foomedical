@@ -1,4 +1,4 @@
-import { createStyles, Title } from '@mantine/core';
+import { createStyles, getStylesRef, Title } from '@mantine/core';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -12,8 +12,8 @@ export interface SideMenuProps {
   menu: { name: string; href: string; subMenu?: SubMenuProps[] }[];
 }
 
-const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef('icon');
+const useStyles = createStyles((theme) => {
+  const icon = getStylesRef('icon');
   return {
     container: {
       flex: 200,
@@ -33,7 +33,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       textDecoration: 'none',
       fontSize: theme.fontSizes.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+      padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 

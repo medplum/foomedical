@@ -2,7 +2,7 @@ import { Alert, Box, Button, Group, Modal, NumberInput, Stack, Table, Title } fr
 import { createReference, formatDate, formatDateTime, formatObservationValue, getReferenceString } from '@medplum/core';
 import { Observation, ObservationComponent, Patient } from '@medplum/fhirtypes';
 import { Document, Form, useMedplum } from '@medplum/react';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { ChartData, ChartDataset } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
