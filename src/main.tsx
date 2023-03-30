@@ -14,11 +14,11 @@ const theme: MantineThemeOverride = {
   primaryColor: 'teal',
   primaryShade: 8,
   fontSizes: {
-    xs: 11,
-    sm: 14,
-    md: 14,
-    lg: 16,
-    xl: 18,
+    xs: '0.6875rem',
+    sm: '0.875rem',
+    md: '0.875rem',
+    lg: '1rem',
+    xl: '1.125rem',
   },
   components: {
     Container: {

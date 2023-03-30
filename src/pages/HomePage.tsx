@@ -15,12 +15,12 @@ import {
   Stack,
   Text,
   Title,
-  useMantineTheme
+  useMantineTheme,
 } from '@mantine/core';
 import { formatHumanName } from '@medplum/core';
 import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { useMedplumProfile } from '@medplum/react';
-import { IconChecklist, IconGift, IconSquareCheck } from '@tabler/icons';
+import { IconChecklist, IconGift, IconSquareCheck } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import DoctorImage from '../img/homePage/doctor.svg';
 import HealthRecordImage from '../img/homePage/health-record.svg';
@@ -51,14 +51,14 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
-    paddingTop: theme.spacing.xl * 3,
-    paddingBottom: theme.spacing.xl * 4,
+    paddingTop: '4.5rem',
+    paddingBottom: '6rem',
     zIndex: 1,
     position: 'relative',
 
     [theme.fn.smallerThan('sm')]: {
-      paddingTop: theme.spacing.xl * 2,
-      paddingBottom: theme.spacing.xl * 3,
+      paddingTop: '3rem',
+      paddingBottom: '4.5rem',
     },
   },
 
@@ -80,7 +80,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   heroButton: {
-    marginTop: theme.spacing.xl * 1.5,
+    marginTop: '2.25rem',
 
     [theme.fn.smallerThan('sm')]: {
       width: '100%',

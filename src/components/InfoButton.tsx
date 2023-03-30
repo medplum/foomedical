@@ -3,7 +3,7 @@ import { createStyles, Group, UnstyledButton } from '@mantine/core';
 const useStyles = createStyles((theme) => ({
   button: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-    padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
+    padding: `${theme.spacing.md} ${theme.spacing.md}`,
 
     '&:not(:last-child)': {
       borderBottom: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[3]}`,

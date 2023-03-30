@@ -33,10 +33,10 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing.xl * 4,
-    paddingBottom: theme.spacing.xl * 4,
-    marginTop: theme.spacing.xl * 4,
-    marginBottom: theme.spacing.xl * 4,
+    paddingTop: '6rem',
+    paddingBottom: '6rem',
+    marginTop: '6rem',
+    marginBottom: '6rem',
 
     [theme.fn.smallerThan('md')]: {
       flexDirection: 'column',
@@ -45,7 +45,7 @@ const useStyles = createStyles((theme) => ({
 
   content: {
     maxWidth: 480,
-    marginRight: theme.spacing.xl * 3,
+    marginRight: '4.5rem',
   },
 
   title: {
@@ -124,7 +124,7 @@ const useStyles = createStyles((theme) => ({
   featureBox: {
     backgroundColor: theme.fn.lighten(theme.fn.primaryColor(), 0.9),
     borderRadius: theme.radius.xl,
-    padding: theme.spacing.xl * 1.5,
+    padding: '2.25rem',
     width: 512,
   },
 
