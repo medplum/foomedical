@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 coverage
+package-lock.json
 
 # Editor directories and files
 .vscode/*
