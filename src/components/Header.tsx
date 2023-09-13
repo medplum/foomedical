@@ -11,9 +11,10 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { ResourceAvatar, useMedplumProfile } from '@medplum/react';
 import { IconChevronDown, IconLogout, IconSettings, IconUserCircle } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from './Logo';
+import { SmarterFhirContext } from '../App';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -63,6 +64,29 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  integrationLink: {
+    display: 'flex',
+    gap: "0.5rem",
+    alignItems: "center",
+    padding: '8px 12px',
+    borderRadius: theme.radius.sm,
+    textDecoration: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    },
+  },
+
+  integrationText: {
+    display: 'block',
+    lineHeight: 1,
+    borderRadius: theme.radius.sm,
+    textDecoration: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    fontSize: theme.fontSizes.lg,
+    fontWeight: 500,
+  },
+
   linkLabel: {
     marginRight: 5,
   },
@@ -101,6 +125,7 @@ export function Header(): JSX.Element {
   const { classes, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const { client, setClient } = useContext(SmarterFhirContext);
 
   return (
     <MantineHeader height={80} mb={120} fixed={true}>
@@ -109,6 +134,27 @@ export function Header(): JSX.Element {
           <UnstyledButton className={classes.logoButton} onClick={() => navigate('/')}>
             <Logo width={240} />
           </UnstyledButton>
+          <Link to={'/integrations'} className={classes.integrationLink}>
+            <div style={{ position: "relative", height: "1rem", width: "1rem" }}>
+              <span style={{ height: "1rem", width: "1rem", backgroundColor: client !== null ? "#cbe6de" : "rgb(255, 235, 235)", borderRadius: "50%", position: "absolute" }}></span>
+              {client !== null
+                ? <svg style={{ position: "absolute", margin: "0.05rem", fill: "#099268", height: "0.9rem", width: "0.9rem"  }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"/>
+                </svg>
+                : <svg style={{ position: "absolute", margin: "0.175rem", fill: "#f79999" }} height="0.65rem" width="0.65rem" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 460.775 460.775" xmlSpace="preserve">
+                <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
+                  c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
+                  c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
+                  c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
+                  l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
+                  c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"/>
+              </svg>}
+            </div>
+            <div className={classes.integrationText} >
+              {"Epic Integration"}
+            </div>
+          </Link>
           <Group spacing={5} className={classes.links}>
             {navigation.map((link) => (
               <Link key={link.name} to={link.href} className={classes.link}>

@@ -20,6 +20,7 @@ import { HomePage } from './pages/HomePage';
 import { Messages } from './pages/MessagesPage';
 import { ObservationPage } from './pages/ObservationPage';
 import { SignOutPage } from './pages/SignOutPage';
+import { Integrations } from './pages/Integrations';
 
 export function Router(): JSX.Element {
   return (
@@ -50,6 +51,7 @@ export function Router(): JSX.Element {
         <Route path="provider/*" element={<Provider />} />
         <Route path="membership-and-billing" element={<MembershipAndBilling />} />
       </Route>
+      <Route path="integrations" element={<Integrations />} />
       <Route path="signout" element={<SignOutPage />} />
     </Routes>
   );

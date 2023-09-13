@@ -55,5 +55,8 @@
     "extends": [
       "@medplum/eslint-config"
     ]
+  },
+  "dependencies": {
+    "@TopologyHealth/smarterfhir": "git@github.com:TopologyHealth/SMARTerFHIR.git#fc8760d881f31e831acab230c086dcfbe5ff282d"
   }
 }
