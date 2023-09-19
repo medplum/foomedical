@@ -2,8 +2,18 @@ import { ClientFactory } from "@TopologyHealth/smarterfhir";
 import { LAUNCH } from "@TopologyHealth/smarterfhir/lib/Client/ClientFactory";
 import { useContext, useEffect, useRef } from "react";
 import { SmarterFhirContext } from "../App";
-import { Group, Stack, Title, Divider, Text, Box, Container, Button } from "@mantine/core";
-import { ResourceAvatar, ResourceName, Document } from "@medplum/react";
+import { Group, Stack, Title, Divider, Text, Button } from "@mantine/core";
+import { Document } from "@medplum/react";
+
+export const EpicTag = () => {
+  return <Text style={{
+    backgroundColor: "#db5a33", color: "white", borderRadius: "0.25rem",
+    paddingLeft: "1rem", paddingRight: "1rem", paddingTop: "0.25rem", paddingBottom: "0.25rem", 
+    fontWeight: "bold", maxWidth: "fit-content" 
+  }}>
+    Epic
+  </Text>
+}
 
 async function startStandaloneLaunch() {
   console.log("Launched");
@@ -34,7 +44,7 @@ export const Integrations = () => {
       const clientFactory = new ClientFactory();
       clientFactory.createEMRClient(LAUNCH.STANDALONE, "http://localhost:3000/integrations").then(client => {
         setClient(client);
-        console.log("Successfully authenticated with Epic");
+        client.getPatientRead().then(v => console.log(`Successfully authenticated with Epic for patient ${v}`));
       })
     }
     catch {}

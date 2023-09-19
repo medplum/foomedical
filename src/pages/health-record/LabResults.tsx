@@ -20,7 +20,7 @@ export function LabResults(): JSX.Element {
 
   useEffect(() => {
     if (client) {
-      client.fhirClientDefault.request("DiagnosticReport?subject=Patient/erXuFYUfucBZaryVksYEcMg3").then(bundle => {
+      client.fhirClientDefault.request(`DiagnosticReport?subject=Patient/${client.fhirClientDefault.getPatientId()}`).then(bundle => {
         const newReports: DiagnosticReport[] = bundle.entry?.map((v: BundleEntry<DiagnosticReport>) => v.resource);
         setEpicReports(newReports.filter(v => v.resourceType === "DiagnosticReport"));
       });
@@ -44,7 +44,7 @@ export function LabResults(): JSX.Element {
             </InfoButton>
           ))}
           {epicReports.map((report, idx) => (
-            <InfoButton key={report.id ?? idx} onClick={() => navigate(`./${report.id}`)}>
+            <InfoButton key={report.id ?? idx} onClick={() => navigate(`./epic/${report.id}`)}>
               <div>
                 <Text fw={500} mb={4}>
                   {formatDate(report.effectiveDateTime as string)}

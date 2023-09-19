@@ -30,9 +30,11 @@ export function Router(): JSX.Element {
       <Route path="health-record/*" element={<HealthRecord />}>
         <Route index element={<Navigate replace to="/health-record/lab-results" />} />
         <Route path="lab-results/*" element={<LabResults />} />
+        <Route path="lab-results/epic/:resultId" element={<LabResult epic />} />
         <Route path="lab-results/:resultId" element={<LabResult />} />
         <Route path="medications" element={<Medications />} />
         <Route path="medications/:medicationId" element={<Medication />} />
+        <Route path="medications/epic/:medicationId" element={<Medication epic />} />
         <Route path="vaccines" element={<Vaccines />} />
         <Route path="vaccines/:vaccineId" element={<Vaccine />} />
         <Route path="vitals" element={<Vitals />} />

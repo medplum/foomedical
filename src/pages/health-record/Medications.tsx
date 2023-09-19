@@ -8,6 +8,7 @@ import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
 import { useContext, useEffect, useState } from 'react';
 import { SmarterFhirContext } from '../../App';
+import { EpicTag } from '../Integrations';
 
 export function Medications(): JSX.Element {
   const theme = useMantineTheme();
@@ -20,7 +21,7 @@ export function Medications(): JSX.Element {
 
   useEffect(() => {
     if (client) {
-      client.fhirClientDefault.request("MedicationRequest?subject=Patient/erXuFYUfucBZaryVksYEcMg3").then(bundle => {
+      client.fhirClientDefault.request(`MedicationRequest?subject=Patient/${client.fhirClientDefault.getPatientId()}`).then(bundle => {
         console.log(bundle);
         const newReports: MedicationRequest[] = bundle.entry?.map((v: BundleEntry<MedicationRequest>) => v.resource);
         setEpicReports(newReports.filter(v => v.resourceType === "MedicationRequest"));
@@ -45,15 +46,15 @@ export function Medications(): JSX.Element {
             </InfoButton>
           ))}
           {epicReports.map((med, idx) => (
-            <InfoButton key={med.id ?? idx} onClick={() => navigate(`./${med.id}`)}>
+            <InfoButton key={med.id ?? idx} onClick={() => navigate(`./epic/${med.id}`)}>
               <div>
                 <Text c={theme.fn.primaryColor()} fw={500} mb={4}>
-                  {med?.medicationCodeableConcept?.text}
+                  {med?.medicationReference?.display}
                 </Text>
                 <Text c="gray.6">{med.requester?.display}</Text>
               </div>
               <Group>
-                <Text style={{ backgroundColor: "#db5a33", color: "white", borderRadius: "0.25rem", paddingLeft: "1rem", paddingRight: "1rem", paddingTop: "0.25rem", paddingBottom: "0.25rem", fontWeight: "bold" }}>Epic</Text>
+                <EpicTag />
                 <IconChevronRight color={theme.colors.gray[5]} />
               </Group>
             </InfoButton>

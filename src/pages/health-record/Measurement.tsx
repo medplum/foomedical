@@ -1,12 +1,14 @@
-import { Alert, Box, Button, Group, Modal, NumberInput, Stack, Table, Title } from '@mantine/core';
+import { Alert, Box, Button, Group, Modal, NumberInput, Stack, Table, Title, Text } from '@mantine/core';
 import { createReference, formatDate, formatDateTime, formatObservationValue, getReferenceString } from '@medplum/core';
-import { Observation, ObservationComponent, Patient } from '@medplum/fhirtypes';
+import { BundleEntry, Observation, ObservationComponent, Patient } from '@medplum/fhirtypes';
 import { Document, Form, useMedplum } from '@medplum/react';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { ChartData, ChartDataset } from 'chart.js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LineChart } from '../../components/LineChart';
+import { SmarterFhirContext } from '../../App';
+import { EpicTag } from '../Integrations';
 
 interface ObservationType {
   id: string;
@@ -130,10 +132,20 @@ export function Measurement(): JSX.Element | null {
   const patient = medplum.getProfile() as Patient;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [chartData, setChartData] = useState<ChartData<'line', number[]>>();
-
-  const observations = medplum
+  const [observations, setObservations] = useState(medplum
     .searchResources('Observation', `code=${code}&patient=${getReferenceString(patient)}`)
-    .read();
+    .read());
+  const { client, setClient } = useContext(SmarterFhirContext);
+  const [epicObservations, setEpicObservations] = useState<Observation[]>([]);
+
+  useEffect(() => {
+    if (client) {
+      client.fhirClientDefault.request(`Observation?subject=Patient/${client.fhirClientDefault.getPatientId()}&category=vital-signs&date=ge2021-02-01&code=${code}`).then(bundle => {
+        const newObs: Observation[] = bundle.entry?.map((v: BundleEntry<Observation>) => v.resource);
+        setEpicObservations(newObs.filter(v => v.resourceType === "Observation"));
+      });
+    }
+  }, [client])
 
   useEffect(() => {
     if (observations) {
@@ -149,9 +161,21 @@ export function Measurement(): JSX.Element | null {
           }
         }
       }
+      if (epicObservations) {
+        for (const obs of epicObservations) {
+          labels.push(formatDate(obs.effectiveDateTime));
+          if (chartDatasets.length === 1) {
+            datasets[0].data.push(obs.valueQuantity?.value as number);
+          } else {
+            for (let i = 0; i < chartDatasets.length; i++) {
+              datasets[i].data.push((obs.component as ObservationComponent[])[i].valueQuantity?.value as number);
+            }
+          }
+        }
+      }
       setChartData({ labels, datasets });
     }
-  }, [chartDatasets, observations]);
+  }, [chartDatasets, observations, epicObservations]);
 
   function addObservation(formData: Record<string, string>): void {
     console.log(formData);
@@ -225,6 +249,7 @@ export function Measurement(): JSX.Element | null {
             <tr>
               <th>Date</th>
               <th>Your Value</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -232,6 +257,14 @@ export function Measurement(): JSX.Element | null {
               <tr key={obs.id}>
                 <td>{formatDateTime(obs.effectiveDateTime as string)}</td>
                 <td>{formatObservationValue(obs)}</td>
+                <td></td>
+              </tr>
+            ))}
+            {epicObservations.map((obs) => (
+              <tr key={obs.id}>
+                <td>{formatDateTime(obs.effectiveDateTime as string)}</td>
+                <td>{formatObservationValue(obs)}</td>
+                <td><EpicTag /></td>
               </tr>
             ))}
           </tbody>

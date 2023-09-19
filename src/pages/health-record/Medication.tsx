@@ -2,28 +2,43 @@ import { Anchor, Box, Button, Modal, Stack, Text, Title } from '@mantine/core';
 import { formatDateTime, formatHumanName, formatTiming } from '@medplum/core';
 import { HumanName, MedicationRequest } from '@medplum/fhirtypes';
 import { ResourceTable, useMedplum } from '@medplum/react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { InfoSection } from '../../components/InfoSection';
+import { SmarterFhirContext } from '../../App';
 
-export function Medication(): JSX.Element {
+export function Medication({ epic }: { epic?: boolean }): JSX.Element {
   const medplum = useMedplum();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { medicationId = '' } = useParams();
-  const med: MedicationRequest = medplum.readResource('MedicationRequest', medicationId).read();
+  const [med, setMed] = useState<MedicationRequest>();
+  const { client, setClient } = useContext(SmarterFhirContext);
+
+  useEffect(() => {
+    if (epic && client) {
+      client.fhirClientDefault.request(`MedicationRequest/${medicationId}`).then(v => setMed(v))
+    }
+    else {
+      setMed(medplum.readResource('MedicationRequest', medicationId).read());
+    }
+  }, []);
 
   return (
     <Box p="xl">
-      <Title order={2}>{med.medicationCodeableConcept?.text}</Title>
-      <p className="mb-6 text-lg text-gray-600">To refill this medication, please contact your pharmacy.</p>
-      <p className="mb-6 text-lg text-gray-600">
-        No more refills available at your pharmacy?{' '}
-        <Anchor onClick={() => setModalOpen(true)}>Renew your prescription</Anchor>
-      </p>
-      <InfoSection title="Medication">
-        <ResourceTable value={med} ignoreMissingValues />
-      </InfoSection>
-      <RenewalModal prev={med} opened={modalOpen} setOpened={setModalOpen} />
+      {med !== undefined
+        ? <>
+          <Title order={2}>{med.medicationCodeableConcept?.text ?? med.medicationReference?.display}</Title>
+          <p className="mb-6 text-lg text-gray-600">To refill this medication, please contact your pharmacy.</p>
+          <p className="mb-6 text-lg text-gray-600">
+            No more refills available at your pharmacy?{' '}
+            <Anchor onClick={() => setModalOpen(true)}>Renew your prescription</Anchor>
+          </p>
+          <InfoSection title="Medication">
+            <ResourceTable value={med} ignoreMissingValues />
+          </InfoSection>
+          <RenewalModal prev={med} opened={modalOpen} setOpened={setModalOpen} />
+        </>
+        : null}
     </Box>
   );
 }
