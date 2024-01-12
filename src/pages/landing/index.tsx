@@ -43,9 +43,27 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  innerText2: {
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: '1.6rem',
+    },
+  },
+
+  innerText3: {
+    [theme.fn.smallerThan('sm')]: {
+      textAlign: 'left',
+      fontSize: '1rem',
+      whiteSpace: 'normal',
+      maxWidth: '350px', // Set your desired maximum width
+    },
+  },
+  
+  
+
   content: {
     maxWidth: 480,
     marginRight: '4.5rem',
+    
   },
 
   title: {
@@ -92,14 +110,30 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('md')]: {
       position: 'static',
     },
+    [theme.fn.smallerThan('sm')]: {
+      position: 'static',
+      marginTop: '20px',
+      height: '150px',
+      width: '150px',
+    },
   },
 
   heroImage3: {
     ...heroImageStyles,
+    position: 'absolute',
+    borderRadius: '50%',
+    objectFit: 'cover',
     top: 0,
     right: -128,
     width: 448,
     height: 448,
+
+    [theme.fn.smallerThan('md')]: {
+      top: '-207px',
+      right: '6px',
+      width: '280px',
+      height: '280px',
+    },
   },
 
   heroImage4: {
@@ -113,12 +147,16 @@ const useStyles = createStyles((theme) => ({
       position: 'static',
       width: 288,
       height: 288,
+      right: '0px',
+      marginTop: '30px',
+      marginLeft: '30px',
     },
   },
 
   featureSection: {
     justifyContent: 'flex-end',
     paddingTop: 0,
+    
   },
 
   featureBox: {
@@ -126,6 +164,10 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     padding: '2.25rem',
     width: 512,
+
+    [theme.fn.smallerThan('sm')]: {
+      width: 350,
+    },
   },
 
   featureTitle: {
@@ -142,7 +184,7 @@ const useStyles = createStyles((theme) => ({
 
 const features = [
   {
-    title: 'Comprehsive Care Plans',
+    title: 'Comprehensive Care Plans',
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
   },
@@ -200,10 +242,10 @@ export function LandingPage(): JSX.Element {
             <Text size={20} c={theme.primaryColor} mb="lg">
               Healthcare
             </Text>
-            <Text size={36} weight={500} mb="md">
+            <Text size={36} weight={500} mb="md" className={classes.innerText2} >
               A better way to get care
             </Text>
-            <Text size={20} c={theme.colors.gray[7]}>
+            <Text size={20} c={theme.colors.gray[7]} className={classes.innerText3}>
               Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
               accusamus quisquam.
             </Text>
