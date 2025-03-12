@@ -12,6 +12,7 @@ export function RegisterPage(): JSX.Element {
           type="patient"
           projectId={MEDPLUM_PROJECT_ID}
           googleClientId={MEDPLUM_GOOGLE_CLIENT_ID}
+          recaptchaSiteKey="" // Explizit leer setzen, um reCAPTCHA zu deaktivieren
           onSuccess={() => navigate('/')?.catch(console.error)}
         >
           <h2>Register with My Health Pass Plus</h2>
