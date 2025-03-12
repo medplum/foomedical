@@ -9,15 +9,13 @@ export function RegisterPage(): JSX.Element {
   return (
     <SimpleGrid cols={{ base: 1, md: 2 }}>
       <Box 
-        pt={100} 
-        pb={200} 
         p="2rem" 
         style={{ 
           display: 'flex', 
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: '100vh'
+          height: '100vh' // Volle Bildschirmhöhe, genau wie das Bild
         }}
       >
         <div style={{ width: '100%', maxWidth: '450px' }}>
