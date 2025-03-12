@@ -31,9 +31,9 @@ import classes from './HomePage.module.css';
 const carouselItems = [
   {
     img: <IconChecklist />,
-    title: 'Welcome to My Health Pass Plus',
+    title: 'Welcome to My Health Pass',
     description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
+      'Brimbamborium ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
     url: '/screening-questionnaire',
     label: 'AHC HRSN Screening',
   },
