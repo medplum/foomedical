@@ -1,0 +1,114 @@
+.app-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-unit) 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  flex: 0 0 auto;
+}
+
+.logo img {
+  height: 40px;
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.hamburger {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  left: 0;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  top: 8px;
+}
+
+/* Mobile Navigation */
+.main-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: var(--primary-color);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  padding: 5rem 1rem 1rem;
+}
+
+.main-nav.open {
+  transform: translateX(0);
+}
+
+.main-nav ul {
+  list-style: none;
+}
+
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 0.75rem 0;
+  font-size: 1.2rem;
+}
+
+/* Desktop Navigation */
+@media (min-width: 768px) {
+  .menu-toggle {
+    display: none;
+  }
+  
+  .main-nav {
+    position: static;
+    transform: none;
+    padding: 0;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+  }
+  
+  .main-nav ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .main-nav a {
+    padding: 0.25rem 0;
+    font-size: 1rem;
+  }
+}

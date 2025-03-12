@@ -9,6 +9,11 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import { App } from './App';
+import './styles/responsive.css';
+import './styles/header.css';
+import './styles/forms.css';
+import './styles/cards.css';
+import './styles/qrcode.css';
 
 const medplum = new MedplumClient({
   // To run FooMedical locally, you can set the baseURL in this constructor
