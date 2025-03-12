@@ -6,10 +6,6 @@ import { MEDPLUM_GOOGLE_CLIENT_ID, MEDPLUM_PROJECT_ID } from '../config';
 export function RegisterPage(): JSX.Element {
   const navigate = useNavigate();
   
-  // Test-Key für recaptcha
-  // Dieser Schlüssel wird von Google für Testzwecke bereitgestellt
-  const TEST_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
-  
   return (
     <SimpleGrid cols={{ base: 1, md: 2 }}>
       <Box 
@@ -29,7 +25,6 @@ export function RegisterPage(): JSX.Element {
             type="patient"
             projectId={MEDPLUM_PROJECT_ID}
             googleClientId={MEDPLUM_GOOGLE_CLIENT_ID}
-            recaptchaSiteKey={TEST_SITE_KEY} // Test-Schlüssel verwenden
             onSuccess={() => navigate('/')?.catch(console.error)}
           >
             <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Register with Health Pass</h2>
