@@ -7,7 +7,7 @@ export function RegisterPage(): JSX.Element {
   const navigate = useNavigate();
   return (
     <SimpleGrid cols={{ base: 1, md: 2 }}>
-      <Box pt={100} pb={200} sx={{ padding: '2rem' }}>
+      <Box pt={100} pb={200} p="2rem">
         <RegisterForm
           type="patient"
           projectId={MEDPLUM_PROJECT_ID}
@@ -19,7 +19,7 @@ export function RegisterPage(): JSX.Element {
       </Box>
       <BackgroundImage 
         src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1567&amp;q=80"
-        sx={{ display: { base: 'none', md: 'block' } }}
+        style={{ display: { base: 'none', md: 'block' } }}
       />
     </SimpleGrid>
   );
