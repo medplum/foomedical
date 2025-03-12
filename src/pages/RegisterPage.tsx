@@ -1,7 +1,7 @@
 import { BackgroundImage, Box, SimpleGrid } from '@mantine/core';
 import { RegisterForm } from '@medplum/react';
 import { useNavigate } from 'react-router';
-import { MEDPLUM_GOOGLE_CLIENT_ID, MEDPLUM_PROJECT_ID } from '../config';
+import { MEDPLUM_GOOGLE_CLIENT_ID, MEDPLUM_PROJECT_ID, MEDPLUM_RECAPTCHA_SITE_KEY } from '../config';
 
 export function RegisterPage(): JSX.Element {
   const navigate = useNavigate();
@@ -12,10 +12,10 @@ export function RegisterPage(): JSX.Element {
           type="patient"
           projectId={MEDPLUM_PROJECT_ID}
           googleClientId={MEDPLUM_GOOGLE_CLIENT_ID}
-          recaptchaSiteKey="6LdEbvIqAAAAAD7svsiOE7DL9NV9Ze1AUK1XAuLt" // Ersetze mit deinem tatsächlichen Key
+          recaptchaSiteKey={MEDPLUM_RECAPTCHA_SITE_KEY}
           onSuccess={() => navigate('/')?.catch(console.error)}
         >
-          <h2>Register with My Health Pass Plus</h2>
+          <h2>Register with My Health Pass</h2>
         </RegisterForm>
       </Box>
       <div className="background-image-container">
