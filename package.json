@@ -1,6 +1,6 @@
 {
-  "name": "foomedical",
-  "version": "4.0.3",
+  "name": "my.healthpass.plus",
+  "version": "0.5.0",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",

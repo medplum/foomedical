@@ -16,7 +16,7 @@ import './styles/cards.css';
 import './styles/qrcode.css';
 
 const medplum = new MedplumClient({
-  // To run FooMedical locally, you can set the baseURL in this constructor
+  // To run my.healthpass.plus locally, you can set the baseURL in this constructor
   // baseUrl: http://localhost:8103
   onUnauthenticated: () => (window.location.href = '/'),
 });

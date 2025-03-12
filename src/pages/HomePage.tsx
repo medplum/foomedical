@@ -31,7 +31,7 @@ import classes from './HomePage.module.css';
 const carouselItems = [
   {
     img: <IconChecklist />,
-    title: 'Welcome to Foo Medical',
+    title: 'Welcome to My Health Pass Plus',
     description:
       'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
     url: '/screening-questionnaire',
@@ -95,7 +95,7 @@ const recommendations = [
   },
   {
     title: 'Request health record',
-    description: 'Get records sent to or from Foo Medical.',
+    description: 'Get records sent to or from Health Pass Plus.',
   },
 ];
 
