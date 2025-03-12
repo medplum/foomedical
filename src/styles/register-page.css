@@ -1,0 +1,9 @@
+.background-image-container {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .background-image-container {
+    display: block;
+  }
+}
