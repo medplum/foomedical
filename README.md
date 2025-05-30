@@ -1,4 +1,4 @@
-<h1 align="center">Foo Medical</h1>
+<h1 align="center">Virtualize Health Medical</h1>
 <p align="center">A free and open-source healthcare webapp from the Medplum team.</p>
 <p align="center">
   <a href="https://github.com/medplum/foomedical/actions">
@@ -12,11 +12,11 @@
   </a>
 </p>
 
-![Foo Medical Screenshot](screenshot.png)
+![Virtualize Health Medical Screenshot](screenshot.png)
 
-### What is Foo Medical?
+### What is Virtualize Health Medical?
 
-[Foo Medical](https://foomedical.com/) is a **ready to use medical practice sample app** that's open source. It's meant for developers to clone, customize and run.
+[Virtualize Health Medical](https://virtualizehealthmedical.com/) is a **ready to use medical practice sample app** that's open source. It's meant for developers to clone, customize and run.
 
 ### Features
 
@@ -33,7 +33,7 @@
 - Patient scheduling
 - All data represented in [FHIR](https://hl7.org/FHIR/)
 
-Foo Medical is designed to be forked and customized for your business' needs. Register on [foomedical.com](https://foomedical.com/) to see it in action.
+Virtualize Health Medical is designed to be forked and customized for your business' needs. Register on [virtualizehealthmedical.com](https://virtualizehealthmedical.com/) to see it in action.
 
 ### Getting Started
 
@@ -53,7 +53,7 @@ npm run dev
 
 This app should run on `http://localhost:3000/`
 
-Log into the app on localhost using the same credentials you created on [foomedical.com](https://foomedical.com/) and you are ready to start customizing.
+Log into the app on localhost using the same credentials you created on [virtualizehealthmedical.com](https://virtualizehealthmedical.com/) and you are ready to start customizing.
 
 ### Deploying your app
 
@@ -63,7 +63,7 @@ You can deploy this application by [clicking here](https://vercel.com/new/clone?
 
 ### Account Setup
 
-By default, your locally running Foo Medical app is pointing to the hosted Medplum service. Foo Medical registers signups to a test project.
+By default, your locally running Virtualize Health Medical app is pointing to the hosted Medplum service. Virtualize Health Medical registers signups to a test project.
 
 To send patients to your own organization you will need to [register a new Project on Medplum](https://www.medplum.com/docs/tutorials/register) and configure your environment variables to point to your own project (see [config.ts](https://github.com/medplum/foomedical/blob/main/src/config.ts) for an example).
 
@@ -78,7 +78,7 @@ Contact the medplum team ([support@medplum.com](mailto:support@medplum.com) or [
 
 ### Data Setup
 
-When you log into Foo Medical a set of sample FHIR records is created on your behalf. The ability to run automations is part of the Medplum platform using a framework called [Bots](https://www.medplum.com/docs/bots). For reference, Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/sample-account-setup.ts).
+When you log into Virtualize Health Medical a set of sample FHIR records is created on your behalf. The ability to run automations is part of the Medplum platform using a framework called [Bots](https://www.medplum.com/docs/bots). For reference, Bot that created the records in Virtualize Health Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/sample-account-setup.ts).
 
 ### Compliance
 
@@ -88,7 +88,7 @@ Medplum backend is HIPAA compliant and SOC 2 certified. Getting an account set u
 
 [Medplum](https://www.medplum.com/) is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.
 
-Medplum supports self-hosting and provides a [hosted service](https://app.medplum.com/). [Foo Medical](https://foomedical.com/) uses the hosted service as a backend.
+Medplum supports self-hosting and provides a [hosted service](https://app.medplum.com/). [Virtualize Health Medical](https://virtualizehealthmedical.com/) uses the hosted service as a backend.
 
 - Read our [documentation](https://www.medplum.com/docs/)
 - Browse our [React component library](https://storybook.medplum.com/)

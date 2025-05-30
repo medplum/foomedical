@@ -16,7 +16,7 @@ export function Footer(): JSX.Element {
             </SimpleGrid>
             <Divider />
             <Text c="dimmed" size="sm">
-              &copy; {new Date().getFullYear()} Foo Medical, Inc. All rights reserved.
+              &copy; {new Date().getFullYear()} Virtualize Health Medical, Inc. All rights reserved.
             </Text>
           </Stack>
         </Container>
