@@ -2,19 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Container, Group } from '@mantine/core';
 import { JSX, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router';
 import { SideMenu } from '../../components/SideMenu';
 
-const sideMenu = {
-  title: 'Account',
-  menu: [
-    { name: 'Profile', href: '/account/profile' },
-    { name: 'Provider', href: '/account/provider' },
-    { name: 'Membership & Billing', href: '/account/membership-and-billing' },
-  ],
-};
-
 export function AccountPage(): JSX.Element {
+  const { t } = useTranslation();
+
+  const sideMenu = {
+    title: t('account.title'),
+    menu: [
+      { name: t('account.menu.profile'), href: '/account/profile' },
+      { name: t('account.menu.provider'), href: '/account/provider' },
+      { name: t('account.menu.billing'), href: '/account/membership-and-billing' },
+    ],
+  };
+
   return (
     <Container>
       <Group align="top">

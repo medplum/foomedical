@@ -6,23 +6,25 @@ import { ResourceAvatar, useMedplumProfile } from '@medplum/react';
 import { IconChevronDown, IconLogout, IconSettings, IconUserCircle } from '@tabler/icons-react';
 import cx from 'clsx';
 import { JSX, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router';
 import classes from './Header.module.css';
 import { Logo } from './Logo';
 
-const navigation = [
-  { name: 'Health Record', href: '/health-record' },
-  { name: 'Messages', href: '/messages' },
-  { name: 'Care Plan', href: '/care-plan' },
-  { name: 'Get Care', href: '/get-care' },
-];
-
 export function Header(): JSX.Element {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const profile = useMedplumProfile();
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+
+  const navigation = [
+    { name: t('header.nav.healthrecord'), href: '/health-record' },
+    { name: t('header.nav.messages'), href: '/messages' },
+    { name: t('header.nav.careplan'), href: '/care-plan' },
+    { name: t('header.nav.getcare'), href: '/get-care' },
+  ];
 
   return (
     <AppShell.Header>
@@ -59,19 +61,19 @@ export function Header(): JSX.Element {
                 leftSection={<IconUserCircle size={16} color={theme.colors.red[6]} stroke={1.5} />}
                 onClick={() => navigate('/account/profile')?.catch(console.error)}
               >
-                Your profile
+                {t('header.menu.profile')}
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconSettings size={16} color={theme.colors.blue[6]} stroke={1.5} />}
                 onClick={() => navigate('/account/profile')?.catch(console.error)}
               >
-                Settings
+                {t('header.menu.settings')}
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconLogout size={16} color={theme.colors.gray[6]} stroke={1.5} />}
                 onClick={() => navigate('/signout')?.catch(console.error)}
               >
-                Sign out
+                {t('header.menu.signout')}
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>

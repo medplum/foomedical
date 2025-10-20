@@ -1,5 +1,5 @@
-<h1 align="center">Foo Medical</h1>
-<p align="center">A free and open-source healthcare webapp from the Medplum team.</p>
+<h1 align="center">Moje Ambulance</h1>
+<p align="center">Bezplatná a open-source webová aplikace pro zdravotnictví od týmu Medplum.</p>
 <p align="center">
   <a href="https://github.com/medplum/foomedical/actions">
     <img src="https://github.com/medplum/foomedical/actions/workflows/build.yml/badge.svg" />
@@ -12,84 +12,84 @@
   </a>
 </p>
 
-![Foo Medical Screenshot](screenshot.png)
+![Snímek obrazovky Moje Ambulance](screenshot.png)
 
-### What is Foo Medical?
+### Co je Moje Ambulance?
 
-[Foo Medical](https://foomedical.com/) is a **ready to use medical practice sample app** that's open source. It's meant for developers to clone, customize and run.
+[Moje Ambulance](https://foomedical.com/) je **ukázková open-source aplikace pro lékařskou praxi připravená k okamžitému použití**. Je určena pro vývojáře, aby ji mohli klonovat, přizpůsobovat a spouštět.
 
-### Features
+### Funkce
 
-- Completely free and open-source
-- Secure and compliant [Medplum](https://www.medplum.com) backend, which is also open source
-- Patient registration and authentication
-- Health records
-  - Lab results
-  - Medications
-  - Vaccines
-  - Vitals
-- Patient-provider messaging
-- Care plans
-- Patient scheduling
-- All data represented in [FHIR](https://hl7.org/FHIR/)
+- Zcela zdarma a open-source
+- Bezpečný a vyhovující [Medplum](https://www.medplum.com) backend, který je také open-source
+- Registrace a ověřování pacientů
+- Zdravotní záznamy
+  - Výsledky laboratoře
+  - Léky
+  - Očkování
+  - Vitální funkce
+- Zprávy mezi pacientem a poskytovatelem
+- Plány péče
+- Plánování pacientů
+- Všechna data reprezentovaná ve [FHIR](https://hl7.org/FHIR/)
 
-Foo Medical is designed to be forked and customized for your business' needs. Register on [foomedical.com](https://foomedical.com/) to see it in action.
+Moje Ambulance je navržena tak, aby ji bylo možné forkovat a přizpůsobit potřebám vašeho podnikání. Zaregistrujte se na [foomedical.com](https://foomedical.com/), abyste ji viděli v akci.
 
-### Getting Started
+### Začínáme
 
-First, [fork](https://github.com/medplum/foomedical/fork) and clone the repo.
+Nejprve [forkujte](https://github.com/medplum/foomedical/fork) a naklonujte repozitář.
 
-Next, install the app from your terminal
+Dále nainstalujte aplikaci z terminálu
 
 ```bash
 npm install
 ```
 
-Then, run the app!
+Poté aplikaci spusťte!
 
 ```bash
 npm run dev
 ```
 
-This app should run on `http://localhost:3000/`
+Tato aplikace by měla běžet na `http://localhost:3000/`
 
-Log into the app on localhost using the same credentials you created on [foomedical.com](https://foomedical.com/) and you are ready to start customizing.
+Přihlaste se do aplikace na localhostu pomocí stejných přihlašovacích údajů, které jste vytvořili na [foomedical.com](https://foomedical.com/), a jste připraveni začít s přizpůsobením.
 
-### Deploying your app
+### Nasazení vaší aplikace
 
-To get started deploying your app we recommend making an account on [Vercel](https://vercel.com/), free accounts are available.
+Pro nasazení vaší aplikace doporučujeme vytvořit si účet na [Vercel](https://vercel.com/), k dispozici jsou bezplatné účty.
 
-You can deploy this application by [clicking here](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fmedplum%2Ffoomedical&showOptionalTeamCreation=false).
+Tuto aplikaci můžete nasadit [kliknutím sem](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fmedplum%2Ffoomedical&showOptionalTeamCreation=false).
 
-### Account Setup
+### Nastavení účtu
 
-By default, your locally running Foo Medical app is pointing to the hosted Medplum service. Foo Medical registers signups to a test project.
+Ve výchozím nastavení vaše lokálně spuštěná aplikace Moje Ambulance ukazuje na hostovanou službu Medplum. Moje Ambulance registruje přihlášení do testovacího projektu.
 
-To send patients to your own organization you will need to [register a new Project on Medplum](https://www.medplum.com/docs/tutorials/register) and configure your environment variables to point to your own project (see [config.ts](https://github.com/medplum/foomedical/blob/main/src/config.ts) for an example).
+Chcete-li posílat pacienty do své vlastní organizace, budete muset [zaregistrovat nový projekt na Medplum](https://www.medplum.com/docs/tutorials/register) a nakonfigurovat proměnné prostředí tak, aby ukazovaly na váš vlastní projekt (viz [config.ts](https://github.com/medplum/foomedical/blob/main/src/config.ts) jako příklad).
 
-If you are using the Medplum Hosted service, you can login to your Medplum Instance and add the following identifiers to your [Project Site Settings](https://app.medplum.com/admin/sites)
+Pokud používáte hostovanou službu Medplum, můžete se přihlásit do své instance Medplum a přidat následující identifikátory do [nastavení webu projektu](https://app.medplum.com/admin/sites)
 
 - Google Client Id
 - Google Client Secret
 - Recaptcha Site Key
 - Recaptcha Secret Key
 
-Contact the medplum team ([support@medplum.com](mailto:support@medplum.com) or [Discord](https://discord.gg/medplum])) with any questions.
+V případě jakýchkoli dotazů kontaktujte tým Medplum ([support@medplum.com](mailto:support@medplum.com) nebo [Discord](https://discord.gg/medplum])).
 
-### Data Setup
+### Nastavení dat
 
-When you log into Foo Medical a set of sample FHIR records is created on your behalf. The ability to run automations is part of the Medplum platform using a framework called [Bots](https://www.medplum.com/docs/bots). For reference, Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/sample-account-setup.ts).
+Když se přihlásíte do Moje Ambulance, vytvoří se pro vás sada ukázkových záznamů FHIR. Schopnost spouštět automatizace je součástí platformy Medplum pomocí frameworku zvaného [Boti](https://www.medplum.com/docs/bots). Pro informaci, Bota, který vytvořil záznamy v Moje Ambulance, najdete [zde](https://github.com/medplum/medplum-demo-bots/blob/main/src/sample-account-setup.ts).
 
-### Compliance
+### Soulad
 
-Medplum backend is HIPAA compliant and SOC 2 certified. Getting an account set up requires registering on [medplum.com](https://www.medplum.com/). Feel free to ask us questions in real time on our [Discord Server](https://discord.gg/medplum).
+Backend Medplum je v souladu s HIPAA a certifikován SOC 2. Založení účtu vyžaduje registraci na [medplum.com](https://www.medplum.com/). Neváhejte se nás zeptat na otázky v reálném čase na našem [Discord serveru](https://discord.gg/medplum).
 
-### About Medplum
+### O Medplum
 
-[Medplum](https://www.medplum.com/) is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.
+[Medplum](https://www.medplum.com/) je open-source, API-first EHR. Medplum usnadňuje rychlé vytváření zdravotnických aplikací s menším množstvím kódu.
 
-Medplum supports self-hosting and provides a [hosted service](https://app.medplum.com/). [Foo Medical](https://foomedical.com/) uses the hosted service as a backend.
+Medplum podporuje vlastní hosting a poskytuje [hostovanou službu](https://app.medplum.com/). [Moje Ambulance](https://foomedical.com/) používá hostovanou službu jako backend.
 
-- Read our [documentation](https://www.medplum.com/docs/)
-- Browse our [React component library](https://storybook.medplum.com/)
-- Join our [Discord](https://discord.gg/medplum)
+- Přečtěte si naši [dokumentaci](https://www.medplum.com/docs/)
+- Prohlédněte si naši [knihovnu komponent React](https://storybook.medplum.com/)
+- Připojte se k našemu [Discordu](https://discord.gg/medplum)

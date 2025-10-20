@@ -23,6 +23,7 @@ import { Patient, Practitioner } from '@medplum/fhirtypes';
 import { useMedplumProfile } from '@medplum/react';
 import { IconChecklist, IconGift, IconSquareCheck } from '@tabler/icons-react';
 import { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import DoctorImage from '../img/homePage/doctor.svg';
 import HealthRecordImage from '../img/homePage/health-record.svg';
@@ -31,88 +32,84 @@ import PharmacyImage from '../img/homePage/pharmacy.svg';
 import PillImage from '../img/homePage/pill.svg';
 import classes from './HomePage.module.css';
 
-const carouselItems = [
-  {
-    img: <IconChecklist />,
-    title: 'Welcome to Foo Medical',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    url: '/screening-questionnaire',
-    label: 'AHC HRSN Screening',
-  },
-  {
-    img: <IconChecklist />,
-    title: 'Patient Intake Questionnaire',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    url: '/patient-intake-questionnaire',
-    label: 'Start Form',
-  },
-  {
-    img: <IconChecklist />,
-    title: 'Select a Doctor',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    url: '/account/provider/choose-a-primary-care-povider',
-    label: 'Choose a Primary Care Provider',
-  },
-  {
-    img: <IconChecklist />,
-    title: 'Emergency Contact',
-    description:
-      'Lorem ipsum at porta donec ultricies ut, arcu morbi amet arcu ornare, curabitur pharetra magna tempus',
-    url: '/account',
-    label: 'Add emergency contact',
-  },
-];
-
-const linkPages = [
-  {
-    img: HealthRecordImage,
-    title: 'Health Record',
-    description: '',
-    href: '/health-record',
-  },
-  {
-    img: PillImage,
-    title: 'Request Prescription Renewal',
-    description: '',
-    href: '/health-record/medications',
-  },
-  {
-    img: PharmacyImage,
-    title: 'Preferred Pharmacy',
-    description: 'Walgreens D2866 1363 Divisadero St  DIVISADERO',
-    href: '#',
-  },
-];
-
-const recommendations = [
-  {
-    title: 'Get travel health recommendations',
-    description: 'Find out what vaccines and meds you need for your trip.',
-  },
-  {
-    title: 'Get FSA/HSA reimbursement',
-    description: 'Request a prescription for over-the-counter items.',
-  },
-  {
-    title: 'Request health record',
-    description: 'Get records sent to or from Foo Medical.',
-  },
-];
-
 export function HomePage(): JSX.Element {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const profile = useMedplumProfile() as Patient | Practitioner;
   const profileName = profile.name ? formatHumanName(profile.name[0]) : '';
 
+  const linkPages = [
+    {
+      img: HealthRecordImage,
+      title: t('home.linkpages.healthrecord.title'),
+      description: '',
+      href: '/health-record',
+    },
+    {
+      img: PillImage,
+      title: t('home.linkpages.prescription.title'),
+      description: '',
+      href: '/health-record/medications',
+    },
+    {
+      img: PharmacyImage,
+      title: t('home.linkpages.pharmacy.title'),
+      description: t('home.linkpages.pharmacy.description'),
+      href: '#',
+    },
+  ];
+  const recommendations = [
+    {
+      title: t('home.recommendations.travel.title'),
+      description: t('home.recommendations.travel.description'),
+    },
+    {
+      title: t('home.recommendations.reimbursement.title'),
+      description: t('home.recommendations.reimbursement.description'),
+    },
+    {
+      title: t('home.recommendations.records.title'),
+      description: t('home.recommendations.records.description'),
+    },
+  ];
+
+  const carouselItems = [
+    {
+      img: <IconChecklist />,
+      title: t('home.carousel.welcome.title'),
+      description: t('home.carousel.welcome.description'),
+      url: '/screening-questionnaire',
+      label: t('home.carousel.welcome.label'),
+    },
+    {
+      img: <IconChecklist />,
+      title: t('home.carousel.intake.title'),
+      description: t('home.carousel.intake.description'),
+      url: '/patient-intake-questionnaire',
+      label: t('home.carousel.intake.label'),
+    },
+    {
+      img: <IconChecklist />,
+      title: t('home.carousel.doctor.title'),
+      description: t('home.carousel.doctor.description'),
+      url: '/account/provider/choose-a-primary-care-povider',
+      label: t('home.carousel.doctor.label'),
+    },
+    {
+      img: <IconChecklist />,
+      title: t('home.carousel.contact.title'),
+      description: t('home.carousel.contact.description'),
+      url: '/account',
+      label: t('home.carousel.contact.label'),
+    },
+  ];
+
   return (
     <Box bg="gray.0">
       <Box className={classes.announcements}>
         <span>
-          Announcements go here. <Anchor href="#">Include links if needed.</Anchor>
+          {t('home.announcements')} <Anchor href="#">{t('home.announcements.links')}</Anchor>
         </span>
       </Box>
       <div className={classes.hero}>
@@ -123,19 +120,19 @@ export function HomePage(): JSX.Element {
         />
         <Container className={classes.heroContainer}>
           <Title className={classes.heroTitle}>
-            Hi <span className="text-teal-600">{profileName}</span>,<br /> we’re here to help
+            {t('home.hero.title', { profileName })}
           </Title>
           <Button size="xl" radius="xl" className={classes.heroButton}>
-            Get Care
+            {t('home.hero.button')}
           </Button>
         </Container>
       </div>
       <Box className={classes.callToAction}>
         <Group justify="center">
           <IconGift />
-          <p>Put calls to action here</p>
+          <p>{t('home.calltoaction')}</p>
           <Button variant="white" onClick={() => navigate('/messages')?.catch(console.error)}>
-            Send Message
+            {t('home.calltoaction.button')}
           </Button>
         </Group>
       </Box>
@@ -164,7 +161,7 @@ export function HomePage(): JSX.Element {
           <Card shadow="md" radius="md" className={classes.card} p="xl">
             <IconSquareCheck />
             <Text size="lg" fw={500} mt="md">
-              Better rest, better health
+              {t('home.card.rest.title')}
             </Text>
             <Text size="sm" color="dimmed" my="sm">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
@@ -172,7 +169,7 @@ export function HomePage(): JSX.Element {
               impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
             </Text>
             <Group>
-              <Button>Invite Friends</Button>
+              <Button>{t('home.card.rest.button')}</Button>
             </Group>
           </Card>
         </Container>
@@ -184,10 +181,10 @@ export function HomePage(): JSX.Element {
               <Image src={HealthVisitImage} m="-40px 30px -40px -40px" w="40%" />
               <div>
                 <Badge color={theme.primaryColor} size="xl">
-                  Now available
+                  {t('home.card.available.badge')}
                 </Badge>
                 <Text size="lg" fw={500} mt="md">
-                  Title
+                  {t('home.card.available.title')}
                 </Text>
                 <Text size="sm" color="dimmed" my="sm">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque,
@@ -223,11 +220,11 @@ export function HomePage(): JSX.Element {
                 <Group wrap="nowrap">
                   <Avatar src={DoctorImage} size="xl" />
                   <div>
-                    <Text fw={500}>Primary Care Provider</Text>
+                    <Text fw={500}>{t('home.card.provider.title')}</Text>
                     <Text size="sm" color="dimmed" my="sm">
-                      Having a consistent, trusted provider can lead to better health.
+                      {t('home.card.provider.description')}
                     </Text>
-                    <Button onClick={() => navigate('/account/provider')?.catch(console.error)}>Choose Provider</Button>
+                    <Button onClick={() => navigate('/account/provider')?.catch(console.error)}>{t('home.card.provider.button')}</Button>
                   </div>
                 </Group>
               </Card>

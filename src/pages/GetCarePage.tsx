@@ -3,8 +3,10 @@
 import { Schedule } from '@medplum/fhirtypes';
 import { Document, Scheduler, useMedplum } from '@medplum/react';
 import { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function GetCare(): JSX.Element {
+  const { t } = useTranslation();
   const medplum = useMedplum();
   const schedule = medplum.searchOne('Schedule').read();
 
@@ -21,19 +23,19 @@ export function GetCare(): JSX.Element {
               id: 'id-1',
               linkId: 'q1',
               type: 'string',
-              text: 'Question 1',
+              text: t('getcare.question1'),
             },
             {
               id: 'id-2',
               linkId: 'q2',
               type: 'string',
-              text: 'Question 2',
+              text: t('getcare.question2'),
             },
             {
               id: 'id-3',
               linkId: 'q3',
               type: 'string',
-              text: 'Question 3',
+              text: t('getcare.question3'),
             },
           ],
         }}
