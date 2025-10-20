@@ -60,5 +60,9 @@
   "packageManager": "npm@10.9.3",
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
+  },
+  "dependencies": {
+    "i18next": "^25.6.0",
+    "react-i18next": "^16.1.0"
   }
 }
